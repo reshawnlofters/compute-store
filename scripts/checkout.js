@@ -53,6 +53,7 @@ cart.forEach((cartItem) => {
                         Delete
                     </span>
                 </div>
+                <p class="quantity-limit-message"></p>
             </div>
 
             <div class="delivery-options">
@@ -115,26 +116,54 @@ function updateCartQuantity() {
 
 updateCartQuantity();
 
+// function to display the quantity limit message
+function displayQuantityLimitMessage(container) {
+    // get the quantity limit message element for the specific cart item container
+    const quantityLimitMessage = container.querySelector('.quantity-limit-message');
+
+    // add the message
+    quantityLimitMessage.innerHTML = 'Quantity limit reached (50)';
+
+    // clear any previous timeouts
+    if (container.timeoutId) {
+        clearTimeout(container.timeoutId);
+    }
+
+    // set a timeout for the message and store the timeout id in the container
+    container.timeoutId = setTimeout(() => {
+        // remove the message
+        quantityLimitMessage.innerHTML = '';
+    }, 4000);
+}
+
 // function to save the new cart item quantities
 function saveNewCartItemQuantity(productId, container) {
     // get the quantity input field value and convert it to a number
     const newCartItemQuantity = Number(container.querySelector('.quantity-input').value);
     
-    // update the cart item quantity displayed on the page
-    const quantityLabel = container.querySelector('.quantity-label');
-    quantityLabel.innerHTML = newCartItemQuantity;
-    
+    // display an error message if the new quantity is above the limit (50)
+    if (newCartItemQuantity > 50) {
+        displayQuantityLimitMessage(container);
+        return;
+    }
+
     // remove the product from the cart if the new quantity is set to 0
     if (newCartItemQuantity === 0) {
         removeFromCart(productId);
         container.remove();
+    } 
+    
+    else {
+        // update the cart item quantity displayed on the page
+        const quantityLabel = container.querySelector('.quantity-label');
+        quantityLabel.innerHTML = newCartItemQuantity;
+        
+        // remove the class added to the product container
+        container.classList.remove('is-editing-quantity');
+        
+        updateCartItemQuantity(productId, newCartItemQuantity);
+        updateCartQuantity();
     }
-    
-    // remove the class added to the product container
-    container.classList.remove('is-editing-quantity');
-    
-    updateCartItemQuantity(productId, newCartItemQuantity);
-    updateCartQuantity();
 
     // remove focus from the quantity input field after saving the new quantity
     container.querySelector('.quantity-input').blur();
@@ -174,7 +203,7 @@ document.querySelectorAll('.js-update-quantity-link').forEach((button) => {
         container.classList.add('is-editing-quantity');
         
         // get the save button element
-        const saveButton = document.querySelector('.save-quantity-link');
+        const saveButton = container.querySelector('.save-quantity-link');
 
         // attach a click event listener to the save button
         saveButton.addEventListener('click', () => {
