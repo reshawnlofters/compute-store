@@ -14,12 +14,12 @@ export function addToCart(productId) {
         }
     });
 
-    // increase the quantity of the product by 1 if it's a duplicate
+    // if the product is in the cart, increase it's quantity by
     if (matchingItem) {
         matchingItem.quantity += 1;
     }
     
-    // add the product to the cart
+    // if the product is not in the cart, add it to the cart
     else {
         cart.push({
             productId: productId,

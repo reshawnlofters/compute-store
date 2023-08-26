@@ -50,12 +50,12 @@ products.forEach((product) => {
 
         <div class="added-to-cart js-added-to-cart-${product.id}">
         <img src="images/icons/checkmark.png">
-        Added
+            Added
         </div>
         
         <button class="add-to-cart-button js-add-to-cart-button button-primary"
         data-product-id="${product.id}">
-        Add to Cart
+            Add to Cart
         </button>
     </div>`;
 });
@@ -63,14 +63,48 @@ products.forEach((product) => {
 // display the generated html
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
-// attach a click event listener to add to cart button
-document.querySelectorAll('.js-add-to-cart-button')
-    .forEach((button) => {
-        button.addEventListener('click', () => {
-            // store the product id from the attached data attribute
-            const productId = button.dataset.productId;
+// iterate through the add to cart buttons
+document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
+    // attach a click event listener to the add to cart button
+    button.addEventListener('click', () => {
+        // store the product id from the attached data attribute
+        const productId = button.dataset.productId;
 
-            // add product to the cart
-            addToCart(productId);
-        })
-    })
+        // add the product to the cart
+        addToCart(productId);
+
+        // set the added to cart message
+        setAddedMessage(productId);
+
+        
+    });
+});
+
+// object to store the added message timeouts in setAddedMessage()
+const addedMessageTimeouts = {};
+
+// function to set the added message
+function setAddedMessage(productId) {
+    // get the added message element
+    let addedMessage = document.querySelector(`.js-added-to-cart-${productId}`);
+
+    // add a class to the added message element to make it visible
+    addedMessage.classList.add('added-to-cart-visible');
+
+    // check for any previous timeouts for an added message
+    const previousTimeoutId = addedMessageTimeouts[productId];
+    
+    // clear any previous timeouts
+    if (previousTimeoutId) {
+        clearTimeout(previousTimeoutId);
+    }
+
+    // set an added message timeout
+    const timeoutId = setInterval(() => {
+        // remove the class added to the added message element to make it invisible
+        addedMessage.classList.remove('added-to-cart-visible');
+    }, 2000);
+
+    // add the added message timeout id to the addedMessageTimeouts object
+    addedMessageTimeouts[productId] = timeoutId;
+}
