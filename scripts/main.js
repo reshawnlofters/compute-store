@@ -1,7 +1,8 @@
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
+import { addToCart } from "../data/cart.js";
 
-// create variable to store the generated html
+// create variable to store the generated html for the products
 let productsHTML = '';
 
 // iterate through the products
@@ -61,3 +62,15 @@ products.forEach((product) => {
 
 // display the generated html
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
+
+// attach a click event listener to add to cart button
+document.querySelectorAll('.js-add-to-cart-button')
+    .forEach((button) => {
+        button.addEventListener('click', () => {
+            // store the product id from the attached data attribute
+            const productId = button.dataset.productId;
+
+            // add product to the cart
+            addToCart(productId);
+        })
+    })
