@@ -1,4 +1,4 @@
-import { cart, removeFromCart, calculateCartQuantity, updateCartItemQuantity} from '../data/cart.js';
+import { cart, removeFromCart, calculateCartQuantity, updateCartItemQuantity } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
@@ -112,6 +112,44 @@ cart.forEach((cartItem) => {
 // add generated html to the checkout page
 document.querySelector('.order-summary').innerHTML = cartSummaryHTML;
 
+// function to update cart quantity
+function updateCartQuantity() {
+    // get the cart quantity
+    const cartQuantity = calculateCartQuantity();
+
+    // display the cart quantity
+    document.querySelector('.js-return-to-home-link')
+        .innerHTML = `${cartQuantity} items`;
+}
+
+updateCartQuantity();
+
+// function to save new cart item quantities
+function saveNewCartItemQuantity(productId, container) {
+    // get the quantity input element value and convert it to a number
+    const newCartItemQuantity = Number(container.querySelector('.quantity-input').value);
+    
+    // update the cart item quantity displayed on the page
+    const quantityLabel = container.querySelector('.quantity-label');
+    quantityLabel.innerHTML = newCartItemQuantity;
+    
+    // remove the product from the cart if the new quantity is 0
+    if (newCartItemQuantity === 0) {
+        removeFromCart(productId);
+        container.remove();
+    }
+    
+    // remove the class added to the product container
+    container.classList.remove('is-editing-quantity');
+    
+    // update the cart item and cart quantity
+    updateCartItemQuantity(productId, newCartItemQuantity);
+    updateCartQuantity();
+
+    // remove focus from input field after saving the quantity
+    container.querySelector('.quantity-input').blur();
+}
+
 // iterate through the delete quantity buttons
 document.querySelectorAll('.js-delete-quantity-link').forEach((button) => {
     // attach a click event listener to the delete button link
@@ -152,40 +190,19 @@ document.querySelectorAll('.js-update-quantity-link').forEach((button) => {
         saveButton.addEventListener('click', () => {
             saveNewCartItemQuantity(productId, container);
         });
+
+        // attach a keydown event listener to the quantity input field
+        container.querySelector('.quantity-input').addEventListener('keydown', (event) => {
+            // check if the user pressed 'Enter'
+            if (event.key === 'Enter') {
+                saveNewCartItemQuantity(productId, container);
+            }
+        });
+
+        /* attach a blur event listener to the quantity input field to ensure,
+           the product quantity is updated correctly when the input field loose focus */
+        container.querySelector('.quantity-input').addEventListener('blur', () => {
+            saveNewCartItemQuantity(productId, container);
+        });
     });
 });
-
-// function to save new cart item quantities
-function saveNewCartItemQuantity(productId, container) {
-    // get the quantity input element value and convert it to a number
-    const newCartItemQuantity = Number(document.querySelector('.quantity-input').value);
-    
-    // update the cart item quantity displayed on the page
-    const quantityLabel = document.querySelector('.quantity-label');
-    quantityLabel.innerHTML = newCartItemQuantity;
-    
-    // remove the product from the cart if the new quantity is 0
-    if (newCartItemQuantity === 0) {
-        removeFromCart(productId);
-        container.remove();
-    }
-    
-    // remove the class added to the product container
-    container.classList.remove('is-editing-quantity');
-    
-    // update the cart item and cart quantity
-    updateCartItemQuantity(productId, newCartItemQuantity);
-    updateCartQuantity();
-}
-
-// function to update cart quantity
-function updateCartQuantity() {
-    // get the cart quantity
-    const cartQuantity = calculateCartQuantity();
-
-    // display the cart quantity
-    document.querySelector('.js-return-to-home-link')
-        .innerHTML = `${cartQuantity} items`;
-}
-
-updateCartQuantity();
