@@ -3,7 +3,7 @@ export let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 // function to save to local storage
 function saveToStorage() {
-    localStorage.setItem('cart', JSON.stringify(cart))
+    localStorage.setItem('cart', JSON.stringify(cart));
 }
 
 // function to add a product to the cart
@@ -13,19 +13,18 @@ export function addToCart(productId, quantitySelector) {
 
     // iterate through the cart
     cart.forEach((item) => {
-        // if the prdouct is in the cart, store it
+        // store the product if it is in the cart
         if (productId === item.productId) {
             matchingItem = item;
         }
     });
 
-    // if the product is in the cart,
-    // increase it's cart quantity by the quantity selector value
+    // increase the products quantity if it is in the cart 
     if (matchingItem) {
         matchingItem.quantity += quantitySelector;
     }
     
-    // if the product is not in the cart, add it to the cart
+    // add the product to the cart if it is not in the cart
     else {
         cart.push({
             productId: productId,
@@ -38,7 +37,7 @@ export function addToCart(productId, quantitySelector) {
 
 // function to remove a product from the cart
 export function removeFromCart(productId) {
-    // filter through the cart and return an array without the product
+    // iterate through the cart and return an array without the product
     cart = cart.filter((cartItem) => {
         return cartItem.productId !== productId;
     });
@@ -48,7 +47,7 @@ export function removeFromCart(productId) {
 
 // function to calculate the cart quantity
 export function calculateCartQuantity() {
-    // create variable to store the cart quantity
+    // variable to store the cart quantity
     let cartQuantity = 0;
 
     // iterate through the cart items
@@ -60,7 +59,7 @@ export function calculateCartQuantity() {
     return cartQuantity;
 }
 
-// function to update a cart item quantity
+// function to update the quantity of a cart item
 export function updateCartItemQuantity(productId, newCartItemQuantity) {
     // iterate through the cart
     cart.forEach((cartItem) => {

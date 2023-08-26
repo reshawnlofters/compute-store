@@ -2,7 +2,7 @@ import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 import { addToCart, calculateCartQuantity } from "../data/cart.js";
 
-// create variable to store the generated html for the products
+// variable to store the generated html for each product
 let productsHTML = '';
 
 // iterate through the products
@@ -60,17 +60,30 @@ products.forEach((product) => {
     </div>`;
 });
 
-// display the generated html
+// add the generated html to the page
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
+
+// function to update the cart quantity
+function updateCartQuantity()
+{
+    // get the cart quantity
+    const cartQuantity = calculateCartQuantity();
+
+    // display the cart quantity
+    document.querySelector('.js-cart-quantity')
+    .innerHTML = cartQuantity;
+}
+
+updateCartQuantity();
 
 // iterate through the add to cart buttons
 document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
     // attach a click event listener to the add to cart button
     button.addEventListener('click', () => {
-        // store the product id from the attached data attribute
+        // store the product id
         const productId = button.dataset.productId;
 
-        // get the quantity selector element value and convet it to a number 
+        // get the quantity selector element value and convert it to a number 
         const quantitySelector = Number (document.querySelector(`.js-quantity-selector-${productId}`).value);
 
         addToCart(productId, quantitySelector);
@@ -110,16 +123,3 @@ function setAddedMessage(productId) {
     // add the added message timeout id to the addedMessageTimeouts object
     addedMessageTimeouts[productId] = timeoutId;
 }
-
-// function to update the cart quantity
-function updateCartQuantity()
-{
-    // get the cart quantity
-    const cartQuantity = calculateCartQuantity();
-
-    // display the cart quantity
-    document.querySelector('.js-cart-quantity')
-    .innerHTML = cartQuantity;
-}
-
-updateCartQuantity();

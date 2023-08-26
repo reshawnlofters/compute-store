@@ -32,7 +32,7 @@ main {
     width: 30px;
 }
 
-/* styles to display the update quantity input field and save button */
+/* style to display the update quantity input field and save button */
 .is-editing-quantity .quantity-input,
 .is-editing-quantity .save-quantity-link {
   display: initial;
@@ -86,8 +86,8 @@ main {
 
 @media (max-width: 1000px) {
     .cart-item-details-grid {
-    grid-template-columns: 100px 1fr;
-    row-gap: 30px;
+        grid-template-columns: 100px 1fr;
+        row-gap: 30px;
     }
 }
 
@@ -116,7 +116,7 @@ main {
 
 @media (max-width: 1000px) {
     .delivery-options {
-        /* element will take  up 2 grid columns */
+        /* style to make element take up 2 grid columns */
         grid-column: 1 / span 2;
     }
 }

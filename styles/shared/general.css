@@ -47,7 +47,7 @@ button, select {
     box-shadow: none;
 }
 
-/* styles to limit text to 2 lines */
+/* style to limit text to 2 lines */
 .limit-text-to-2-lines {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -64,7 +64,7 @@ button, select {
     color: rgb(196, 80, 0);
 }
 
-/* styles for the dropdown selectors */
+/* styles for the product quantity dropdown selectors */
 select {
     color: rgb(33, 33, 33);
     background-color: rgb(240, 240, 240);

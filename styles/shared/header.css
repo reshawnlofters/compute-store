@@ -1,4 +1,4 @@
-header {
+.home-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -25,18 +25,18 @@ header {
     border: 1px solid white;
 }
 
-.header-left-section {
+.home-header-left-section {
     display: flex;
     justify-content: center;
     width: 180px;
 }
 
-.header-left-section .bi {
+.home-header-left-section .bi {
     font-size: 40px;
     color: white;
 }
 
-.header-middle-section {
+.home-header-middle-section {
     flex: 1;
     max-width: 800px;
     margin: 0 10px;
@@ -72,7 +72,7 @@ header {
     font-size: 20px;
 }
 
-.header-right-section {
+.home-header-right-section {
     width: 300px;
     flex-shrink: 0;
     display: flex;
