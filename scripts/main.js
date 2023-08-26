@@ -70,16 +70,20 @@ document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
         // store the product id from the attached data attribute
         const productId = button.dataset.productId;
 
+        // get the quantity selector element value and convet it to a number 
+        const quantitySelector = Number (document.querySelector(`.js-quantity-selector-${productId}`).value);
+
         // add the product to the cart
-        addToCart(productId);
+        addToCart(productId, quantitySelector);
 
         // set the added to cart message
         setAddedMessage(productId);
 
-        // update the cart quantity in the cart quantity element 
+        // update the cart quantity displayed 
         document.querySelector('.js-cart-quantity').innerHTML = calculateCartQuantity();
 
-        
+        // reset the quantity selector element value
+        document.querySelector(`.js-quantity-selector-${productId}`).value = 1;
     });
 });
 
