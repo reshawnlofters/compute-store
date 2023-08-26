@@ -1,5 +1,10 @@
-// create array to store the cart items
-export let cart = [];
+// get the cart array in local storage
+export let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+// function to save to local storage
+function saveToStorage() {
+    localStorage.setItem('cart', JSON.stringify(cart))
+}
 
 // function to add a product to the cart
 export function addToCart(productId, quantitySelector) {
@@ -27,6 +32,8 @@ export function addToCart(productId, quantitySelector) {
             quantity: quantitySelector
         })
     }
+    
+    saveToStorage();
 }
 
 // function to calculate the cart quantity

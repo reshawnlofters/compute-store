@@ -73,14 +73,9 @@ document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
         // get the quantity selector element value and convet it to a number 
         const quantitySelector = Number (document.querySelector(`.js-quantity-selector-${productId}`).value);
 
-        // add the product to the cart
         addToCart(productId, quantitySelector);
-
-        // set the added to cart message
         setAddedMessage(productId);
-
-        // update the cart quantity displayed 
-        document.querySelector('.js-cart-quantity').innerHTML = calculateCartQuantity();
+        updateCartQuantity();
 
         // reset the quantity selector element value
         document.querySelector(`.js-quantity-selector-${productId}`).value = 1;
@@ -115,3 +110,16 @@ function setAddedMessage(productId) {
     // add the added message timeout id to the addedMessageTimeouts object
     addedMessageTimeouts[productId] = timeoutId;
 }
+
+// function to update the cart quantity
+function updateCartQuantity()
+{
+    // get the cart quantity
+    const cartQuantity = calculateCartQuantity();
+
+    // display the cart quantity
+    document.querySelector('.js-cart-quantity')
+    .innerHTML = cartQuantity;
+}
+
+updateCartQuantity();
