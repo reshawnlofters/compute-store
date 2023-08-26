@@ -36,6 +36,16 @@ export function addToCart(productId, quantitySelector) {
     saveToStorage();
 }
 
+// function to remove a product from the cart
+export function removeFromCart(productId) {
+    // filter through the cart and return an array without the product
+    cart = cart.filter((cartItem) => {
+        return cartItem.productId !== productId;
+    });
+
+    saveToStorage();
+}
+
 // function to calculate the cart quantity
 export function calculateCartQuantity() {
     // create variable to store the cart quantity
