@@ -58,7 +58,7 @@ header {
     border-bottom-right-radius: 0;
 }
 
-.search-btn {
+.search-button {
     background-color:#5878ff;
     border: none;
     width: 45px;
@@ -68,7 +68,7 @@ header {
     flex-shrink: 0;
 }
 
-.search-btn .bi {
+.search-button .bi {
     font-size: 20px;
 }
 

@@ -107,3 +107,16 @@ main {
 .product-spacer {
     flex: 1;
 }
+
+/* .add-to-cart-button {
+    background-color: #ffce00;
+    border: none;
+    height: 35px;
+    border-radius: 4px;
+    width: 100%;
+    padding: 8px;
+}
+
+.add-to-cart-button:hover {
+    background-color: #fff200;
+} */
