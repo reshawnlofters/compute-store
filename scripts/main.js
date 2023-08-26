@@ -1,6 +1,6 @@
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
-import { addToCart } from "../data/cart.js";
+import { addToCart, calculateCartQuantity } from "../data/cart.js";
 
 // create variable to store the generated html for the products
 let productsHTML = '';
@@ -75,6 +75,9 @@ document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
 
         // set the added to cart message
         setAddedMessage(productId);
+
+        // update the cart quantity in the cart quantity element 
+        document.querySelector('.js-cart-quantity').innerHTML = calculateCartQuantity();
 
         
     });

@@ -27,3 +27,17 @@ export function addToCart(productId) {
         })
     }
 }
+
+// function to calculate the cart quantity
+export function calculateCartQuantity() {
+    // create variable to store the cart quantity
+    let cartQuantity = 0;
+
+    // iterate through the cart
+    cart.forEach((cartItem) => {
+        // store the quantity of each cart item
+        cartQuantity += cartItem.quantity;
+    });
+
+    return cartQuantity;
+}
