@@ -1,4 +1,4 @@
-import { cart, removeFromCart} from '../data/cart.js';
+import { cart, removeFromCart, calculateCartQuantity, updateCartItemQuantity} from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
@@ -131,3 +131,61 @@ document.querySelectorAll('.js-delete-quantity-link').forEach((button) => {
         updateCartQuantity();
     });
 });
+
+// iterate through the update quantity buttons
+document.querySelectorAll('.js-update-quantity-link').forEach((button) => {
+    // attach a click event listener to the update quantity buttons
+    button.addEventListener('click', () => {
+        // get the product id
+        const productId = button.dataset.productId;
+        
+        // get the product container
+        const container = document.querySelector(`.js-cart-item-container-${productId}`);
+        
+        // add a class to the product container to reveal the input and save element
+        container.classList.add('is-editing-quantity');
+        
+        // get the save button element
+        const saveButton = document.querySelector('.save-quantity-link');
+
+        // attach a click event listener to the save button
+        saveButton.addEventListener('click', () => {
+            saveNewCartItemQuantity(productId, container);
+        });
+    });
+});
+
+// function to save new cart item quantities
+function saveNewCartItemQuantity(productId, container) {
+    // get the quantity input element value and convert it to a number
+    const newCartItemQuantity = Number(document.querySelector('.quantity-input').value);
+    
+    // update the cart item quantity displayed on the page
+    const quantityLabel = document.querySelector('.quantity-label');
+    quantityLabel.innerHTML = newCartItemQuantity;
+    
+    // remove the product from the cart if the new quantity is 0
+    if (newCartItemQuantity === 0) {
+        removeFromCart(productId);
+        container.remove();
+    }
+    
+    // remove the class added to the product container
+    container.classList.remove('is-editing-quantity');
+    
+    // update the cart item and cart quantity
+    updateCartItemQuantity(productId, newCartItemQuantity);
+    updateCartQuantity();
+}
+
+// function to update cart quantity
+function updateCartQuantity() {
+    // get the cart quantity
+    const cartQuantity = calculateCartQuantity();
+
+    // display the cart quantity
+    document.querySelector('.js-return-to-home-link')
+        .innerHTML = `${cartQuantity} items`;
+}
+
+updateCartQuantity();

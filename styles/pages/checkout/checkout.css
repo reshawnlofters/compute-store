@@ -32,6 +32,12 @@ main {
     width: 30px;
 }
 
+/* styles to display the update quantity input field and save button */
+.is-editing-quantity .quantity-input,
+.is-editing-quantity .save-quantity-link {
+  display: initial;
+}
+
 @media (max-width: 1000px) {
     main {
         max-width: 500px;
