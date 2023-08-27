@@ -1,3 +1,6 @@
+import { products } from '../data/products.js';
+import { formatCurrency } from '../scripts/utils/money.js';
+
 // get the cart array in local storage
 export let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -8,30 +11,39 @@ function saveToStorage() {
 
 // function to add a product to the cart
 export function addToCart(productId, quantitySelector) {
+    // find the product with the given id from the global products array
+    const product = products.find((product) => product.id === productId);
+
+    if (!product) {
+        // handle the case where the product with the given id doesn't exist
+        return;
+    }
+
     // variable to store a matching cart item
-    let matchingItem;
+    let matchingCartItem;
 
     // iterate through the cart
-    cart.forEach((item) => {
-        // store the product if it is in the cart
-        if (productId === item.productId) {
-            matchingItem = item;
+    cart.forEach((cartItem) => {
+        // store the product if it is already in the cart
+        if (productId === cartItem.productId) {
+            matchingCartItem = cartItem;
         }
     });
 
-    // increase the products quantity if it is in the cart 
-    if (matchingItem) {
-        matchingItem.quantity += quantitySelector;
-    }
+    if (matchingCartItem) {
+        // increase the product quantity if the product is already in the cart
+        matchingCartItem.quantity += quantitySelector;
+    } 
     
-    // add the product to the cart if it is not in the cart
     else {
+        // add the product to the cart
         cart.push({
             productId: productId,
-            quantity: quantitySelector
-        })
+            quantity: quantitySelector,
+            priceCents: product.priceCents  // price from the global products array
+        });
     }
-    
+
     saveToStorage();
 }
 
@@ -70,4 +82,18 @@ export function updateCartItemQuantity(productId, newCartItemQuantity) {
     });
 
     saveToStorage();
+}
+
+// function to update the price of a cart item
+export function updateCartItemPriceDisplayed(productId, cartItemContainer, newCartItemQuantity) {
+    // get the cart item price element
+    const cartItemPriceElement = cartItemContainer.querySelector('.product-price');
+
+    // iterate through the products
+    products.forEach((product) => {
+        if (product.id === productId) {
+            // update the cart item price displayed on the page
+            cartItemPriceElement.innerHTML = `$${formatCurrency(product.priceCents * newCartItemQuantity)}`;
+        }
+    });
 }

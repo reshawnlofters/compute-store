@@ -1,4 +1,4 @@
-import { cart, removeFromCart, calculateCartQuantity, updateCartItemQuantity } from '../data/cart.js';
+import { cart, removeFromCart, calculateCartQuantity, updateCartItemQuantity, updateCartItemPriceDisplayed} from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
@@ -15,7 +15,7 @@ cart.forEach((cartItem) => {
 
     // iterate through the products
     products.forEach((product) => {
-        // store the product if it is in the cart
+        // store the product if it is already in the cart to access object properties
         if (product.id === productId) {
             matchingCartItem = product;
         }
@@ -36,7 +36,7 @@ cart.forEach((cartItem) => {
                     ${matchingCartItem.name}
                 </div>
                 <div class="product-price">
-                    $${(formatCurrency(matchingCartItem.priceCents))}
+                    $${(formatCurrency(cartItem.priceCents * cartItem.quantity))}
                 </div>
                 <div class="product-quantity">
                     <span>
@@ -117,59 +117,59 @@ function updateCartQuantity() {
 updateCartQuantity();
 
 // function to display the quantity limit message
-function displayQuantityLimitMessage(container) {
+function displayCartItemQuantityError(cartItemContainer) {
     // get the quantity limit message element for the specific cart item container
-    const quantityLimitMessage = container.querySelector('.quantity-limit-message');
+    const quantityLimitMessage = cartItemContainer.querySelector('.quantity-limit-message');
 
     // add the message
     quantityLimitMessage.innerHTML = 'Quantity limit reached (50)';
 
     // clear any previous timeouts
-    if (container.timeoutId) {
-        clearTimeout(container.timeoutId);
+    if (cartItemContainer.timeoutId) {
+        clearTimeout(cartItemContainer.timeoutId);
     }
 
     // set a timeout for the message and store the timeout id in the container
-    container.timeoutId = setTimeout(() => {
+    cartItemContainer.timeoutId = setTimeout(() => {
         // remove the message
         quantityLimitMessage.innerHTML = '';
     }, 4000);
 }
 
 // function to save the new cart item quantities
-function saveNewCartItemQuantity(productId, container) {
+function saveNewCartItemQuantity(productId, cartItemContainer) {
     // get the quantity input field value and convert it to a number
-    const newCartItemQuantity = Number(container.querySelector('.quantity-input').value);
+    const newCartItemQuantity = Number(cartItemContainer.querySelector('.quantity-input').value);
     
-    // display an error message if the new quantity is above the limit (50)
     if (newCartItemQuantity > 50) {
-        displayQuantityLimitMessage(container);
+        // display an error message
+        displayCartItemQuantityError(cartItemContainer);
         return;
     }
 
-    // remove the product from the cart if the new quantity is set to 0
     if (newCartItemQuantity === 0) {
+        // remove the cart item
         removeFromCart(productId);
-        container.remove();
+        cartItemContainer.remove();
     } 
     
     else {
-        // update the cart item quantity displayed on the page
-        const quantityLabel = container.querySelector('.quantity-label');
-        quantityLabel.innerHTML = newCartItemQuantity;
-        
-        // remove the class added to the product container
-        container.classList.remove('is-editing-quantity');
+        // update the cart item quantity on the page
+        cartItemContainer.querySelector('.quantity-label').innerHTML = newCartItemQuantity;
+
+        // remove the class added to the cart item container
+        cartItemContainer.classList.remove('is-editing-quantity');
         
         updateCartItemQuantity(productId, newCartItemQuantity);
+        updateCartItemPriceDisplayed(productId, cartItemContainer, newCartItemQuantity);
         updateCartQuantity();
     }
 
     // remove focus from the quantity input field after saving the new quantity
-    container.querySelector('.quantity-input').blur();
+    cartItemContainer.querySelector('.quantity-input').blur();
 }
 
-// iterate through the delete quantity buttons
+// iterate through the cart item delete buttons
 document.querySelectorAll('.js-delete-quantity-link').forEach((button) => {
     // attach a click event listener to the delete button
     button.addEventListener('click', () => {
@@ -179,17 +179,17 @@ document.querySelectorAll('.js-delete-quantity-link').forEach((button) => {
         removeFromCart(productId);
 
         // get the cart item container
-        const container = document.querySelector(
+        const cartItemContainer = document.querySelector(
             `.js-cart-item-container-${productId}`
         );
 
         // remove the removed cart item from the page
-        container.remove();
+        cartItemContainer.remove();
         updateCartQuantity();
     });
 });
 
-// iterate through the update quantity buttons
+// iterate through the update cart item quantity buttons
 document.querySelectorAll('.js-update-quantity-link').forEach((button) => {
     // attach a click event listener to the update quantity buttons
     button.addEventListener('click', () => {
@@ -197,31 +197,32 @@ document.querySelectorAll('.js-update-quantity-link').forEach((button) => {
         const productId = button.dataset.productId;
         
         // get the cart item container
-        const container = document.querySelector(`.js-cart-item-container-${productId}`);
+        const cartItemContainer = document.querySelector(`.js-cart-item-container-${productId}`);
         
         // add a class to the product container to reveal the input and save element
-        container.classList.add('is-editing-quantity');
+        cartItemContainer.classList.add('is-editing-quantity');
         
         // get the save button element
-        const saveButton = container.querySelector('.save-quantity-link');
+        const saveButton = cartItemContainer.querySelector('.save-quantity-link');
 
         // attach a click event listener to the save button
         saveButton.addEventListener('click', () => {
-            saveNewCartItemQuantity(productId, container);
+            saveNewCartItemQuantity(productId, cartItemContainer);
         });
 
         // attach a keydown event listener to the quantity input field
-        container.querySelector('.quantity-input').addEventListener('keydown', (event) => {
+        cartItemContainer.querySelector('.quantity-input').addEventListener('keydown', (event) => {
             // check if the user pressed the'Enter' key
             if (event.key === 'Enter') {
-                saveNewCartItemQuantity(productId, container);
+                saveNewCartItemQuantity(productId, cartItemContainer);
             }
         });
 
         /* attach a blur event listener to the quantity input field to ensure,
            the product quantity is updated correctly when the input field loses focus */
-        container.querySelector('.quantity-input').addEventListener('blur', () => {
-            saveNewCartItemQuantity(productId, container);
+        cartItemContainer.querySelector('.quantity-input').addEventListener('blur', () => {
+            saveNewCartItemQuantity(productId, cartItemContainer);
         });
     });
 });
+
