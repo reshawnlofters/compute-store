@@ -33,8 +33,8 @@ export function addToCart(productId, quantitySelector) {
     if (matchingCartItem) {
         // increase the product quantity if the product is already in the cart
         matchingCartItem.quantity += quantitySelector;
-    } 
-    
+    }
+
     else {
         // add the product to the cart
         cart.push({
@@ -96,4 +96,18 @@ export function updateCartItemPriceDisplayed(productId, cartItemContainer, newCa
             cartItemPriceElement.innerHTML = `$${formatCurrency(product.priceCents * newCartItemQuantity)}`;
         }
     });
+}
+
+// function to calculate the total cost of all cart items
+export function calculateCartTotalCost() {
+    // variable to store the cart total
+    let cartTotalCost = 0.0;
+
+    // iterate through the cart
+    cart.forEach((cartItem) => {
+        // store the price of each cart item
+        cartTotalCost += cartItem.priceCents * cartItem.quantity;
+    })
+
+    return formatCurrency(cartTotalCost);
 }

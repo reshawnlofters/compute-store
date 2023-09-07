@@ -1,6 +1,7 @@
-import { cart, removeFromCart, calculateCartQuantity, updateCartItemQuantity, updateCartItemPriceDisplayed} from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
+import { cart, removeFromCart, calculateCartQuantity, updateCartItemQuantity,
+        updateCartItemPriceDisplayed, calculateCartTotalCost} from '../data/cart.js';
 
 // variable to store the generated html for each cart item
 let cartHTML = '';
@@ -108,13 +109,21 @@ document.querySelector('.order-summary').innerHTML = cartHTML;
 function updateCartQuantity() {
     // get the cart quantity
     const cartQuantity = calculateCartQuantity();
-
+    
     // display the cart quantity
     document.querySelector('.js-return-to-home-link')
         .innerHTML = `${cartQuantity} items`;
 }
 
 updateCartQuantity();
+
+// function to update the cart total cost on the page
+function updateCartTotalCostDisplay() {
+    document.querySelector('.js-payment-summary-money')
+        .innerHTML = `$${calculateCartTotalCost()}`;
+}
+
+updateCartTotalCostDisplay();
 
 // function to display the quantity limit message
 function displayCartItemQuantityError(cartItemContainer) {
@@ -163,6 +172,7 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
         updateCartItemQuantity(productId, newCartItemQuantity);
         updateCartItemPriceDisplayed(productId, cartItemContainer, newCartItemQuantity);
         updateCartQuantity();
+        updateCartTotalCostDisplay();
     }
 
     // remove focus from the quantity input field after saving the new quantity
@@ -186,6 +196,7 @@ document.querySelectorAll('.js-delete-quantity-link').forEach((button) => {
         // remove the removed cart item from the page
         cartItemContainer.remove();
         updateCartQuantity();
+        updateCartTotalCostDisplay();
     });
 });
 
