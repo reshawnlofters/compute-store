@@ -1,7 +1,7 @@
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 import { cart, removeFromCart, calculateCartQuantity, updateCartItemQuantity,
-        updateCartItemPriceDisplayed, calculateCartTotalCost} from '../data/cart.js';
+        updateCartItemPriceDisplayed, calculateCartItemTotalCost} from '../data/cart.js';
 
 // variable to store the generated html for each cart item
 let cartHTML = '';
@@ -105,25 +105,45 @@ cart.forEach((cartItem) => {
 // add the generated html to the page
 document.querySelector('.order-summary').innerHTML = cartHTML;
 
-// function to update the cart quantity
-function updateCartQuantity() {
-    // get the cart quantity
-    const cartQuantity = calculateCartQuantity();
-    
-    // display the cart quantity
+// function to update the cart quantity on the page
+function updateCartQuantityDisplayed() {
     document.querySelector('.js-return-to-home-link')
-        .innerHTML = `${cartQuantity} items`;
+        .innerHTML = `${calculateCartQuantity()} items`;
+
+    document.querySelector('.js-payment-summary-items')
+        .innerHTML = `${calculateCartQuantity()}`;
 }
 
-updateCartQuantity();
+updateCartQuantityDisplayed();
 
-// function to update the cart total cost on the page
-function updateCartTotalCostDisplay() {
-    document.querySelector('.js-payment-summary-money')
-        .innerHTML = `$${calculateCartTotalCost()}`;
+// function to update the order summary displayed on the page
+function updateOrderSummaryDisplay() {
+    let cartItemTotalCostInCents = calculateCartItemTotalCost();
+    const shippingHandlingFeeInCents = 999;
+    let cartTotalBeforeTaxInCents = cartItemTotalCostInCents + shippingHandlingFeeInCents;
+
+    // update cart item total cost
+    document.querySelector('.js-payment-summary-items-cost')
+        .innerHTML = `$${formatCurrency(cartItemTotalCostInCents)}`;
+    
+    // update shipping cost
+    document.querySelector('.js-payment-summary-shipping-cost')
+        .innerHTML = `$${formatCurrency(shippingHandlingFeeInCents)}`;
+    
+    // update cart total before tax
+    document.querySelector('.js-payment-summary-total-before-tax-cost')
+        .innerHTML = `$${formatCurrency(cartTotalBeforeTaxInCents)}`;
+
+    // update cart total tax
+    document.querySelector('.js-payment-summary-tax-cost')
+        .innerHTML = `$${formatCurrency(cartTotalBeforeTaxInCents * 0.13)}`;
+    
+    // update cart total cost after tax
+    document.querySelector('.js-payment-summary-total-cost')
+        .innerHTML = `$${formatCurrency(cartTotalBeforeTaxInCents * 1.13)}`;
 }
 
-updateCartTotalCostDisplay();
+updateOrderSummaryDisplay();
 
 // function to display the quantity limit message
 function displayCartItemQuantityError(cartItemContainer) {
@@ -171,8 +191,8 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
         
         updateCartItemQuantity(productId, newCartItemQuantity);
         updateCartItemPriceDisplayed(productId, cartItemContainer, newCartItemQuantity);
-        updateCartQuantity();
-        updateCartTotalCostDisplay();
+        updateCartQuantityDisplayed();
+        updateOrderSummaryDisplay();
     }
 
     // remove focus from the quantity input field after saving the new quantity
@@ -195,8 +215,8 @@ document.querySelectorAll('.js-delete-quantity-link').forEach((button) => {
 
         // remove the removed cart item from the page
         cartItemContainer.remove();
-        updateCartQuantity();
-        updateCartTotalCostDisplay();
+        updateCartQuantityDisplayed();
+        updateOrderSummaryDisplay();
     });
 });
 

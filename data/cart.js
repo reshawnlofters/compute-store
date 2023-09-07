@@ -99,15 +99,15 @@ export function updateCartItemPriceDisplayed(productId, cartItemContainer, newCa
 }
 
 // function to calculate the total cost of all cart items
-export function calculateCartTotalCost() {
+export function calculateCartItemTotalCost() {
     // variable to store the cart total
-    let cartTotalCost = 0.0;
+    let cartItemTotalCostInCents = 0.0;
 
     // iterate through the cart
     cart.forEach((cartItem) => {
         // store the price of each cart item
-        cartTotalCost += cartItem.priceCents * cartItem.quantity;
+        cartItemTotalCostInCents += cartItem.priceCents * cartItem.quantity;
     })
 
-    return formatCurrency(cartTotalCost);
+    return cartItemTotalCostInCents;
 }
