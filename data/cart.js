@@ -1,55 +1,66 @@
 import { products } from '../data/products.js';
 import { formatCurrency } from '../scripts/utils/money.js';
 
-// get the cart array in local storage
+/* This code initializes the variable `cart` with the value stored in the 'cart' key of the local storage. 
+If there is no value stored in the key, it will default to an empty array `[]`. */
 export let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-// function to save to local storage
+// The function saves the `cart` array to the browser's local storage as a JSON string
 function saveToStorage() {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-// function to add a product to the cart
-export function addToCart(productId, quantitySelector) {
-    // find the product with the given id from the global products array
+/**
+ * The function adds a product to the cart or increases its quantity if it already exists in the cart.
+ * @param productId - The productId parameter is the unique identifier of the product a user wants to
+ * add to the cart. It is used to find the product in the global `products` array.
+ * @param quantitySelector - The quantitySelector parameter represents the quantity of the product
+ * that the user wants to add to the cart.
+ */
+export function addToCart(productId, quantitySelectorValue) {
+    // find the product with the given `productId` from the global `products` array
     const product = products.find((product) => product.id === productId);
 
+    // check if the product with the given `productId` in the global `products` array doesn't exit
     if (!product) {
-        // handle the case where the product with the given id doesn't exist
         return;
     }
 
-    // variable to store a matching cart item
     let matchingCartItem;
 
-    // iterate through the cart
+    // iterate through the cart to find a matching product
     cart.forEach((cartItem) => {
-        // store the product if it is already in the cart
         if (productId === cartItem.productId) {
+            // store the product
             matchingCartItem = cartItem;
         }
     });
 
     if (matchingCartItem) {
-        // increase the product quantity if the product is already in the cart
-        matchingCartItem.quantity += quantitySelector;
+        // increase product quantity
+        matchingCartItem.quantity += quantitySelectorValue;
     }
 
     else {
-        // add the product to the cart
+        // add product to the cart
         cart.push({
             productId: productId,
-            quantity: quantitySelector,
-            priceCents: product.priceCents  // price from the global products array
+            quantity: quantitySelectorValue,
+            priceInCents: product.priceInCents
         });
     }
 
     saveToStorage();
 }
 
-// function to remove a product from the cart
+/**
+ * The function removes a product from the cart by filtering out the cart item with the specified
+ * product id and then saves the updated cart to storage.
+ * @param productId - The `productId` parameter is the unique identifier of the product that needs to
+ * be removed from the cart.
+ */
 export function removeFromCart(productId) {
-    // iterate through the cart and return an array without the product
+    // iterate through the cart and return an array without the specified product
     cart = cart.filter((cartItem) => {
         return cartItem.productId !== productId;
     });
@@ -57,12 +68,14 @@ export function removeFromCart(productId) {
     saveToStorage();
 }
 
-// function to calculate the cart quantity
+/**
+ * The function calculates the total quantity of items in the cart.
+ * @returns the total quantity of items in the cart.
+ */
 export function calculateCartQuantity() {
-    // variable to store the cart quantity
     let cartQuantity = 0;
 
-    // iterate through the cart items
+    // iterate through the cart
     cart.forEach((cartItem) => {
         // store the quantity of each cart item
         cartQuantity += cartItem.quantity;
@@ -84,8 +97,14 @@ export function updateCartItemQuantity(productId, newCartItemQuantity) {
     saveToStorage();
 }
 
-// function to update the price of a cart item
-export function updateCartItemPriceDisplayed(productId, cartItemContainer, newCartItemQuantity) {
+/**
+ * The function updates the displayed price of a cart item based on the product id and new quantity.
+ * @param productId - The unique identifier of the product that needs to be updated in the cart.
+ * @param cartItemContainer - The `cartItemContainer` parameter is the container element that holds the
+ * cart item on the page. It is used to find the specific cart item price element within the container.
+ * @param newCartItemQuantity - The new quantity of the cart item.
+ */
+export function updateCartItemPriceDisplay(productId, cartItemContainer, newCartItemQuantity) {
     // get the cart item price element
     const cartItemPriceElement = cartItemContainer.querySelector('.product-price');
 
@@ -93,20 +112,22 @@ export function updateCartItemPriceDisplayed(productId, cartItemContainer, newCa
     products.forEach((product) => {
         if (product.id === productId) {
             // update the cart item price displayed on the page
-            cartItemPriceElement.innerHTML = `$${formatCurrency(product.priceCents * newCartItemQuantity)}`;
+            cartItemPriceElement.innerHTML = `$${formatCurrency(product.priceInCents * newCartItemQuantity)}`;
         }
     });
 }
 
-// function to calculate the total cost of all cart items
+/**
+ * The function calculates the total cost of all items in the cart.
+ * @returns the total cost of all items in the cart, in cents.
+ */
 export function calculateCartItemTotalCost() {
-    // variable to store the cart total
-    let cartItemTotalCostInCents = 0.0;
+    let cartItemTotalCostInCents = 0;
 
     // iterate through the cart
     cart.forEach((cartItem) => {
         // store the price of each cart item
-        cartItemTotalCostInCents += cartItem.priceCents * cartItem.quantity;
+        cartItemTotalCostInCents += cartItem.priceInCents * cartItem.quantity;
     })
 
     return cartItemTotalCostInCents;

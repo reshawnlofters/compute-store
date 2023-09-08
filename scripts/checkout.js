@@ -1,29 +1,31 @@
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 import { cart, removeFromCart, calculateCartQuantity, updateCartItemQuantity,
-        updateCartItemPriceDisplayed, calculateCartItemTotalCost} from '../data/cart.js';
+        updateCartItemPriceDisplay, calculateCartItemTotalCost} from '../data/cart.js';
 
-// variable to store the generated html for each cart item
-let cartHTML = '';
+/* The code is generating HTML for each item in the cart. It iterates through the `cart` array
+and for each item, it finds the matching product in the `products` array based on the `productId`.
+It then generates HTML markup using the properties of the matching product and the cart item. The
+generated HTML includes details such as the delivery date, product image, name, price, quantity,
+delivery options, and buttons for updating and deleting the quantity. The generated HTML is stored
+in the `cartItemHTML` variable. */
+let cartItemHTML = '';
 
-// iterate through the cart
 cart.forEach((cartItem) => {
-    // variable to store the product id of a cart item
     const productId = cartItem.productId;
-
-    // variable to store a matching cart item
     let matchingCartItem;
 
-    // iterate through the products
+    /* The code iterates through the `products` array and checks if each product's `id` matches
+    the `productId` of the current cart item being iterated over. If there is a match, it assigns
+    the matching product to the `matchingCartItem` variable. This is done to access the properties
+    of the matching product when generating the HTML for each cart item. */
     products.forEach((product) => {
-        // store the product if it is already in the cart to access object properties
         if (product.id === productId) {
             matchingCartItem = product;
         }
     });
 
-    // store the generated html for each cart item
-    cartHTML += `
+    cartItemHTML += `
     <div class="cart-item-container js-cart-item-container-${matchingCartItem.id}">
         <div class="delivery-date">
             Delivery date: Tuesday, June 21
@@ -37,7 +39,7 @@ cart.forEach((cartItem) => {
                     ${matchingCartItem.name}
                 </div>
                 <div class="product-price">
-                    $${(formatCurrency(cartItem.priceCents * cartItem.quantity))}
+                    $${(formatCurrency(cartItem.priceInCents * cartItem.quantity))}
                 </div>
                 <div class="product-quantity">
                     <span>
@@ -54,7 +56,7 @@ cart.forEach((cartItem) => {
                         Delete
                     </span>
                 </div>
-                <p class="quantity-limit-message"></p>
+                <p class="js-quantity-limit-message"></p>
             </div>
 
             <div class="delivery-options">
@@ -102,11 +104,11 @@ cart.forEach((cartItem) => {
     </div>`;
 });
 
-// add the generated html to the page
-document.querySelector('.order-summary').innerHTML = cartHTML;
+// display the cart items on the page
+document.querySelector('.order-summary').innerHTML = cartItemHTML;
 
-// function to update the cart quantity on the page
-function updateCartQuantityDisplayed() {
+// The function updates the quantity display of items in the cart
+function updateCartQuantityDisplay() {
     document.querySelector('.js-return-to-home-link')
         .innerHTML = `${calculateCartQuantity()} items`;
 
@@ -114,12 +116,21 @@ function updateCartQuantityDisplayed() {
         .innerHTML = `${calculateCartQuantity()}`;
 }
 
-updateCartQuantityDisplayed();
+updateCartQuantityDisplay();
 
-// function to update the order summary displayed on the page
+/**
+ * The function updates the order summary displayed on the page by calculating 
+ * and displaying the cart item total cost, shipping cost, cart total before tax, 
+ * cart total tax, and cart total cost after tax.
+ */
 function updateOrderSummaryDisplay() {
+    // calculate cart item total cost in cents
     let cartItemTotalCostInCents = calculateCartItemTotalCost();
+
+    // define shipping and handling fee in cents
     const shippingHandlingFeeInCents = 999;
+
+    // calculate cart total before tax in cents
     let cartTotalBeforeTaxInCents = cartItemTotalCostInCents + shippingHandlingFeeInCents;
 
     // update cart item total cost
@@ -134,7 +145,7 @@ function updateOrderSummaryDisplay() {
     document.querySelector('.js-payment-summary-total-before-tax-cost')
         .innerHTML = `$${formatCurrency(cartTotalBeforeTaxInCents)}`;
 
-    // update cart total tax
+    // update cart total tax (13%)
     document.querySelector('.js-payment-summary-tax-cost')
         .innerHTML = `$${formatCurrency(cartTotalBeforeTaxInCents * 0.13)}`;
     
@@ -145,13 +156,19 @@ function updateOrderSummaryDisplay() {
 
 updateOrderSummaryDisplay();
 
-// function to display the quantity limit message
+/**
+ * The function displays a quantity limit message for a specific cart
+ * item container and removes it after 4 seconds.
+ * @param cartItemContainer - The cartItemContainer parameter is the container element that holds the
+ * cart item. It is used to find the quantity limit message element within the container and display an
+ * error message when the quantity limit is reached.
+ */
 function displayCartItemQuantityError(cartItemContainer) {
     // get the quantity limit message element for the specific cart item container
-    const quantityLimitMessage = cartItemContainer.querySelector('.quantity-limit-message');
+    const quantityLimitMessageElement = cartItemContainer.querySelector('.js-quantity-limit-message');
 
     // add the message
-    quantityLimitMessage.innerHTML = 'Quantity limit reached (50)';
+    quantityLimitMessageElement.innerHTML = 'Quantity limit reached (50)';
 
     // clear any previous timeouts
     if (cartItemContainer.timeoutId) {
@@ -161,17 +178,23 @@ function displayCartItemQuantityError(cartItemContainer) {
     // set a timeout for the message and store the timeout id in the container
     cartItemContainer.timeoutId = setTimeout(() => {
         // remove the message
-        quantityLimitMessage.innerHTML = '';
+        quantityLimitMessageElement.innerHTML = '';
     }, 4000);
 }
 
-// function to save the new cart item quantities
+/**
+ * The function saves the new quantity of a cart item and updates the cart and order summary displays.
+ * @param productId - The ID of the product that the cart item corresponds to.
+ * @param cartItemContainer - The `cartItemContainer` parameter is a reference to the container element
+ * that holds the cart item. It is used to access and manipulate the elements within the cart item,
+ * such as the quantity input field and the quantity label.
+ */
 function saveNewCartItemQuantity(productId, cartItemContainer) {
     // get the quantity input field value and convert it to a number
     const newCartItemQuantity = Number(cartItemContainer.querySelector('.quantity-input').value);
     
     if (newCartItemQuantity > 50) {
-        // display an error message
+        // display error message
         displayCartItemQuantityError(cartItemContainer);
         return;
     }
@@ -190,8 +213,8 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
         cartItemContainer.classList.remove('is-editing-quantity');
         
         updateCartItemQuantity(productId, newCartItemQuantity);
-        updateCartItemPriceDisplayed(productId, cartItemContainer, newCartItemQuantity);
-        updateCartQuantityDisplayed();
+        updateCartItemPriceDisplay(productId, cartItemContainer, newCartItemQuantity);
+        updateCartQuantityDisplay();
         updateOrderSummaryDisplay();
     }
 
@@ -199,58 +222,48 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
     cartItemContainer.querySelector('.quantity-input').blur();
 }
 
-// iterate through the cart item delete buttons
+/* The code adds click event listeners to each "delete cart item" button on the page.
+When a button is clicked, the code retrieves the product id associated with the button,
+removes the cart item from the page, and updates the cart quantity and order summary display. */
 document.querySelectorAll('.js-delete-quantity-link').forEach((button) => {
-    // attach a click event listener to the delete button
     button.addEventListener('click', () => {
-        // get the product id
         const productId = button.dataset.productId;
 
         removeFromCart(productId);
 
-        // get the cart item container
+        // remove the cart item from the page and update displays
         const cartItemContainer = document.querySelector(
             `.js-cart-item-container-${productId}`
         );
 
-        // remove the removed cart item from the page
         cartItemContainer.remove();
-        updateCartQuantityDisplayed();
+        updateCartQuantityDisplay();
         updateOrderSummaryDisplay();
     });
 });
 
-// iterate through the update cart item quantity buttons
+/* The code adds click event listeners to each "update cart item quantity" button on the page.
+When a button is clicked, the code retrieves the product id and the corresponding cart item
+container. It then adds a class to the container to reveal an input field and a save button. */
 document.querySelectorAll('.js-update-quantity-link').forEach((button) => {
-    // attach a click event listener to the update quantity buttons
     button.addEventListener('click', () => {
-        // get the product id
         const productId = button.dataset.productId;
-        
-        // get the cart item container
         const cartItemContainer = document.querySelector(`.js-cart-item-container-${productId}`);
-        
-        // add a class to the product container to reveal the input and save element
+
         cartItemContainer.classList.add('is-editing-quantity');
-        
-        // get the save button element
         const saveButton = cartItemContainer.querySelector('.save-quantity-link');
 
-        // attach a click event listener to the save button
         saveButton.addEventListener('click', () => {
             saveNewCartItemQuantity(productId, cartItemContainer);
         });
 
-        // attach a keydown event listener to the quantity input field
+        // check if the 'Enter' key is pressed
         cartItemContainer.querySelector('.quantity-input').addEventListener('keydown', (event) => {
-            // check if the user pressed the'Enter' key
             if (event.key === 'Enter') {
                 saveNewCartItemQuantity(productId, cartItemContainer);
             }
         });
 
-        /* attach a blur event listener to the quantity input field to ensure,
-           the product quantity is updated correctly when the input field loses focus */
         cartItemContainer.querySelector('.quantity-input').addEventListener('blur', () => {
             saveNewCartItemQuantity(productId, cartItemContainer);
         });

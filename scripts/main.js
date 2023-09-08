@@ -2,12 +2,13 @@ import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 import { addToCart, calculateCartQuantity } from "../data/cart.js";
 
-// variable to store the generated html for each product
+/* The code generates HTML markup for each product in the `products` array. It iterates
+through each product and concatenates the generated HTML code to the `productsHTML` variable. The
+generated HTML includes the product image, name, rating, price, quantity selector, "Added" message,
+and an "Add to Cart" button. The generated HTML is stored in the `productsHTML` variable. */
 let productsHTML = '';
 
-// iterate through the products
 products.forEach((product) => {
-    // store the generated html
     productsHTML += `
     <div class="product-container">
         <div class="product-image-container">
@@ -28,7 +29,7 @@ products.forEach((product) => {
         </div>
 
         <div class="product-price">
-            $${(formatCurrency(product.priceCents))}
+            $${(formatCurrency(product.priceInCents))}
         </div>
 
         <div class="product-quantity-container">
@@ -60,10 +61,10 @@ products.forEach((product) => {
     </div>`;
 });
 
-// add the generated html to the page
+// display the products on the page
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
-// function to update the cart quantity
+// The function updates the cart quantity displayed on the page.
 function updateCartQuantity()
 {
     // get the cart quantity
@@ -76,35 +77,41 @@ function updateCartQuantity()
 
 updateCartQuantity();
 
-// iterate through the add to cart buttons
+/* The code iterates through all the elements with the class "js-add-to-cart-button" and
+attaches click event listeners to each button. When a button is clicked, the code retrieves the
+product id from the button's "data-product-id" attribute. It then gets the value of the quantity
+selector element associated with the clicked button and converts it to a number. */
 document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
-    // attach a click event listener to the add to cart button
     button.addEventListener('click', () => {
-        // store the product id
         const productId = button.dataset.productId;
 
         // get the quantity selector element value and convert it to a number 
-        const quantitySelector = Number (document.querySelector(`.js-quantity-selector-${productId}`).value);
+        const quantitySelectorValue = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
 
-        addToCart(productId, quantitySelector);
+        addToCart(productId, quantitySelectorValue);
         setAddedMessage(productId);
         updateCartQuantity();
 
-        // reset the quantity selector element value
+        // reset the quantity selector value
         document.querySelector(`.js-quantity-selector-${productId}`).value = 1;
     });
 });
 
-// object to store the added message timeouts in setAddedMessage()
+// object to store added message timeouts in the `setAddedMessage` function
 const addedMessageTimeouts = {};
 
-// function to set the added message
+/**
+ * The function sets an added message for a specific product by adding a class to make it visible 
+ * and removing the class after a certain timeout period.
+ * @param productId - The `productId` parameter is the unique identifier of a product. It is used to
+ * select the specific added message element associated with that product.
+ */
 function setAddedMessage(productId) {
     // get the added message element
-    let addedMessage = document.querySelector(`.js-added-to-cart-${productId}`);
+    let addedMessageElement = document.querySelector(`.js-added-to-cart-${productId}`);
 
     // add a class to the added message element to make it visible
-    addedMessage.classList.add('added-to-cart-visible');
+    addedMessageElement.classList.add('added-to-cart-visible');
 
     // check for any previous timeouts for an added message
     const previousTimeoutId = addedMessageTimeouts[productId];
@@ -117,7 +124,7 @@ function setAddedMessage(productId) {
     // set an added message timeout
     const timeoutId = setInterval(() => {
         // remove the class added to the added message element to make it invisible
-        addedMessage.classList.remove('added-to-cart-visible');
+        addedMessageElement.classList.remove('added-to-cart-visible');
     }, 2000);
 
     // add the added message timeout id to the addedMessageTimeouts object
