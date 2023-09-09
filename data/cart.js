@@ -39,14 +39,12 @@ export function addToCart(productId, quantitySelectorValue) {
     if (matchingCartItem) {
         // increase product quantity
         matchingCartItem.quantity += quantitySelectorValue;
-    }
-
-    else {
+    } else {
         // add product to the cart
         cart.push({
             productId: productId,
             quantity: quantitySelectorValue,
-            priceInCents: product.priceInCents
+            priceInCents: product.priceInCents,
         });
     }
 
@@ -104,15 +102,22 @@ export function updateCartItemQuantity(productId, newCartItemQuantity) {
  * cart item on the page. It is used to find the specific cart item price element within the container.
  * @param newCartItemQuantity - The new quantity of the cart item.
  */
-export function updateCartItemPriceDisplay(productId, cartItemContainer, newCartItemQuantity) {
+export function updateCartItemPriceDisplay(
+    productId,
+    cartItemContainer,
+    newCartItemQuantity
+) {
     // get the cart item price element
-    const cartItemPriceElement = cartItemContainer.querySelector('.product-price');
+    const cartItemPriceElement =
+        cartItemContainer.querySelector('.product-price');
 
     // iterate through the products
     products.forEach((product) => {
         if (product.id === productId) {
             // update the cart item price displayed on the page
-            cartItemPriceElement.innerHTML = `$${formatCurrency(product.priceInCents * newCartItemQuantity)}`;
+            cartItemPriceElement.innerHTML = `$${formatCurrency(
+                product.priceInCents * newCartItemQuantity
+            )}`;
         }
     });
 }
@@ -128,7 +133,7 @@ export function calculateCartItemTotalCost() {
     cart.forEach((cartItem) => {
         // store the price of each cart item
         cartItemTotalCostInCents += cartItem.priceInCents * cartItem.quantity;
-    })
+    });
 
     return cartItemTotalCostInCents;
 }

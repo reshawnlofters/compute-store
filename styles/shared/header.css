@@ -5,6 +5,7 @@
     background-color: rgb(19, 25, 33);
     position: fixed;
     color: white;
+
     height: 60px;
     top: 0;
     left: 0;
@@ -59,7 +60,7 @@
 }
 
 .search-button {
-    background-color:#5878ff;
+    background-color: #5878ff;
     border: none;
     width: 45px;
     height: 40px;
@@ -73,13 +74,11 @@
 }
 
 .home-header-right-section {
-    width: 300px;
     flex-shrink: 0;
     display: flex;
     justify-content: end;
 }
 
-.user-profile-link,
 .orders-link,
 .cart-link {
     display: flex;
@@ -87,12 +86,10 @@
     color: white;
 }
 
-.user-profile-link,
 .orders-link {
     margin-right: 10px;
 }
 
-.user-profile-link .bi,
 .orders-link .bi,
 .cart-link .bi {
     font-size: 23px;
@@ -100,13 +97,12 @@
     margin-bottom: 1px;
 }
 
-.user-profile-text,
 .orders-text,
 .cart-text {
     font-size: 15px;
     font-weight: 700;
 }
-  
+
 .cart-quantity {
     color: rgb(240, 136, 4);
 }

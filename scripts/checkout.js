@@ -1,7 +1,13 @@
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
-import { cart, removeFromCart, calculateCartQuantity, updateCartItemQuantity,
-        updateCartItemPriceDisplay, calculateCartItemTotalCost} from '../data/cart.js';
+import {
+    cart,
+    removeFromCart,
+    calculateCartQuantity,
+    updateCartItemQuantity,
+    updateCartItemPriceDisplay,
+    calculateCartItemTotalCost,
+} from '../data/cart.js';
 
 /* The code is generating HTML for each item in the cart. It iterates through the `cart` array
 and for each item, it finds the matching product in the `products` array based on the `productId`.
@@ -26,7 +32,9 @@ cart.forEach((cartItem) => {
     });
 
     cartItemHTML += `
-    <div class="cart-item-container js-cart-item-container-${matchingCartItem.id}">
+    <div class="cart-item-container js-cart-item-container-${
+        matchingCartItem.id
+    }">
         <div class="delivery-date">
             Delivery date: Tuesday, June 21
         </div>
@@ -39,11 +47,15 @@ cart.forEach((cartItem) => {
                     ${matchingCartItem.name}
                 </div>
                 <div class="product-price">
-                    $${(formatCurrency(cartItem.priceInCents * cartItem.quantity))}
+                    $${formatCurrency(
+                        cartItem.priceInCents * cartItem.quantity
+                    )}
                 </div>
                 <div class="product-quantity">
                     <span>
-                        Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+                        Quantity: <span class="quantity-label">${
+                            cartItem.quantity
+                        }</span>
                     </span>
                     <span class="update-quantity-link link-primary js-update-quantity-link link-primary"
                         data-product-id="${matchingCartItem.id}">
@@ -109,18 +121,20 @@ document.querySelector('.order-summary').innerHTML = cartItemHTML;
 
 // The function updates the quantity display of items in the cart
 function updateCartQuantityDisplay() {
-    document.querySelector('.js-return-to-home-link')
-        .innerHTML = `${calculateCartQuantity()} items`;
+    document.querySelector(
+        '.js-return-to-home-link'
+    ).innerHTML = `${calculateCartQuantity()} items`;
 
-    document.querySelector('.js-payment-summary-items')
-        .innerHTML = `${calculateCartQuantity()}`;
+    document.querySelector(
+        '.js-payment-summary-items'
+    ).innerHTML = `${calculateCartQuantity()}`;
 }
 
 updateCartQuantityDisplay();
 
 /**
- * The function updates the order summary displayed on the page by calculating 
- * and displaying the cart item total cost, shipping cost, cart total before tax, 
+ * The function updates the order summary displayed on the page by calculating
+ * and displaying the cart item total cost, shipping cost, cart total before tax,
  * cart total tax, and cart total cost after tax.
  */
 function updateOrderSummaryDisplay() {
@@ -131,27 +145,33 @@ function updateOrderSummaryDisplay() {
     const shippingHandlingFeeInCents = 999;
 
     // calculate cart total before tax in cents
-    let cartTotalBeforeTaxInCents = cartItemTotalCostInCents + shippingHandlingFeeInCents;
+    let cartTotalBeforeTaxInCents =
+        cartItemTotalCostInCents + shippingHandlingFeeInCents;
 
     // update cart item total cost
-    document.querySelector('.js-payment-summary-items-cost')
-        .innerHTML = `$${formatCurrency(cartItemTotalCostInCents)}`;
-    
+    document.querySelector(
+        '.js-payment-summary-items-cost'
+    ).innerHTML = `$${formatCurrency(cartItemTotalCostInCents)}`;
+
     // update shipping cost
-    document.querySelector('.js-payment-summary-shipping-cost')
-        .innerHTML = `$${formatCurrency(shippingHandlingFeeInCents)}`;
-    
+    document.querySelector(
+        '.js-payment-summary-shipping-cost'
+    ).innerHTML = `$${formatCurrency(shippingHandlingFeeInCents)}`;
+
     // update cart total before tax
-    document.querySelector('.js-payment-summary-total-before-tax-cost')
-        .innerHTML = `$${formatCurrency(cartTotalBeforeTaxInCents)}`;
+    document.querySelector(
+        '.js-payment-summary-total-before-tax-cost'
+    ).innerHTML = `$${formatCurrency(cartTotalBeforeTaxInCents)}`;
 
     // update cart total tax (13%)
-    document.querySelector('.js-payment-summary-tax-cost')
-        .innerHTML = `$${formatCurrency(cartTotalBeforeTaxInCents * 0.13)}`;
-    
+    document.querySelector(
+        '.js-payment-summary-tax-cost'
+    ).innerHTML = `$${formatCurrency(cartTotalBeforeTaxInCents * 0.13)}`;
+
     // update cart total cost after tax
-    document.querySelector('.js-payment-summary-total-cost')
-        .innerHTML = `$${formatCurrency(cartTotalBeforeTaxInCents * 1.13)}`;
+    document.querySelector(
+        '.js-payment-summary-total-cost'
+    ).innerHTML = `$${formatCurrency(cartTotalBeforeTaxInCents * 1.13)}`;
 }
 
 updateOrderSummaryDisplay();
@@ -165,7 +185,9 @@ updateOrderSummaryDisplay();
  */
 function displayCartItemQuantityError(cartItemContainer) {
     // get the quantity limit message element for the specific cart item container
-    const quantityLimitMessageElement = cartItemContainer.querySelector('.js-quantity-limit-message');
+    const quantityLimitMessageElement = cartItemContainer.querySelector(
+        '.js-quantity-limit-message'
+    );
 
     // add the message
     quantityLimitMessageElement.innerHTML = 'Quantity limit reached (50)';
@@ -191,8 +213,10 @@ function displayCartItemQuantityError(cartItemContainer) {
  */
 function saveNewCartItemQuantity(productId, cartItemContainer) {
     // get the quantity input field value and convert it to a number
-    const newCartItemQuantity = Number(cartItemContainer.querySelector('.quantity-input').value);
-    
+    const newCartItemQuantity = Number(
+        cartItemContainer.querySelector('.quantity-input').value
+    );
+
     if (newCartItemQuantity > 50) {
         // display error message
         displayCartItemQuantityError(cartItemContainer);
@@ -203,17 +227,20 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
         // remove the cart item
         removeFromCart(productId);
         cartItemContainer.remove();
-    } 
-    
-    else {
+    } else {
         // update the cart item quantity on the page
-        cartItemContainer.querySelector('.quantity-label').innerHTML = newCartItemQuantity;
+        cartItemContainer.querySelector('.quantity-label').innerHTML =
+            newCartItemQuantity;
 
         // remove the class added to the cart item container
         cartItemContainer.classList.remove('is-editing-quantity');
-        
+
         updateCartItemQuantity(productId, newCartItemQuantity);
-        updateCartItemPriceDisplay(productId, cartItemContainer, newCartItemQuantity);
+        updateCartItemPriceDisplay(
+            productId,
+            cartItemContainer,
+            newCartItemQuantity
+        );
         updateCartQuantityDisplay();
         updateOrderSummaryDisplay();
     }
@@ -248,25 +275,32 @@ container. It then adds a class to the container to reveal an input field and a 
 document.querySelectorAll('.js-update-quantity-link').forEach((button) => {
     button.addEventListener('click', () => {
         const productId = button.dataset.productId;
-        const cartItemContainer = document.querySelector(`.js-cart-item-container-${productId}`);
+        const cartItemContainer = document.querySelector(
+            `.js-cart-item-container-${productId}`
+        );
 
         cartItemContainer.classList.add('is-editing-quantity');
-        const saveButton = cartItemContainer.querySelector('.save-quantity-link');
+        const saveButton = cartItemContainer.querySelector(
+            '.save-quantity-link'
+        );
 
         saveButton.addEventListener('click', () => {
             saveNewCartItemQuantity(productId, cartItemContainer);
         });
 
         // check if the 'Enter' key is pressed
-        cartItemContainer.querySelector('.quantity-input').addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') {
-                saveNewCartItemQuantity(productId, cartItemContainer);
-            }
-        });
+        cartItemContainer
+            .querySelector('.quantity-input')
+            .addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    saveNewCartItemQuantity(productId, cartItemContainer);
+                }
+            });
 
-        cartItemContainer.querySelector('.quantity-input').addEventListener('blur', () => {
-            saveNewCartItemQuantity(productId, cartItemContainer);
-        });
+        cartItemContainer
+            .querySelector('.quantity-input')
+            .addEventListener('blur', () => {
+                saveNewCartItemQuantity(productId, cartItemContainer);
+            });
     });
 });
-

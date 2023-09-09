@@ -35,7 +35,7 @@ main {
 /* style to display the update quantity input field and save button */
 .is-editing-quantity .quantity-input,
 .is-editing-quantity .save-quantity-link {
-   display: initial;
+    display: initial;
 }
 
 .quantity-limit-message {
@@ -48,7 +48,7 @@ main {
     }
 
     .checkout-grid {
-    grid-template-columns: 1fr;
+        grid-template-columns: 1fr;
     }
 }
 

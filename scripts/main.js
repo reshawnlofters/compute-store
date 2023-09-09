@@ -1,6 +1,6 @@
-import { products } from "../data/products.js";
-import { formatCurrency } from "./utils/money.js";
-import { addToCart, calculateCartQuantity } from "../data/cart.js";
+import { products } from '../data/products.js';
+import { formatCurrency } from './utils/money.js';
+import { addToCart, calculateCartQuantity } from '../data/cart.js';
 
 /* The code generates HTML markup for each product in the `products` array. It iterates
 through each product and concatenates the generated HTML code to the `productsHTML` variable. The
@@ -29,7 +29,7 @@ products.forEach((product) => {
         </div>
 
         <div class="product-price">
-            $${(formatCurrency(product.priceInCents))}
+            $${formatCurrency(product.priceInCents)}
         </div>
 
         <div class="product-quantity-container">
@@ -64,15 +64,13 @@ products.forEach((product) => {
 // display the products on the page
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
-// The function updates the cart quantity displayed on the page.
-function updateCartQuantity()
-{
+// The function updates the cart quantity displayed on the page
+function updateCartQuantity() {
     // get the cart quantity
     const cartQuantity = calculateCartQuantity();
 
     // display the cart quantity
-    document.querySelector('.js-cart-quantity')
-    .innerHTML = cartQuantity;
+    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 }
 
 updateCartQuantity();
@@ -85,8 +83,10 @@ document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
     button.addEventListener('click', () => {
         const productId = button.dataset.productId;
 
-        // get the quantity selector element value and convert it to a number 
-        const quantitySelectorValue = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
+        // get the quantity selector element value and convert it to a number
+        const quantitySelectorValue = Number(
+            document.querySelector(`.js-quantity-selector-${productId}`).value
+        );
 
         addToCart(productId, quantitySelectorValue);
         setAddedMessage(productId);
@@ -101,21 +101,23 @@ document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
 const addedMessageTimeouts = {};
 
 /**
- * The function sets an added message for a specific product by adding a class to make it visible 
+ * The function sets an added message for a specific product by adding a class to make it visible
  * and removing the class after a certain timeout period.
  * @param productId - The `productId` parameter is the unique identifier of a product. It is used to
  * select the specific added message element associated with that product.
  */
 function setAddedMessage(productId) {
     // get the added message element
-    let addedMessageElement = document.querySelector(`.js-added-to-cart-${productId}`);
+    let addedMessageElement = document.querySelector(
+        `.js-added-to-cart-${productId}`
+    );
 
     // add a class to the added message element to make it visible
     addedMessageElement.classList.add('added-to-cart-visible');
 
     // check for any previous timeouts for an added message
     const previousTimeoutId = addedMessageTimeouts[productId];
-    
+
     // clear any previous timeouts
     if (previousTimeoutId) {
         clearTimeout(previousTimeoutId);
