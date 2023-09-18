@@ -1,5 +1,6 @@
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
+import { orders, saveToStorage} from '../data/orders.js';
 import {
     cart,
     removeFromCart,
@@ -141,8 +142,9 @@ function updateOrderSummaryDisplay() {
     // calculate cart item total cost in cents
     let cartItemTotalCostInCents = calculateCartItemTotalCost();
 
-    // define shipping and handling fee in cents
-    const shippingHandlingFeeInCents = 999;
+    // determine shipping and handling fee in cents based on whether the cart is empty or not:
+    // If the cart is empty, set the fee to 0; otherwise, set it to 999 cents.
+    let shippingHandlingFeeInCents = cartItemTotalCostInCents === 0 ? 0 : 999;
 
     // calculate cart total before tax in cents
     let cartTotalBeforeTaxInCents =
@@ -304,3 +306,33 @@ document.querySelectorAll('.js-update-quantity-link').forEach((button) => {
             });
     });
 });
+
+// This function handles the "Place Order" button click
+function placeOrder() {
+    // get the current cart items
+    const cartItems = [...cart];
+
+    // add the cart items to the orders array
+    orders.push({
+        items: cartItems,
+        // add other order-related information if needed
+    });
+
+    // clear the cart
+    clearCart();
+
+    // save the updated orders array to local storage
+    saveToStorage();
+}
+
+// attach a click event listener to the "Place Order" button
+document
+    .querySelector('.place-order-button')
+    .addEventListener('click', placeOrder);
+
+// This function clears all cart items
+function clearCart() {
+    cart.forEach((cartItem) => {
+        removeFromCart(cartItem.productId);
+    });
+}
