@@ -1,6 +1,7 @@
 import { orders } from '../data/orders.js';
 
-// This function generates the HTML for orders
+/* This function generates the HTML for each order in the `orders` array. It iterates 
+through each order and concatenates the generated HTML to the `ordersHTML` variable.*/
 function generateOrdersHTML() {
     let ordersHTML = '';
 
@@ -87,5 +88,4 @@ function generateOrderItemsHTML(orderItems) {
     return orderItemsHTML;
 }
 
-// call the function to generate orders HTML when the page loads
 generateOrdersHTML();

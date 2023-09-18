@@ -1,5 +1,4 @@
-/* Each object of the `products` array represents a product and 
-contains properties such as id, image, name, rating, and priceInCents*/
+// `products` array of objects that represent a product and contains product details
 export const products = [
     {
         id: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',

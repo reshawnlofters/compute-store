@@ -1,6 +1,6 @@
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
-import { orders, saveToStorage} from '../data/orders.js';
+import { orders, saveToStorage } from '../data/orders.js';
 import {
     cart,
     removeFromCart,
@@ -10,117 +10,119 @@ import {
     calculateCartItemTotalCost,
 } from '../data/cart.js';
 
-/* The code is generating HTML for each item in the cart. It iterates through the `cart` array
-and for each item, it finds the matching product in the `products` array based on the `productId`.
-It then generates HTML markup using the properties of the matching product and the cart item. The
-generated HTML includes details such as the delivery date, product image, name, price, quantity,
-delivery options, and buttons for updating and deleting the quantity. The generated HTML is stored
-in the `cartItemHTML` variable. */
-let cartItemHTML = '';
 
-cart.forEach((cartItem) => {
-    const productId = cartItem.productId;
-    let matchingCartItem;
+/* This function generates the HTML for each cart item in the `cart` array. It iterates 
+through each cart item and finds the matching product in the `products` array based on the `productId`.
+It then generates HTML markup using the properties of the matching product and the cart item.
+The generated HTML is stored in the `cartItemHTML` variable. */
+function generateCartHTML() {
+    let cartItemHTML = '';
 
-    /* The code iterates through the `products` array and checks if each product's `id` matches
-    the `productId` of the current cart item being iterated over. If there is a match, it assigns
-    the matching product to the `matchingCartItem` variable. This is done to access the properties
-    of the matching product when generating the HTML for each cart item. */
-    products.forEach((product) => {
-        if (product.id === productId) {
-            matchingCartItem = product;
-        }
+    cart.forEach((cartItem) => {
+        const productId = cartItem.productId;
+        let matchingCartItem;
+
+        // find and assign the matching product to access product properties
+        products.forEach((product) => {
+            if (product.id === productId) {
+                matchingCartItem = product;
+            }
+        });
+
+        cartItemHTML += `
+            <div class="cart-item-container js-cart-item-container-${
+                matchingCartItem.id
+            }">
+                <div class="delivery-date">
+                    Delivery date: Tuesday, June 21
+                </div>
+
+                <div class="cart-item-details-grid">
+                    <img class="product-image" src="${matchingCartItem.image}">
+
+                    <div class="cart-item-details">
+                        <div class="product-name">
+                            ${matchingCartItem.name}
+                        </div>
+                        <div class="product-price">
+                            $${formatCurrency(
+                                cartItem.priceInCents * cartItem.quantity
+                            )}
+                        </div>
+                        <div class="product-quantity">
+                            <span>
+                                Quantity: <span class="quantity-label">${
+                                    cartItem.quantity
+                                }</span>
+                            </span>
+                            <span class="update-quantity-link link-primary js-update-quantity-link link-primary"
+                                data-product-id="${matchingCartItem.id}">
+                                Update
+                            </span>
+                            <input class="quantity-input">
+                            <span class="save-quantity-link link-primary">Save</span>
+                            <span class="delete-quantity-link js-delete-quantity-link 
+                            link-primary" data-product-id="${
+                                matchingCartItem.id
+                            }">
+                                Delete
+                            </span>
+                        </div>
+                        <p class="js-quantity-limit-message"></p>
+                    </div>
+
+                    <div class="delivery-options">
+                        <div class="delivery-options-title">
+                            Choose a delivery option:
+                        </div>
+                        <div class="delivery-option">
+                            <input type="radio" checked class="delivery-option-input"
+                                name="delivery-option-${matchingCartItem.id}">
+                            <div>
+                                <div class="delivery-option-date">
+                                    Tuesday, June 21
+                                </div>
+                                <div class="delivery-option-price">
+                                    FREE Shipping
+                                </div>
+                            </div>
+                        </div>
+                        <div class="delivery-option">
+                            <input type="radio" class="delivery-option-input"
+                                name="delivery-option-${matchingCartItem.id}">
+                            <div>
+                                <div class="delivery-option-date">
+                                    Wednesday, June 15
+                                </div>
+                                <div class="delivery-option-price">
+                                    $4.99 - Shipping
+                                </div>
+                            </div>
+                        </div>
+                        <div class="delivery-option">
+                            <input type="radio" class="delivery-option-input"
+                                name="delivery-option-${matchingCartItem.id}">
+                            <div>
+                                <div class="delivery-option-date">
+                                    Monday, June 13
+                                </div>
+                                <div class="delivery-option-price">
+                                    $9.99 - Shipping
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
     });
 
-    cartItemHTML += `
-    <div class="cart-item-container js-cart-item-container-${
-        matchingCartItem.id
-    }">
-        <div class="delivery-date">
-            Delivery date: Tuesday, June 21
-        </div>
+    // display the cart items on the page
+    document.querySelector('.order-summary').innerHTML = cartItemHTML;
+}
 
-        <div class="cart-item-details-grid">
-            <img class="product-image" src="${matchingCartItem.image}">
+generateCartHTML();
 
-            <div class="cart-item-details">
-                <div class="product-name">
-                    ${matchingCartItem.name}
-                </div>
-                <div class="product-price">
-                    $${formatCurrency(
-                        cartItem.priceInCents * cartItem.quantity
-                    )}
-                </div>
-                <div class="product-quantity">
-                    <span>
-                        Quantity: <span class="quantity-label">${
-                            cartItem.quantity
-                        }</span>
-                    </span>
-                    <span class="update-quantity-link link-primary js-update-quantity-link link-primary"
-                        data-product-id="${matchingCartItem.id}">
-                        Update
-                    </span>
-                    <input class="quantity-input">
-                    <span class="save-quantity-link link-primary">Save</span>
-                    <span class="delete-quantity-link js-delete-quantity-link 
-                    link-primary" data-product-id="${matchingCartItem.id}">
-                        Delete
-                    </span>
-                </div>
-                <p class="js-quantity-limit-message"></p>
-            </div>
-
-            <div class="delivery-options">
-                <div class="delivery-options-title">
-                    Choose a delivery option:
-                </div>
-                <div class="delivery-option">
-                    <input type="radio" checked class="delivery-option-input"
-                        name="delivery-option-${matchingCartItem.id}">
-                    <div>
-                        <div class="delivery-option-date">
-                            Tuesday, June 21
-                        </div>
-                        <div class="delivery-option-price">
-                            FREE Shipping
-                        </div>
-                    </div>
-                </div>
-                <div class="delivery-option">
-                    <input type="radio" class="delivery-option-input"
-                        name="delivery-option-${matchingCartItem.id}">
-                    <div>
-                        <div class="delivery-option-date">
-                            Wednesday, June 15
-                        </div>
-                        <div class="delivery-option-price">
-                            $4.99 - Shipping
-                        </div>
-                    </div>
-                </div>
-                <div class="delivery-option">
-                    <input type="radio" class="delivery-option-input"
-                        name="delivery-option-${matchingCartItem.id}">
-                    <div>
-                        <div class="delivery-option-date">
-                            Monday, June 13
-                        </div>
-                        <div class="delivery-option-price">
-                            $9.99 - Shipping
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>`;
-});
-
-// display the cart items on the page
-document.querySelector('.order-summary').innerHTML = cartItemHTML;
-
-// The function updates the quantity display of items in the cart
+// This function updates the quantity display of items in the cart
 function updateCartQuantityDisplay() {
     document.querySelector(
         '.js-return-to-home-link'
@@ -134,7 +136,7 @@ function updateCartQuantityDisplay() {
 updateCartQuantityDisplay();
 
 /**
- * The function updates the order summary displayed on the page by calculating
+ * This function updates the order summary displayed on the page by calculating
  * and displaying the cart item total cost, shipping cost, cart total before tax,
  * cart total tax, and cart total cost after tax.
  */
@@ -179,7 +181,7 @@ function updateOrderSummaryDisplay() {
 updateOrderSummaryDisplay();
 
 /**
- * The function displays a quantity limit message for a specific cart
+ * This function displays a quantity limit message for a specific cart
  * item container and removes it after 4 seconds.
  * @param cartItemContainer - The cartItemContainer parameter is the container element that holds the
  * cart item. It is used to find the quantity limit message element within the container and display an
@@ -207,7 +209,7 @@ function displayCartItemQuantityError(cartItemContainer) {
 }
 
 /**
- * The function saves the new quantity of a cart item and updates the cart and order summary displays.
+ * This function saves the new quantity of a cart item and updates the cart and order summary displays.
  * @param productId - The ID of the product that the cart item corresponds to.
  * @param cartItemContainer - The `cartItemContainer` parameter is a reference to the container element
  * that holds the cart item. It is used to access and manipulate the elements within the cart item,
@@ -251,7 +253,7 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
     cartItemContainer.querySelector('.quantity-input').blur();
 }
 
-/* The code adds click event listeners to each "delete cart item" button on the page.
+/* This code adds click event listeners to each "delete cart item" button on the page.
 When a button is clicked, the code retrieves the product id associated with the button,
 removes the cart item from the page, and updates the cart quantity and order summary display. */
 document.querySelectorAll('.js-delete-quantity-link').forEach((button) => {
@@ -271,7 +273,7 @@ document.querySelectorAll('.js-delete-quantity-link').forEach((button) => {
     });
 });
 
-/* The code adds click event listeners to each "update cart item quantity" button on the page.
+/* This code adds click event listeners to each "update cart item quantity" button on the page.
 When a button is clicked, the code retrieves the product id and the corresponding cart item
 container. It then adds a class to the container to reveal an input field and a save button. */
 document.querySelectorAll('.js-update-quantity-link').forEach((button) => {
