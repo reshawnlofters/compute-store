@@ -1,6 +1,7 @@
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 import { orders, saveToStorage } from '../data/orders.js';
+import { generateOrderId } from './placed-orders.js';
 import {
     cart,
     removeFromCart,
@@ -311,11 +312,15 @@ document.querySelectorAll('.js-update-quantity-link').forEach((button) => {
 
 // This function handles the "Place Order" button click
 function placeOrder() {
+    // generate a unique order ID
+    const orderId = generateOrderId();
+    
     // get the current cart items
     const cartItems = [...cart];
 
     // add the cart items to the orders array
     orders.push({
+        id: orderId,
         items: cartItems,
         // add other order-related information if needed
     });
