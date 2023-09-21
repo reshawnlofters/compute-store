@@ -1,7 +1,7 @@
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/format-currency.js';
 import { orders, saveToLocalStorage } from '../data/orders.js';
-import { generateOrderId } from './orders-page.js';
+import { generateOrderId, calculateOrderArrivalDate } from './orders-page.js';
 import {
     cart,
     removeCartItem,
@@ -316,10 +316,32 @@ function placeOrder() {
     // get the current cart items
     const cartItems = [...cart];
 
-    // add the cart items to the orders array
+    // create date class object
+    let date = new Date();
+
+    // create an array of month names for mapping
+    const monthNames = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+    ];
+
+    // add the order details to the orders array
     orders.push({
         id: orderId,
         items: cartItems,
+        priceInCents: (calculateCartItemTotalCost() + 999) * 1.13,
+        orderDate: `${monthNames[date.getMonth()]} ${date.getDate()}`,
+        arrivalDate: `${calculateOrderArrivalDate(date, monthNames)}`,
     });
 
     clearCart();

@@ -1,12 +1,23 @@
 import { products } from '../data/products.js';
 import { orders, saveToLocalStorage } from '../data/orders.js';
+import { formatCurrency } from './utils/format-currency.js';
 
 /* This function generates the HTML for each order in the `orders` array. It iterates 
 through each order and concatenates the generated HTML to the `ordersHTML` variable.*/
 function generateOrdersHTML() {
     let ordersHTML = '';
 
-    orders.forEach((order) => {
+    for (let i = orders.length - 1; i >= 0; i--) {
+        const order = orders[i];
+        const productId = order.productId;
+        let matchingProduct;
+
+        products.forEach((product) => {
+            if (product.id === productId) {
+                matchingProduct = product;
+            }
+        });
+
         ordersHTML += `
             <div class="order-container-${order.id}">
                 <div class="order-header">
@@ -15,24 +26,24 @@ function generateOrdersHTML() {
                             <div class="order-header-label">
                                 Order Placed:
                             </div>
-                            <div>August 12</div>
+                            <div>${order.orderDate}</div>
                         </div>
                         <div class="order-total">
                             <div class="order-header-label">Total:</div>
-                            <div>$35.06</div>
+                            <div>$${formatCurrency(order.priceInCents)}</div>
                         </div>
                     </div>
 
                     <div class="order-header-right-section">
                         <div class="order-header-label">Order ID:</div>
-                        <div>27cba69d-4c3d-4098-b42d-ac7fa62b7664</div>
+                        <div>${order.id}</div>
                     </div>
                 </div>
 
                 <!-- call the function to generate the order items HTML -->
                 ${generateOrderItemsHTML(order)}
         </div>`;
-    });
+    }
 
     // display the orders on the page
     const ordersGrid = document.querySelector('.orders-grid');
@@ -67,7 +78,7 @@ function generateOrderItemsHTML(order) {
                         ${matchingProduct.name}
                     </div>
                     <div class="product-delivery-date">
-                        Arriving on: August 15
+                        Arriving on: ${order.arrivalDate}
                     </div>
                     <div class="product-quantity">
                         Quantity: ${orderItem.quantity}
@@ -127,7 +138,28 @@ export function generateOrderId() {
 }
 
 /**
- * This function cancels an order based on the `orderId`, updates the orders array, 
+ * This function calculates the arrival date of an order based on the current date.
+ * @param date - The `Date` object representing the current date.
+ * @param monthNames - An array of month names.
+ * @returns a string that represents the estimated arrival date of an order.
+ */
+export function calculateOrderArrivalDate(date, monthNames) {
+    const dayOfMonth = date.getDate();
+
+    if (dayOfMonth + 2 >= 30) {
+        // calculate the next month
+        const nextMonth = (date.getMonth() + 1) % 12;
+
+        // display the first day of the next month
+        return `${monthNames[nextMonth]} 1`;
+    } else {
+        // display 2 days after the day of the month (2 day shipping)
+        return `${monthNames[date.getMonth()]} ${dayOfMonth + 2}`;
+    }
+}
+
+/**
+ * This function cancels an order based on the `orderId`, updates the orders array,
  * and syncs the changes with the page.
  * @param orderId - The unique identifier of the order to be cancelled.
  */
