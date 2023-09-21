@@ -1,26 +1,24 @@
 import { products } from '../data/products.js';
-import { formatCurrency } from '../scripts/utils/money.js';
+import { formatCurrency } from '../scripts/utils/format-currency.js';
 
 // initialize `cart` from local storage or use an empty array if no data is found
 export let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-// This function saves the `cart` array to the browser's local storage as a JSON string
-function saveToStorage() {
+// This function saves the `cart` array to local storage
+function saveToLocalStorage() {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
 /**
- * This function adds a product to the cart or increases its quantity if it already exists in the cart.
- * @param productId - The productId parameter is the unique identifier of the product a user wants to
- * add to the cart. It is used to find the product in the global `products` array.
- * @param quantitySelector - The quantitySelector parameter represents the quantity of the product
- * that the user wants to add to the cart.
+ * This function adds a cart item or increases its cart quantity if it already exists in the cart.
+ * @param productId - The unique identifier of the product to be added to the cart.
+ * @param quantitySelector - The quantity of the product the user wants to add to the cart.
  */
-export function addToCart(productId, quantitySelectorValue) {
-    // find the product with the given `productId` from the global `products` array
+export function addCartItem(productId, quantitySelectorValue) {
+    // find the product with the `productId` from the global `products` array
     const product = products.find((product) => product.id === productId);
 
-    // check if the product with the given `productId` in the global `products` array doesn't exit
+    // check if the product doesn't exit
     if (!product) {
         return;
     }
@@ -36,10 +34,10 @@ export function addToCart(productId, quantitySelectorValue) {
     });
 
     if (matchingCartItem) {
-        // increase product quantity
+        // increase the product quantity
         matchingCartItem.quantity += quantitySelectorValue;
     } else {
-        // add product to the cart
+        // add the product to the cart
         cart.push({
             productId,
             quantity: quantitySelectorValue,
@@ -47,32 +45,33 @@ export function addToCart(productId, quantitySelectorValue) {
         });
     }
 
-    saveToStorage();
+    saveToLocalStorage();
 }
 
 /**
- * This function removes a product from the cart by filtering out the cart item with the specified
- * product id and then saves the updated cart to storage.
- * @param productId - The `productId` parameter is the unique identifier of the product that needs to
- * be removed from the cart.
+ * This function removes a cart item based on the `productId` and updates the cart array.
+ * @param productId - The unique identifier of the order to be removed.
  */
-export function removeFromCart(productId) {
-    // iterate through the cart and return an array without the specified product
-    cart = cart.filter((cartItem) => {
-        return cartItem.productId !== productId;
-    });
+export function removeCartItem(productId) {
+    // find the index of the cart item with the specified ID
+    const cartItemIndex = cart.findIndex(
+        (cartItem) => cartItem.productId === productId
+    );
 
-    saveToStorage();
+    // if the cart item is found, remove it from the cart array
+    if (cartItemIndex !== -1) {
+        cart.splice(cartItemIndex, 1);
+        saveToLocalStorage();
+    }
 }
 
 /**
- * This function calculates the total quantity of items in the cart.
- * @returns the total quantity of items in the cart.
+ * This function calculates the total quantity of cart items.
+ * @returns the total quantity of cart items.
  */
 export function calculateCartQuantity() {
     let cartQuantity = 0;
 
-    // iterate through the cart
     cart.forEach((cartItem) => {
         // store the quantity of each cart item
         cartQuantity += cartItem.quantity;
@@ -83,22 +82,21 @@ export function calculateCartQuantity() {
 
 // This function updates the quantity of a cart item
 export function updateCartItemQuantity(productId, newCartItemQuantity) {
-    // iterate through the cart
     cart.forEach((cartItem) => {
         if (cartItem.productId === productId) {
-            // store the new cart item quantity
+            // store the cart item quantity
             cartItem.quantity = newCartItemQuantity;
         }
     });
 
-    saveToStorage();
+    saveToLocalStorage();
 }
 
 /**
- * This function updates the displayed price of a cart item based on the product id and new quantity.
- * @param productId - The unique identifier of the product that needs to be updated in the cart.
- * @param cartItemContainer - The `cartItemContainer` parameter is the container element that holds the
- * cart item on the page. It is used to find the specific cart item price element within the container.
+ * This function updates a displayed cart item price based on the `productId` and new quantity.
+ * @param productId - The unique identifier of the product to be updated in the cart.
+ * @param cartItemContainer - The element that holds the cart item on the page.
+ * It is used to find the specific cart item price element within the container.
  * @param newCartItemQuantity - The new quantity of the cart item.
  */
 export function updateCartItemPriceDisplay(
@@ -110,10 +108,9 @@ export function updateCartItemPriceDisplay(
     const cartItemPriceElement =
         cartItemContainer.querySelector('.product-price');
 
-    // iterate through the products
     products.forEach((product) => {
         if (product.id === productId) {
-            // update the cart item price displayed on the page
+            // update the cart item price on the page
             cartItemPriceElement.innerHTML = `$${formatCurrency(
                 product.priceInCents * newCartItemQuantity
             )}`;
@@ -122,17 +119,23 @@ export function updateCartItemPriceDisplay(
 }
 
 /**
- * This function calculates the total cost of all items in the cart.
- * @returns the total cost of all items in the cart, in cents.
+ * This function calculates the total cost of all cart items.
+ * @returns the total cost of all cart items, in cents.
  */
 export function calculateCartItemTotalCost() {
     let cartItemTotalCostInCents = 0;
 
-    // iterate through the cart
     cart.forEach((cartItem) => {
         // store the price of each cart item
         cartItemTotalCostInCents += cartItem.priceInCents * cartItem.quantity;
     });
 
     return cartItemTotalCostInCents;
+}
+
+// This function clears all cart items
+export function clearCart() {
+    cart.forEach((cartItem) => {
+        removeCartItem(cartItem.productId);
+    });
 }

@@ -1,5 +1,5 @@
-import { orders, saveToStorage } from '../data/orders.js';
 import { products } from '../data/products.js';
+import { orders, saveToLocalStorage } from '../data/orders.js';
 
 /* This function generates the HTML for each order in the `orders` array. It iterates 
 through each order and concatenates the generated HTML to the `ordersHTML` variable.*/
@@ -31,7 +31,6 @@ function generateOrdersHTML() {
 
                 <!-- call the function to generate the order items HTML -->
                 ${generateOrderItemsHTML(order)}
-
         </div>`;
     });
 
@@ -42,7 +41,7 @@ function generateOrdersHTML() {
     }
 }
 
-// This function generates HTML for order items
+// This function generates the HTML for order items
 function generateOrderItemsHTML(order) {
     let orderItemsHTML = '';
 
@@ -139,7 +138,7 @@ function cancelOrder(orderId) {
     // if the order is found, remove it from the orders array
     if (orderIndex !== -1) {
         orders.splice(orderIndex, 1);
-        saveToStorage();
+        saveToLocalStorage();
 
         // remove the order from the page
         const orderItemContainer = document.querySelector(
@@ -149,7 +148,7 @@ function cancelOrder(orderId) {
     }
 }
 
-// attach a click event listener to the "Cancel Order" button
+// attach a click event listener to the "Cancel Order" button on the page
 document.querySelectorAll('.cancel-order-button').forEach((button) => {
     button.addEventListener('click', () => {
         // get the order ID from the data attribute

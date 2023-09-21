@@ -1,6 +1,6 @@
 import { products } from '../data/products.js';
-import { formatCurrency } from './utils/money.js';
-import { addToCart, calculateCartQuantity } from '../data/cart.js';
+import { formatCurrency } from './utils/format-currency.js';
+import { addCartItem, calculateCartQuantity } from '../data/cart.js';
 
 /* This function generates the HTML for each product in the `products` array. It iterates
 through each product and concatenates the generated HTML to the `productsHTML` variable.*/
@@ -62,7 +62,7 @@ function generateProductsHTML() {
             </div>`;
     });
 
-    // display the products on the page if the element exists
+    // display the products on the page
     const productsGrid = document.querySelector('.js-products-grid');
     if (productsGrid) {
         productsGrid.innerHTML = productsHTML;
@@ -76,16 +76,14 @@ function updateCartQuantity() {
     // get the cart quantity
     const cartQuantity = calculateCartQuantity();
 
-    // display the cart quantity
     document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 }
 
 updateCartQuantity();
 
-/* This code iterates through all the elements with the class "js-add-to-cart-button" and
-attaches click event listeners to each button. When a button is clicked, the code retrieves the
-product id from the button's "data-product-id" attribute. It then gets the value of the quantity
-selector element associated with the clicked button and converts it to a number. */
+/* This code adds click event listeners to each "Add to Cart" button on the page.
+When a button is clicked, the code retrieves the `productId` and gets the quantity 
+selector value associated with product. */
 document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
     button.addEventListener('click', () => {
         const productId = button.dataset.productId;
@@ -95,8 +93,8 @@ document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
             document.querySelector(`.js-quantity-selector-${productId}`).value
         );
 
-        addToCart(productId, quantitySelectorValue);
-        setAddedMessage(productId);
+        addCartItem(productId, quantitySelectorValue);
+        displayAddedMessage(productId);
         updateCartQuantity();
 
         // reset the quantity selector value
@@ -104,16 +102,16 @@ document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
     });
 });
 
-// object to store added message timeouts in the `setAddedMessage` function
+// object to store added message timeouts in the `displayAddedMessage` function
 const addedMessageTimeouts = {};
 
 /**
- * This function sets an added message for a specific product by adding a class to make it visible
- * and removing the class after a certain timeout period.
- * @param productId - The `productId` parameter is the unique identifier of a product. It is used to
- * select the specific added message element associated with that product.
+ * This function displays an added message for a specific product by adding a class to
+ * temporarily make the message visible.
+ * @param productId - The the unique identifier of the product.
+ * It is used to select the specific added message element associated with a product.
  */
-function setAddedMessage(productId) {
+function displayAddedMessage(productId) {
     // get the added message element
     let addedMessageElement = document.querySelector(
         `.js-added-to-cart-${productId}`
@@ -122,7 +120,7 @@ function setAddedMessage(productId) {
     // add a class to the added message element to make it visible
     addedMessageElement.classList.add('added-to-cart-visible');
 
-    // check for any previous timeouts for an added message
+    // check for any previous added message timeouts
     const previousTimeoutId = addedMessageTimeouts[productId];
 
     // clear any previous timeouts
@@ -136,6 +134,6 @@ function setAddedMessage(productId) {
         addedMessageElement.classList.remove('added-to-cart-visible');
     }, 2000);
 
-    // add the added message timeout id to the addedMessageTimeouts object
+    // add the added message `timeoutId` to the `addedMessageTimeouts` object
     addedMessageTimeouts[productId] = timeoutId;
 }
