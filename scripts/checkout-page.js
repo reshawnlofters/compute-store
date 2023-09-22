@@ -267,6 +267,7 @@ document.querySelectorAll('.js-delete-quantity-link').forEach((button) => {
         );
 
         cartItemContainer.remove();
+        updatePlaceOrderButtonVisibility();
         updateCartQuantityDisplay();
         updateOrderSummaryDisplay();
     });
@@ -352,3 +353,17 @@ function placeOrder() {
 document
     .querySelector('.place-order-button')
     .addEventListener('click', placeOrder);
+
+// This function updates the "Place Order" button visibility based on the cart quantity.
+function updatePlaceOrderButtonVisibility() {
+    const placeOrderButton = document.querySelector('.place-order-button');
+
+    if (calculateCartQuantity() === 0) {
+        placeOrderButton.style.display = 'none';
+    } else {
+        placeOrderButton.style.display = 'block';
+    }
+}
+
+// initially hide the "Place Order" button
+updatePlaceOrderButtonVisibility();
