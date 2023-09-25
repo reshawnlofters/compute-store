@@ -180,12 +180,27 @@ function cancelOrder(orderId) {
     }
 }
 
-// attach a click event listener to the "Cancel Order" button on the page
+/* This code attaches click event listeners to each "Cancel Order" button on the page.
+When a button is clicked, a modal is opened and the user is prompted to confirm
+the cancellation. If the user wants to cancel the order, the `CancelOrder` function is called. */
 document.querySelectorAll('.cancel-order-button').forEach((button) => {
     button.addEventListener('click', () => {
-        // get the order ID from the data attribute
-        const orderId = button.dataset.orderId;
+        // get modal element
+        const modal = document.querySelector('.cancel-order-modal');
 
-        cancelOrder(orderId);
+        modal.showModal();
+
+        document.querySelector('.modal-cancel-order-button').addEventListener('click', () => {
+            modal.close();
+
+            // get the order ID from the data attribute
+            const orderId = button.dataset.orderId;
+
+            cancelOrder(orderId);
+        });
+
+        document.querySelector('.modal-not-now-button').addEventListener('click', () => {
+            modal.close();
+        })
     });
 });

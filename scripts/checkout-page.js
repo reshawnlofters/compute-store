@@ -356,12 +356,8 @@ document
 
 // This function updates the "Place Order" button visibility based on the cart quantity.
 function updatePlaceOrderButtonVisibility() {
-    const placeOrderButton = document.querySelector('.place-order-button');
-
     if (calculateCartQuantity() === 0) {
-        placeOrderButton.style.display = 'none';
-    } else {
-        placeOrderButton.style.display = 'block';
+        document.querySelector('.place-order-button').style.display = 'none';
     }
 }
 

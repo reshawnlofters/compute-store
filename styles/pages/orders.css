@@ -52,6 +52,53 @@ main {
     flex-shrink: 1;
 }
 
+.cancel-order-modal {
+    max-width: 600px;
+    width: 45%;
+    padding: 30px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+    border: none;
+}
+
+.cancel-order-modal h2 {
+    font-size: 22px;
+}
+
+.cancel-order-modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.cancel-order-modal-button-row {
+    display: flex;
+    justify-content: end;
+    margin-top: 35px;
+}
+
+.modal-not-now-button,
+.modal-cancel-order-button {
+    font-size: 15px;
+    font-weight: 500;
+    border-style: solid;
+    border-radius: 4px;
+    padding: 8px 22px;
+}
+
+.modal-not-now-button {
+    background-color: white;
+    border-color: black;
+    margin-right: 15px;
+}
+
+.modal-cancel-order-button {
+    background-color: #ed4040;
+    color: white;
+    border: none;
+}
+
 @media (max-width: 575px) {
     .order-header {
         flex-direction: column;
