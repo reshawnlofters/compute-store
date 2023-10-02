@@ -52,14 +52,40 @@ main {
     }
 }
 
+.empty-cart-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    height: 273px;
+    width: auto;
+}
+
+.empty-cart-message-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.empty-cart-message-container span {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.empty-cart-container-img {
+    height: 70px;
+    align-self: end;
+    justify-self: end;
+}
+
 .cart-item-container,
-.payment-summary {
+.payment-summary,
+.empty-cart-container {
     border: 1px solid rgb(222, 222, 222);
     border-radius: 4px;
     padding: 18px;
 }
 
-.cart-item-container {
+.cart-item-container,
+.empty-cart-container {
     margin-bottom: 12px;
 }
 

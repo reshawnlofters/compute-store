@@ -121,7 +121,35 @@ function generateCartHTML() {
     document.querySelector('.order-summary').innerHTML = cartItemHTML;
 }
 
-generateCartHTML();
+// This function generates the HTML for an empty cart
+function generateEmptyCartHTML() {
+    document.querySelector('.order-summary').innerHTML = `
+        <div class="empty-cart-container">
+            <div class="empty-cart-message-container">
+                <div>
+                    <span>Looks like it's empty!</span><br><br>
+                    Why not add something?
+                </div>
+                <div>
+                    Continue shopping on the
+                    <a class="link-primary" href="index.html">homepage</a>.
+                </div>
+            </div>
+            <img class="empty-cart-container-img" src="images/icons/empty-cart.png">
+        </div>
+    `;
+}
+
+// This function updates the cart items visibility based on the cart quantity
+function updateCartItemVisibility() {
+    if (calculateCartQuantity() > 0) {
+        generateCartHTML();
+    } else {
+        generateEmptyCartHTML();
+    }
+}
+
+updateCartItemVisibility();
 
 // This function updates the cart quantity displayed on the page
 function updateCartQuantityDisplay() {
@@ -267,6 +295,7 @@ document.querySelectorAll('.js-delete-quantity-link').forEach((button) => {
         );
 
         cartItemContainer.remove();
+        updateCartItemVisibility();
         updatePlaceOrderButtonVisibility();
         updateCartQuantityDisplay();
         updateOrderSummaryDisplay();
