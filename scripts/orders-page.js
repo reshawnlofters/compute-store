@@ -1,5 +1,9 @@
 import { products } from '../data/products.js';
-import { orders, saveToLocalStorage } from '../data/orders.js';
+import {
+    calculateOrderQuantity,
+    orders,
+    saveToLocalStorage,
+} from '../data/orders.js';
 import { formatCurrency } from './utils/format-currency.js';
 
 /* This function generates the HTML for each order in the `orders` array. It iterates 
@@ -109,6 +113,39 @@ function generateOrderItemsHTML(order) {
 
 generateOrdersHTML();
 
+// This function generates the HTML for when there are no orders
+function generateEmptyOrdersHTML() {
+    const ordersGrid = document.querySelector('.orders-grid');
+
+    if (ordersGrid) {
+        ordersGrid.innerHTML = `
+            <div class="empty-orders-container">
+                <div class="empty-orders-message-container">
+                    <div>
+                        <span>Looks like it's empty!</span><br><br>
+                        Why not place an order?
+                    </div>
+                    <div>
+                        Continue shopping on the
+                        <a class="link-primary" href="index.html">homepage</a>.
+                    </div>
+                </div>
+                <img class="empty-orders-container-img" src="images/icons/shopping-bag.png">
+            </div>`;
+    }
+}
+
+// This function updates order visibility based on the quantity of orders
+function updateOrdersVisibility() {
+    if (calculateOrderQuantity() > 0) {
+        generateOrdersHTML();
+    } else {
+        generateEmptyOrdersHTML();
+    }
+}
+
+updateOrdersVisibility();
+
 /**
  * This function generates a random order ID.
  * @returns the generated order ID.
@@ -180,27 +217,38 @@ function cancelOrder(orderId) {
     }
 }
 
-/* This code attaches click event listeners to each "Cancel Order" button on the page.
-When a button is clicked, a modal is opened and the user is prompted to confirm
-the cancellation. If the user wants to cancel the order, the `CancelOrder` function is called. */
-document.querySelectorAll('.cancel-order-button').forEach((button) => {
-    button.addEventListener('click', () => {
-        // get modal element
-        const modal = document.querySelector('.cancel-order-modal');
+/**
+ * This code attaches a click event listener to the container that holds all "Cancel Order"
+ * buttons. It uses event delegation to handle the click events for the buttons.
+ * If a button is clicked, a modal appears and the user is prompted to confirm the cancellation.
+ * */
+const ordersGrid = document.querySelector('.orders-grid');
+if (ordersGrid) {
+    document
+        .querySelector('.orders-grid')
+        .addEventListener('click', (event) => {
+            if (event.target.classList.contains('cancel-order-button')) {
+                // get modal element
+                const modal = document.querySelector('.cancel-order-modal');
+                modal.showModal();
 
-        modal.showModal();
+                document
+                    .querySelector('.modal-cancel-order-button')
+                    .addEventListener('click', () => {
+                        modal.close();
 
-        document.querySelector('.modal-cancel-order-button').addEventListener('click', () => {
-            modal.close();
+                        // get the order ID from the data attribute
+                        const orderId = event.target.dataset.orderId;
 
-            // get the order ID from the data attribute
-            const orderId = button.dataset.orderId;
+                        cancelOrder(orderId);
+                        updateOrdersVisibility();
+                    });
 
-            cancelOrder(orderId);
+                document
+                    .querySelector('.modal-not-now-button')
+                    .addEventListener('click', () => {
+                        modal.close();
+                    });
+            }
         });
-
-        document.querySelector('.modal-not-now-button').addEventListener('click', () => {
-            modal.close();
-        })
-    });
-});
+}

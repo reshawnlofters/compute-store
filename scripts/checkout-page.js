@@ -248,6 +248,10 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
         cartItemContainer.querySelector('.quantity-input').value
     );
 
+    if (isNaN(newCartItemQuantity)) {
+        return;
+    }
+
     if (newCartItemQuantity > 50) {
         // display the error message
         displayCartItemQuantityError(cartItemContainer);
@@ -258,6 +262,7 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
         // remove the cart item
         removeCartItem(productId);
         cartItemContainer.remove();
+        updateCartItemVisibility();
     } else {
         // update the cart item quantity on the page
         cartItemContainer.querySelector('.quantity-label').innerHTML =
@@ -280,12 +285,14 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
     cartItemContainer.querySelector('.quantity-input').blur();
 }
 
-/* This code adds click event listeners to each "Delete Cart Item" button on the page.
-When a button is clicked, the code retrieves the button `productId`, removes the cart item 
-from the page, and updates the cart quantity and order summary displayed. */
-document.querySelectorAll('.js-delete-quantity-link').forEach((button) => {
-    button.addEventListener('click', () => {
-        const productId = button.dataset.productId;
+/**
+ *  This code adds a click event listener to the "order-summary" container. When a click event occurs, the code
+ * checks if the clicked element corresponds to the "Delete Cart Item" button. If it does,the code retrieves the button
+ * `productId`, removes the cart item from the page, and updates the cart quantity and order summary displayed.
+ * */
+document.querySelector('.order-summary').addEventListener('click', (event) => {
+    if (event.target.classList.contains('js-delete-quantity-link')) {
+        const productId = event.target.dataset.productId;
 
         removeCartItem(productId);
 
@@ -299,15 +306,17 @@ document.querySelectorAll('.js-delete-quantity-link').forEach((button) => {
         updatePlaceOrderButtonVisibility();
         updateCartQuantityDisplay();
         updateOrderSummaryDisplay();
-    });
+    }
 });
 
-/* This code adds click event listeners to each "Update Cart Item Quantity" button on the page.
-When a button is clicked, the code retrieves the `productId` and corresponding cart item
-container. It then adds a class to the container to reveal an input field and save button. */
-document.querySelectorAll('.js-update-quantity-link').forEach((button) => {
-    button.addEventListener('click', () => {
-        const productId = button.dataset.productId;
+/**
+ * This code adds a click event listener to the "order-summary" container. When a click event occurs, the code
+ * checks if the clicked element corresponds to the "Update Cart Item Quantity" button. If it does, the code retrieves the button
+ * `productId` and corresponding cart item container. It then adds a class to the container to reveal an input field and save button.
+ * */
+document.querySelector('.order-summary').addEventListener('click', (event) => {
+    if (event.target.classList.contains('js-update-quantity-link')) {
+        const productId = event.target.dataset.productId;
         const cartItemContainer = document.querySelector(
             `.js-cart-item-container-${productId}`
         );
@@ -335,7 +344,7 @@ document.querySelectorAll('.js-update-quantity-link').forEach((button) => {
             .addEventListener('blur', () => {
                 saveNewCartItemQuantity(productId, cartItemContainer);
             });
-    });
+    }
 });
 
 // This function handles the "Place Order" button operation
@@ -374,6 +383,7 @@ function placeOrder() {
         arrivalDate: `${calculateOrderArrivalDate(date, monthNames)}`,
     });
 
+    clearCart();
     clearCart();
     saveToLocalStorage();
 }

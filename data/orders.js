@@ -5,3 +5,7 @@ export let orders = JSON.parse(localStorage.getItem('orders')) || [];
 export function saveToLocalStorage() {
     localStorage.setItem('orders', JSON.stringify(orders));
 }
+
+export function calculateOrderQuantity() {
+    return orders.length;
+}

@@ -21,6 +21,36 @@ main {
     row-gap: 50px;
 }
 
+.empty-orders-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    height: 273px;
+    width: auto;
+}
+
+.empty-orders-message-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.empty-orders-message-container span {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.empty-orders-container-img {
+    height: 70px;
+    align-self: end;
+    justify-self: end;
+}
+
+.empty-orders-container {
+    border: 1px solid rgb(222, 222, 222);
+    border-radius: 4px;
+    padding: 18px;
+}
+
 .order-header {
     background-color: rgb(240, 242, 242);
     border: 1px solid rgb(213, 217, 217);
