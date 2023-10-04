@@ -1,10 +1,10 @@
 import { products } from '../data/products.js';
+import { formatCurrency } from './utils/format-currency.js';
 import {
     calculateOrderQuantity,
     orders,
     saveToLocalStorage,
 } from '../data/orders.js';
-import { formatCurrency } from './utils/format-currency.js';
 
 /* This function generates the HTML for each order in the `orders` array. It iterates 
 through each order and concatenates the generated HTML to the `ordersHTML` variable.*/
@@ -135,7 +135,7 @@ function generateEmptyOrdersHTML() {
     }
 }
 
-// This function updates order visibility based on the quantity of orders
+// This function updates the orders visibility based on the quantity of orders
 function updateOrdersVisibility() {
     if (calculateOrderQuantity() > 0) {
         generateOrdersHTML();
@@ -229,11 +229,13 @@ if (ordersGrid) {
         .addEventListener('click', (event) => {
             if (event.target.classList.contains('cancel-order-button')) {
                 // get modal element
-                const modal = document.querySelector('.cancel-order-modal');
+                const modal = document.querySelector(
+                    '.cancel-order-button-modal'
+                );
                 modal.showModal();
 
                 document
-                    .querySelector('.modal-cancel-order-button')
+                    .querySelector('.modal-accept-order-cancel-button')
                     .addEventListener('click', () => {
                         modal.close();
 
@@ -245,7 +247,7 @@ if (ordersGrid) {
                     });
 
                 document
-                    .querySelector('.modal-not-now-button')
+                    .querySelector('.modal-close-button')
                     .addEventListener('click', () => {
                         modal.close();
                     });

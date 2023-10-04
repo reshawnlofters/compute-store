@@ -21,36 +21,6 @@ main {
     row-gap: 50px;
 }
 
-.empty-orders-container {
-    display: grid;
-    grid-template-columns: auto auto;
-    height: 273px;
-    width: auto;
-}
-
-.empty-orders-message-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.empty-orders-message-container span {
-    font-size: 18px;
-    font-weight: 700;
-}
-
-.empty-orders-container-img {
-    height: 70px;
-    align-self: end;
-    justify-self: end;
-}
-
-.empty-orders-container {
-    border: 1px solid rgb(222, 222, 222);
-    border-radius: 4px;
-    padding: 18px;
-}
-
 .order-header {
     background-color: rgb(240, 242, 242);
     border: 1px solid rgb(213, 217, 217);
@@ -82,7 +52,7 @@ main {
     flex-shrink: 1;
 }
 
-.cancel-order-modal {
+.cancel-order-button-modal {
     max-width: 600px;
     width: 45%;
     padding: 30px;
@@ -94,39 +64,36 @@ main {
     border: none;
 }
 
-.cancel-order-modal h2 {
-    font-size: 22px;
+.cancel-order-button-modal h3 {
+    font-size: 19px;
 }
 
-.cancel-order-modal::backdrop {
+.cancel-order-button-modal::backdrop {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.cancel-order-modal-button-row {
+.modal-button-row {
     display: flex;
     justify-content: end;
     margin-top: 35px;
 }
 
-.modal-not-now-button,
-.modal-cancel-order-button {
+.modal-close-button,
+.modal-accept-order-cancel-button {
     font-size: 15px;
-    font-weight: 500;
-    border-style: solid;
-    border-radius: 4px;
-    padding: 8px 22px;
+    padding: 8px 24px;
 }
 
-.modal-not-now-button {
-    background-color: white;
-    border-color: black;
+.modal-close-button {
     margin-right: 15px;
 }
 
-.modal-cancel-order-button {
+.modal-accept-order-cancel-button {
     background-color: #ed4040;
     color: white;
     border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(213, 217, 217, 0.5);
 }
 
 @media (max-width: 575px) {

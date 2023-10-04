@@ -81,3 +81,40 @@ select:focus,
 input:focus {
     outline: 2px solid rgb(255, 153, 0);
 }
+
+.empty-cart-container,
+.empty-orders-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    height: 273px;
+    width: auto;
+}
+
+.empty-cart-message-container,
+.empty-orders-message-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.empty-cart-message-container span,
+.empty-orders-message-container span {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.empty-cart-container-img,
+.empty-orders-container-img {
+    height: 70px;
+    align-self: end;
+    justify-self: end;
+}
+
+.cart-item-container,
+.payment-summary,
+.empty-cart-container,
+.empty-orders-container {
+    border: 1px solid rgb(222, 222, 222);
+    border-radius: 4px;
+    padding: 18px;
+}

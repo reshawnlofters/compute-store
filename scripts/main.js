@@ -108,7 +108,7 @@ const addedMessageTimeouts = {};
 /**
  * This function displays an added message for a specific product by adding a class to
  * temporarily make the message visible.
- * @param productId - The the unique identifier of the product.
+ * @param productId - The unique identifier of the product.
  * It is used to select the specific added message element associated with a product.
  */
 function displayAddedMessage(productId) {

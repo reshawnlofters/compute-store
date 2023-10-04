@@ -72,10 +72,7 @@ export function removeCartItem(productId) {
 export function calculateCartQuantity() {
     let cartQuantity = 0;
 
-    cart.forEach((cartItem) => {
-        // store the quantity of each cart item
-        cartQuantity += cartItem.quantity;
-    });
+    cart.forEach((cartItem) => (cartQuantity += cartItem.quantity));
 
     return cartQuantity;
 }
@@ -84,7 +81,7 @@ export function calculateCartQuantity() {
 export function updateCartItemQuantity(productId, newCartItemQuantity) {
     cart.forEach((cartItem) => {
         if (cartItem.productId === productId) {
-            // store the cart item quantity
+            // store the quantity
             cartItem.quantity = newCartItemQuantity;
         }
     });
@@ -93,7 +90,7 @@ export function updateCartItemQuantity(productId, newCartItemQuantity) {
 }
 
 /**
- * This function updates a displayed cart item price based on the `productId` and new quantity.
+ * This function updates cart item price displays based on the `productId` and new quantity.
  * @param productId - The unique identifier of the product to be updated in the cart.
  * @param cartItemContainer - The element that holds the cart item on the page.
  * It is used to find the specific cart item price element within the container.
@@ -110,7 +107,7 @@ export function updateCartItemPriceDisplay(
 
     products.forEach((product) => {
         if (product.id === productId) {
-            // update the cart item price on the page
+            // update the price on the page
             cartItemPriceElement.innerHTML = `$${formatCurrency(
                 product.priceInCents * newCartItemQuantity
             )}`;
@@ -125,17 +122,16 @@ export function updateCartItemPriceDisplay(
 export function calculateCartItemTotalCost() {
     let cartItemTotalCostInCents = 0;
 
-    cart.forEach((cartItem) => {
-        // store the price of each cart item
-        cartItemTotalCostInCents += cartItem.priceInCents * cartItem.quantity;
-    });
+    cart.forEach(
+        (cartItem) =>
+            (cartItemTotalCostInCents +=
+                cartItem.priceInCents * cartItem.quantity)
+    );
 
     return cartItemTotalCostInCents;
 }
 
 // This function clears all cart items
 export function clearCart() {
-    cart.forEach((cartItem) => {
-        removeCartItem(cartItem.productId);
-    });
+    cart.forEach((cartItem) => removeCartItem(cartItem.productId));
 }

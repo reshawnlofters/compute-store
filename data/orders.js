@@ -6,6 +6,10 @@ export function saveToLocalStorage() {
     localStorage.setItem('orders', JSON.stringify(orders));
 }
 
+/**
+ * This function calculates the quantity of orders.
+ * @returns the quantity of orders.
+ */
 export function calculateOrderQuantity() {
     return orders.length;
 }

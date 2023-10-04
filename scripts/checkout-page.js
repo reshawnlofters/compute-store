@@ -52,24 +52,24 @@ function generateCartHTML() {
                         </div>
                         <div class="product-quantity">
                             <span>
-                                Quantity: <span class="quantity-label">${
+                                Quantity: <span class="cart-item-quantity-label">${
                                     cartItem.quantity
                                 }</span>
                             </span>
-                            <span class="update-quantity-link link-primary js-update-quantity-link link-primary"
+                            <span class="update-cart-item-quantity-button link-primary js-update-cart-item-quantity-button link-primary"
                                 data-product-id="${matchingProduct.id}">
                                 Update
                             </span>
-                            <input class="quantity-input">
-                            <span class="save-quantity-link link-primary">Save</span>
-                            <span class="delete-quantity-link js-delete-quantity-link 
+                            <input class="update-cart-item-quantity-input">
+                            <span class="save-new-cart-item-quantity-button link-primary">Save</span>
+                            <span class="delete-cart-item-button js-delete-cart-item-button 
                             link-primary" data-product-id="${
                                 matchingProduct.id
                             }">
                                 Delete
                             </span>
                         </div>
-                        <p class="js-quantity-limit-message"></p>
+                        <p class="js-update-cart-item-quantity-limit-message"></p>
                     </div>
 
                     <div class="delivery-options">
@@ -117,7 +117,7 @@ function generateCartHTML() {
             </div>`;
     });
 
-    // display the cart items on the page
+    // display the cart items
     document.querySelector('.order-summary').innerHTML = cartItemHTML;
 }
 
@@ -166,16 +166,16 @@ updateCartQuantityDisplay();
 
 /**
  * This function updates the order summary displayed on the page by calculating
- * and displaying the cart item total, shipping cost, cart total before tax,
- * total tax, and cart total after tax.
+ * the cart item total, shipping cost, cart total before tax, total tax,
+ * and cart total after tax.
  */
 function updateOrderSummaryDisplay() {
     // calculate cart item total cost in cents
     let cartItemTotalCostInCents = calculateCartItemTotalCost();
 
     // determine shipping fee based on whether the cart is empty or not:
-    // if the cart is empty, set the fee to 0; otherwise, set it to 999 cents.
-    let shippingHandlingFeeInCents = cartItemTotalCostInCents === 0 ? 0 : 999;
+    // if the cart is empty, set the fee to 0; otherwise, set it to 499 cents.
+    let shippingHandlingFeeInCents = cartItemTotalCostInCents === 0 ? 0 : 499;
 
     // calculate cart total before tax
     let cartTotalBeforeTaxInCents =
@@ -217,11 +217,11 @@ updateOrderSummaryDisplay();
 function displayCartItemQuantityError(cartItemContainer) {
     // get the quantity limit message element for the specific cart item container
     const quantityLimitMessageElement = cartItemContainer.querySelector(
-        '.js-quantity-limit-message'
+        '.js-update-cart-item-quantity-limit-message'
     );
 
     // display the error message
-    quantityLimitMessageElement.innerHTML = 'Quantity limit reached (50)';
+    quantityLimitMessageElement.innerHTML = '<br>Quantity limit reached (50)';
 
     // clear any previous timeouts
     if (cartItemContainer.timeoutId) {
@@ -237,15 +237,16 @@ function displayCartItemQuantityError(cartItemContainer) {
 
 /**
  * This function saves a new cart item quantity and updates the cart and order summary displays.
- * @param productId - The the unique identifier of the product.
- * @param cartItemContainer - The container element that holds the cart item. 
+ * @param productId - The unique identifier of the product.
+ * @param cartItemContainer - The container element that holds the cart item.
  * It is used to access and manipulate the elements within the cart item,
  * such as the quantity input field and the quantity label.
  */
 function saveNewCartItemQuantity(productId, cartItemContainer) {
-    // get the quantity input field value and convert it to a number
+    // get the quantity input field value
     const newCartItemQuantity = Number(
-        cartItemContainer.querySelector('.quantity-input').value
+        cartItemContainer.querySelector('.update-cart-item-quantity-input')
+            .value
     );
 
     if (isNaN(newCartItemQuantity)) {
@@ -253,7 +254,7 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
     }
 
     if (newCartItemQuantity > 50) {
-        // display the error message
+        // display an error message
         displayCartItemQuantityError(cartItemContainer);
         return;
     }
@@ -261,11 +262,11 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
     if (newCartItemQuantity === 0) {
         // remove the cart item
         removeCartItem(productId);
-        cartItemContainer.remove();
         updateCartItemVisibility();
+        updateCartQuantityDisplay();
     } else {
         // update the cart item quantity on the page
-        cartItemContainer.querySelector('.quantity-label').innerHTML =
+        cartItemContainer.querySelector('.cart-item-quantity-label').innerHTML =
             newCartItemQuantity;
 
         // remove the class added to the cart item container for editing
@@ -282,16 +283,17 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
     }
 
     // remove focus from the quantity input field after saving the new quantity
-    cartItemContainer.querySelector('.quantity-input').blur();
+    cartItemContainer.querySelector('.update-cart-item-quantity-input').blur();
 }
 
 /**
- *  This code adds a click event listener to the "order-summary" container. When a click event occurs, the code
- * checks if the clicked element corresponds to the "Delete Cart Item" button. If it does,the code retrieves the button
- * `productId`, removes the cart item from the page, and updates the cart quantity and order summary displayed.
+ * This code attaches a click event listener to the container that holds all "Delete Cart Item"
+ * buttons. It uses event delegation to handle the click events for the buttons. If a button is clicked,
+ * the code retrieves the button `productId`, removes the cart item from the page, and updates the
+ * cart quantity and order summary displays.
  * */
 document.querySelector('.order-summary').addEventListener('click', (event) => {
-    if (event.target.classList.contains('js-delete-quantity-link')) {
+    if (event.target.classList.contains('js-delete-cart-item-button')) {
         const productId = event.target.dataset.productId;
 
         removeCartItem(productId);
@@ -310,12 +312,15 @@ document.querySelector('.order-summary').addEventListener('click', (event) => {
 });
 
 /**
- * This code adds a click event listener to the "order-summary" container. When a click event occurs, the code
- * checks if the clicked element corresponds to the "Update Cart Item Quantity" button. If it does, the code retrieves the button
- * `productId` and corresponding cart item container. It then adds a class to the container to reveal an input field and save button.
+ * This code attaches a click event listener to the container that holds all "Update Cart Item Quantity"
+ * buttons. It uses event delegation to handle the click events for the buttons. If a button is clicked,
+ * the code retrieves the button `productId` and corresponding cart item container. It then adds a class
+ * to the container to reveal an input field and save button.
  * */
 document.querySelector('.order-summary').addEventListener('click', (event) => {
-    if (event.target.classList.contains('js-update-quantity-link')) {
+    if (
+        event.target.classList.contains('js-update-cart-item-quantity-button')
+    ) {
         const productId = event.target.dataset.productId;
         const cartItemContainer = document.querySelector(
             `.js-cart-item-container-${productId}`
@@ -323,7 +328,7 @@ document.querySelector('.order-summary').addEventListener('click', (event) => {
 
         cartItemContainer.classList.add('is-editing-quantity');
         const saveButton = cartItemContainer.querySelector(
-            '.save-quantity-link'
+            '.save-new-cart-item-quantity-button'
         );
 
         saveButton.addEventListener('click', () => {
@@ -332,7 +337,7 @@ document.querySelector('.order-summary').addEventListener('click', (event) => {
 
         // check if the 'Enter' key is pressed
         cartItemContainer
-            .querySelector('.quantity-input')
+            .querySelector('.update-cart-item-quantity-input')
             .addEventListener('keydown', (event) => {
                 if (event.key === 'Enter') {
                     saveNewCartItemQuantity(productId, cartItemContainer);
@@ -340,14 +345,14 @@ document.querySelector('.order-summary').addEventListener('click', (event) => {
             });
 
         cartItemContainer
-            .querySelector('.quantity-input')
+            .querySelector('.update-cart-item-quantity-input')
             .addEventListener('blur', () => {
                 saveNewCartItemQuantity(productId, cartItemContainer);
             });
     }
 });
 
-// This function handles the "Place Order" button operation
+// This function handles the "Place Order" button functionality
 function placeOrder() {
     // generate a unique order ID
     const orderId = generateOrderId();
@@ -355,7 +360,7 @@ function placeOrder() {
     // get the current cart items
     const cartItems = [...cart];
 
-    // create date class object
+    // create a date class object
     let date = new Date();
 
     // create an array of month names for mapping
@@ -388,17 +393,16 @@ function placeOrder() {
     saveToLocalStorage();
 }
 
-// attach a click event listener to the "Place Order" button on the page
+// attach a click event listener to the "Place Order" button
 document
     .querySelector('.place-order-button')
     .addEventListener('click', placeOrder);
 
-// This function updates the "Place Order" button visibility based on the cart quantity.
+// This function updates the "Place Order" button visibility based on the cart quantity
 function updatePlaceOrderButtonVisibility() {
     if (calculateCartQuantity() === 0) {
         document.querySelector('.place-order-button').style.display = 'none';
     }
 }
 
-// initially hide the "Place Order" button
 updatePlaceOrderButtonVisibility();

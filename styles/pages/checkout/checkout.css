@@ -23,23 +23,20 @@ main {
     align-items: start;
 }
 
-.quantity-input,
-.save-quantity-link {
+.update-cart-item-quantity-input,
+.save-new-cart-item-quantity-button {
     display: none;
 }
 
-.quantity-input {
+.update-cart-item-quantity-input {
     width: 30px;
 }
 
-/* style to display the update quantity input field and save button */
-.is-editing-quantity .quantity-input,
-.is-editing-quantity .save-quantity-link {
+/* style to display the "Update Cart Item Quantity" input field 
+and "Save New Cart Item Quantity" button */
+.is-editing-quantity .update-cart-item-quantity-input,
+.is-editing-quantity .save-new-cart-item-quantity-button {
     display: initial;
-}
-
-.quantity-limit-message {
-    margin-top: 20px;
 }
 
 @media (max-width: 1000px) {
@@ -50,38 +47,6 @@ main {
     .checkout-grid {
         grid-template-columns: 1fr;
     }
-}
-
-.empty-cart-container {
-    display: grid;
-    grid-template-columns: auto auto;
-    height: 273px;
-    width: auto;
-}
-
-.empty-cart-message-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.empty-cart-message-container span {
-    font-size: 18px;
-    font-weight: 700;
-}
-
-.empty-cart-container-img {
-    height: 70px;
-    align-self: end;
-    justify-self: end;
-}
-
-.cart-item-container,
-.payment-summary,
-.empty-cart-container {
-    border: 1px solid rgb(222, 222, 222);
-    border-radius: 4px;
-    padding: 18px;
 }
 
 .cart-item-container,
