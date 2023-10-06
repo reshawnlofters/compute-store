@@ -394,9 +394,12 @@ function placeOrder() {
 }
 
 // attach a click event listener to the "Place Order" button
-document
-    .querySelector('.place-order-button')
-    .addEventListener('click', placeOrder);
+document.querySelector('.place-order-button').addEventListener('click', () => {
+    setTimeout(() => {
+        placeOrder();
+        window.location.href = 'orders.html';
+    }, 1000);
+});
 
 // This function updates the "Place Order" button visibility based on the cart quantity
 function updatePlaceOrderButtonVisibility() {

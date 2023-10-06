@@ -86,19 +86,21 @@ When a button is clicked, the code retrieves the `productId` and gets the quanti
 selector value associated with product. */
 document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
     button.addEventListener('click', () => {
-        const productId = button.dataset.productId;
-
-        // get the quantity selector element value and convert it to a number
-        const quantitySelectorValue = Number(
-            document.querySelector(`.js-quantity-selector-${productId}`).value
-        );
-
-        addCartItem(productId, quantitySelectorValue);
-        displayAddedMessage(productId);
-        updateCartQuantity();
-
-        // reset the quantity selector value
-        document.querySelector(`.js-quantity-selector-${productId}`).value = 1;
+        setTimeout(() => {
+            const productId = button.dataset.productId;
+    
+            // get the quantity selector element value and convert it to a number
+            const quantitySelectorValue = Number(
+                document.querySelector(`.js-quantity-selector-${productId}`).value
+            );
+    
+            addCartItem(productId, quantitySelectorValue);
+            displayAddedMessage(productId);
+            updateCartQuantity();
+    
+            // reset the quantity selector value
+            document.querySelector(`.js-quantity-selector-${productId}`).value = 1;
+        }, 500)
     });
 });
 
