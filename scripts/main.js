@@ -139,3 +139,18 @@ function displayAddedMessage(productId) {
     // add the added message `timeoutId` to the `addedMessageTimeouts` object
     addedMessageTimeouts[productId] = timeoutId;
 }
+
+// This function clears the search bar input when leaving the page
+function clearSearchBarOnLeave() {
+  const searchBar = document.querySelector('.search-bar');
+  
+  window.addEventListener('beforeunload', (event) => {
+    if (searchBar.value.trim() !== '') {
+      event.preventDefault();
+      searchBar.value = '';
+    }
+  });
+}
+
+clearSearchBarOnLeave();
+

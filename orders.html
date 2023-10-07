@@ -64,12 +64,19 @@
         <main>
             <div class="page-title">Your Orders</div>
             <div class="orders-grid"></div>
-            <dialog class="cancel-order-button-modal">
-                <h3>Cancel scheduled order?</h2><br>
+            <dialog class="placed-order-modal">
+                <h3>Success!</h3>
+                <p>Your order has been placed.</p>
+                <div class="button-container">
+                    <button class="modal-close-window-button button-primary">Close this window</button>
+                </div>
+            </dialog>
+            <dialog class="cancel-order-modal">
+                <h3>Cancel scheduled order?</h2>
                 <p>You will permanently cancel this scheduled order.</p>
-                <div class="modal-button-row">
+                <div class="button-container">
                     <button class="modal-close-button button-secondary">Close</button>
-                    <button class="modal-accept-order-cancel-button">Yes, cancel</button>
+                    <button class="modal-cancel-order-button">Yes, cancel</button>
                 </div>
             </dialog>
         </main>

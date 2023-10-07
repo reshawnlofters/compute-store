@@ -229,13 +229,11 @@ if (ordersGrid) {
         .addEventListener('click', (event) => {
             if (event.target.classList.contains('cancel-order-button')) {
                 // get modal element
-                const modal = document.querySelector(
-                    '.cancel-order-button-modal'
-                );
+                const modal = document.querySelector('.cancel-order-modal');
                 modal.showModal();
 
                 document
-                    .querySelector('.modal-accept-order-cancel-button')
+                    .querySelector('.modal-cancel-order-button')
                     .addEventListener('click', () => {
                         modal.close();
 
@@ -254,3 +252,25 @@ if (ordersGrid) {
             }
         });
 }
+
+// This function diplays a modal when an order is successfully placed
+function displayPlacedOrderModal() {
+    const orderPlaced = localStorage.getItem('orderPlaced');
+
+    if (orderPlaced === 'true') {
+        const modal = document.querySelector('.placed-order-modal');
+        modal.showModal();
+
+
+        document
+            .querySelector('.modal-close-window-button')
+            .addEventListener('click', () => {
+                modal.close();
+            });
+
+        // clear the flag after displaying the modal
+        localStorage.removeItem('orderPlaced');
+    }
+}
+
+displayPlacedOrderModal();

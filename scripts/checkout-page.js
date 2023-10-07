@@ -391,6 +391,9 @@ function placeOrder() {
     clearCart();
     clearCart();
     saveToLocalStorage();
+
+    // set a flag in localStorage to indicate successful order placement
+    localStorage.setItem('orderPlaced', 'true');
 }
 
 // attach a click event listener to the "Place Order" button

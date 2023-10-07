@@ -52,43 +52,71 @@ main {
     flex-shrink: 1;
 }
 
-.cancel-order-button-modal {
+.placed-order-modal,
+.cancel-order-modal {
+    position: fixed;
     max-width: 600px;
     width: 45%;
-    padding: 30px;
-    position: fixed;
     top: 50%;
     left: 50%;
+
     transform: translate(-50%, -50%);
-    border-radius: 8px;
     border: none;
+    border-radius: 8px;
+    padding: 30px;
 }
 
-.cancel-order-button-modal h3 {
-    font-size: 19px;
-}
-
-.cancel-order-button-modal::backdrop {
+.placed-order-modal::backdrop,
+.cancel-order-modal::backdrop {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.modal-button-row {
-    display: flex;
-    justify-content: end;
-    margin-top: 35px;
+.placed-order-modal h3,
+.cancel-order-modal h3 {
+    font-size: 19px;
+    margin-bottom: 15px;
 }
 
+.placed-order-modal p,
+.cancel-order-modal p {
+    margin-bottom: 50px;
+}
+
+.placed-order-modal .button-container,
+.cancel-order-modal .button-container {
+    display: flex;
+}
+
+.placed-order-modal .button-container {
+    justify-content: center;
+}
+
+.cancel-order-modal .button-container {
+    justify-content: end;
+}
+
+.modal-close-window-button,
 .modal-close-button,
-.modal-accept-order-cancel-button {
+.modal-cancel-order-button {
     font-size: 15px;
     padding: 8px 24px;
+}
+
+.modal-close-window-button:focus,
+.modal-close-button:focus,
+.modal-cancel-order-button:focus {
+    outline: none;
+}
+
+.modal-close-window-button {
+    width: 200px;
 }
 
 .modal-close-button {
     margin-right: 15px;
 }
 
-.modal-accept-order-cancel-button {
+.modal-cancel-order-button {
     background-color: #ed4040;
     color: white;
     border: none;
