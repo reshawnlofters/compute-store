@@ -118,12 +118,12 @@ function generateCartHTML() {
     });
 
     // display the cart items
-    document.querySelector('.order-summary').innerHTML = cartItemHTML;
+    document.querySelector('.cart-items-container').innerHTML = cartItemHTML;
 }
 
 // This function generates the HTML for an empty cart
 function generateEmptyCartHTML() {
-    document.querySelector('.order-summary').innerHTML = `
+    document.querySelector('.cart-items-container').innerHTML = `
         <div class="empty-cart-container">
             <div class="empty-cart-message-container">
                 <div>
@@ -292,7 +292,7 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
  * the code retrieves the button `productId`, removes the cart item from the page, and updates the
  * cart quantity and order summary displays.
  * */
-document.querySelector('.order-summary').addEventListener('click', (event) => {
+document.querySelector('.cart-items-container').addEventListener('click', (event) => {
     if (event.target.classList.contains('js-delete-cart-item-button')) {
         const productId = event.target.dataset.productId;
 
@@ -317,7 +317,7 @@ document.querySelector('.order-summary').addEventListener('click', (event) => {
  * the code retrieves the button `productId` and corresponding cart item container. It then adds a class
  * to the container to reveal an input field and save button.
  * */
-document.querySelector('.order-summary').addEventListener('click', (event) => {
+document.querySelector('.cart-items-container').addEventListener('click', (event) => {
     if (
         event.target.classList.contains('js-update-cart-item-quantity-button')
     ) {

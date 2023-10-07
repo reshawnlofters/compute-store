@@ -37,45 +37,49 @@
 
     <!-- Main -->
     <main>
-        <div class="page-title">Your Cart</div>
+        <div class="cart-items-section-title">Your Cart</div>
 
-        <div class="checkout-grid">
-            <div class="order-summary"></div>
+        <div class="cart-items-payment-summary-grid">
+            <div class="cart-items-container"></div>
             
-            <div class="payment-summary">
-            <div class="payment-summary-title">
-                Order Summary
-            </div>
+            <div class="payment-summary-container">
+                <div class="payment-summary-section-title">
+                    Order Summary
+                </div>
 
-            <div class="payment-summary-row">
-                <div>Items (<span class="js-payment-summary-items"></span>):</div>
-                <div class="payment-summary-money js-payment-summary-items-cost"></div>
-            </div>
+                <div class="payment-summary-row">
+                    <div>Items (<span class="js-payment-summary-items"></span>):</div>
+                    <div class="payment-summary-money js-payment-summary-items-cost"></div>
+                </div>
 
-            <div class="payment-summary-row">
-                <div>Shipping &amp; handling:</div>
-                <div class="payment-summary-money js-payment-summary-shipping-cost"></div>
-            </div>
+                <div class="payment-summary-row">
+                    <div>Shipping &amp; handling:</div>
+                    <div class="payment-summary-money js-payment-summary-shipping-cost"></div>
+                </div>
 
-            <div class="payment-summary-row subtotal-row">
-                <div>Total before tax:</div>
-                <div class="payment-summary-money js-payment-summary-total-before-tax-cost"></div>
-            </div>
+                <div class="payment-summary-row subtotal-row">
+                    <div>Total before tax:</div>
+                    <div class="payment-summary-money js-payment-summary-total-before-tax-cost"></div>
+                </div>
 
-            <div class="payment-summary-row">
-                <div>Estimated tax (13%):</div>
-                <div class="payment-summary-money js-payment-summary-tax-cost"></div>
-            </div>
+                <div class="payment-summary-row">
+                    <div>Estimated tax (13%):</div>
+                    <div class="payment-summary-money js-payment-summary-tax-cost"></div>
+                </div>
 
-            <div class="payment-summary-row total-row">
-                <div>Order total:</div>
-                <div class="payment-summary-money js-payment-summary-total-cost"></div>
-            </div>
+                <div class="payment-summary-row total-row">
+                    <div>Order total:</div>
+                    <div class="payment-summary-money js-payment-summary-total-cost"></div>
+                </div>
 
-            <button class="place-order-button button-primary">
-                Place your order
-            </button>
+                <button class="place-order-button button-primary">
+                    Place your order
+                </button>
+            </div>
         </div>
+
+        <div class="saved-cart-items-section-title">Your Saved Items</div>
+        <div class="saved-cart-items-container"></div>
     </main>
 </body>
 </html>

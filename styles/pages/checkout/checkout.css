@@ -10,17 +10,12 @@ main {
     margin-right: auto;
 }
 
-.page-title {
-    font-weight: 700;
-    font-size: 22px;
-    margin-bottom: 18px;
-}
-
-.checkout-grid {
+.cart-items-payment-summary-grid {
     display: grid;
     grid-template-columns: 1fr 325px;
     column-gap: 12px;
     align-items: start;
+    margin-bottom: 70px;
 }
 
 .update-cart-item-quantity-input,
@@ -44,7 +39,7 @@ and "Save New Cart Item Quantity" button */
         max-width: 500px;
     }
 
-    .checkout-grid {
+    .cart-items-payment-summary-grid {
         grid-template-columns: 1fr;
     }
 }
@@ -54,12 +49,12 @@ and "Save New Cart Item Quantity" button */
     margin-bottom: 12px;
 }
 
-.payment-summary {
+.payment-summary-container {
     padding-bottom: 5px;
 }
 
 @media (max-width: 1000px) {
-    .payment-summary {
+    .payment-summary-container {
         grid-row: 1;
         margin-bottom: 12px;
     }
@@ -144,7 +139,7 @@ and "Save New Cart Item Quantity" button */
     font-size: 15px;
 }
 
-.payment-summary-title {
+.payment-summary-section-title {
     font-weight: 700;
     font-size: 18px;
     margin-bottom: 12px;
@@ -187,4 +182,17 @@ and "Save New Cart Item Quantity" button */
 
     margin-top: 11px;
     margin-bottom: 15px;
+}
+
+.saved-cart-items-container {
+    display: flex;
+    height: 273px;
+    width: 753px;
+}
+
+.cart-items-section-title, 
+.saved-cart-items-section-title {
+    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: 18px;
 }
