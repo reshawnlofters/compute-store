@@ -10,6 +10,7 @@ import {
     updateCartItemPriceDisplay,
     calculateCartItemTotalCost,
     clearCart,
+    calculateSavedCartItemsQuantity,
 } from '../data/cart.js';
 
 /* This function generates the HTML for each cart item in the `cart` array. It iterates 
@@ -121,7 +122,7 @@ function generateCartHTML() {
     document.querySelector('.cart-items-container').innerHTML = cartItemHTML;
 }
 
-// This function generates the HTML for an empty cart
+// This function generates the HTML for when the cart is empty
 function generateEmptyCartHTML() {
     document.querySelector('.cart-items-container').innerHTML = `
         <div class="empty-cart-container">
@@ -140,6 +141,21 @@ function generateEmptyCartHTML() {
     `;
 }
 
+// This function generates the HTML for when the saved cart items section is empty
+function generateEmptySavedCartItemsHTML() {
+    document.querySelector('.saved-cart-items-container').innerHTML = `
+        <div class="empty-saved-cart-items-container">
+            <div class="empty-saved-cart-items-message-container">
+                <div>
+                    <span>Looks like it's empty!</span><br><br>
+                    Why not add something?
+                </div>
+            </div>
+            <img class="empty-saved-cart-items-container-img" src="images/icons/save.png">
+        </div>
+    `;
+}
+
 // This function updates the cart items visibility based on the cart quantity
 function updateCartItemVisibility() {
     if (calculateCartQuantity() > 0) {
@@ -150,6 +166,17 @@ function updateCartItemVisibility() {
 }
 
 updateCartItemVisibility();
+
+// This function updates the saved cart items visibility based on the section quantity
+function updateSavedCartItemsVisibility() {
+    if (calculateSavedCartItemsQuantity() > 0) {
+        generateSavedCartItemsHTML();
+    } else {
+        generateEmptySavedCartItemsHTML();
+    }
+}
+
+updateSavedCartItemsVisibility();
 
 // This function updates the cart quantity displayed on the page
 function updateCartQuantityDisplay() {
@@ -244,30 +271,35 @@ function displayCartItemQuantityError(cartItemContainer) {
  */
 function saveNewCartItemQuantity(productId, cartItemContainer) {
     // get the quantity input field value
-    const newCartItemQuantity = Number(
-        cartItemContainer.querySelector('.update-cart-item-quantity-input')
-            .value
+    const newCartItemQuantityInput = cartItemContainer.querySelector(
+        '.update-cart-item-quantity-input'
+    );
+    const newCartItemQuantity = parseInt(
+        newCartItemQuantityInput.value.trim(),
+        10
     );
 
     if (isNaN(newCartItemQuantity)) {
         return;
     }
 
-    if (newCartItemQuantity > 50) {
-        // display an error message
-        displayCartItemQuantityError(cartItemContainer);
+    if (newCartItemQuantity === '') {
         return;
     }
 
-    if (newCartItemQuantity === 0) {
+    if (newCartItemQuantity > 50) {
+        // display an error message
+        displayCartItemQuantityError(cartItemContainer);
+    } else if (newCartItemQuantity === 0) {
         // remove the cart item
         removeCartItem(productId);
         updateCartItemVisibility();
         updateCartQuantityDisplay();
     } else {
-        // update the cart item quantity on the page
-        cartItemContainer.querySelector('.cart-item-quantity-label').innerHTML =
-            newCartItemQuantity;
+        // update the cart item quantity on the page as a string
+        cartItemContainer.querySelector(
+            '.cart-item-quantity-label'
+        ).textContent = String(newCartItemQuantity);
 
         // remove the class added to the cart item container for editing
         cartItemContainer.classList.remove('is-editing-quantity');
@@ -283,7 +315,7 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
     }
 
     // remove focus from the quantity input field after saving the new quantity
-    cartItemContainer.querySelector('.update-cart-item-quantity-input').blur();
+    newCartItemQuantityInput.blur();
 }
 
 /**
@@ -292,24 +324,28 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
  * the code retrieves the button `productId`, removes the cart item from the page, and updates the
  * cart quantity and order summary displays.
  * */
-document.querySelector('.cart-items-container').addEventListener('click', (event) => {
-    if (event.target.classList.contains('js-delete-cart-item-button')) {
-        const productId = event.target.dataset.productId;
+document
+    .querySelector('.cart-items-container')
+    .addEventListener('click', (event) => {
+        setTimeout(() => {
+            if (event.target.classList.contains('js-delete-cart-item-button')) {
+                const productId = event.target.dataset.productId;
 
-        removeCartItem(productId);
+                removeCartItem(productId);
 
-        // remove the cart item from the page and update displays
-        const cartItemContainer = document.querySelector(
-            `.js-cart-item-container-${productId}`
-        );
+                // remove the cart item from the page and update displays
+                const cartItemContainer = document.querySelector(
+                    `.js-cart-item-container-${productId}`
+                );
 
-        cartItemContainer.remove();
-        updateCartItemVisibility();
-        updatePlaceOrderButtonVisibility();
-        updateCartQuantityDisplay();
-        updateOrderSummaryDisplay();
-    }
-});
+                cartItemContainer.remove();
+                updateCartItemVisibility();
+                updatePlaceOrderButtonVisibility();
+                updateCartQuantityDisplay();
+                updateOrderSummaryDisplay();
+            }
+        }, 500);
+    });
 
 /**
  * This code attaches a click event listener to the container that holds all "Update Cart Item Quantity"
@@ -317,40 +353,44 @@ document.querySelector('.cart-items-container').addEventListener('click', (event
  * the code retrieves the button `productId` and corresponding cart item container. It then adds a class
  * to the container to reveal an input field and save button.
  * */
-document.querySelector('.cart-items-container').addEventListener('click', (event) => {
-    if (
-        event.target.classList.contains('js-update-cart-item-quantity-button')
-    ) {
-        const productId = event.target.dataset.productId;
-        const cartItemContainer = document.querySelector(
-            `.js-cart-item-container-${productId}`
-        );
+document
+    .querySelector('.cart-items-container')
+    .addEventListener('click', (event) => {
+        if (
+            event.target.classList.contains(
+                'js-update-cart-item-quantity-button'
+            )
+        ) {
+            const productId = event.target.dataset.productId;
+            const cartItemContainer = document.querySelector(
+                `.js-cart-item-container-${productId}`
+            );
 
-        cartItemContainer.classList.add('is-editing-quantity');
-        const saveButton = cartItemContainer.querySelector(
-            '.save-new-cart-item-quantity-button'
-        );
+            cartItemContainer.classList.add('is-editing-quantity');
+            const saveButton = cartItemContainer.querySelector(
+                '.save-new-cart-item-quantity-button'
+            );
 
-        saveButton.addEventListener('click', () => {
-            saveNewCartItemQuantity(productId, cartItemContainer);
-        });
-
-        // check if the 'Enter' key is pressed
-        cartItemContainer
-            .querySelector('.update-cart-item-quantity-input')
-            .addEventListener('keydown', (event) => {
-                if (event.key === 'Enter') {
-                    saveNewCartItemQuantity(productId, cartItemContainer);
-                }
-            });
-
-        cartItemContainer
-            .querySelector('.update-cart-item-quantity-input')
-            .addEventListener('blur', () => {
+            saveButton.addEventListener('click', () => {
                 saveNewCartItemQuantity(productId, cartItemContainer);
             });
-    }
-});
+
+            // check if the 'Enter' key is pressed
+            cartItemContainer
+                .querySelector('.update-cart-item-quantity-input')
+                .addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter') {
+                        saveNewCartItemQuantity(productId, cartItemContainer);
+                    }
+                });
+
+            cartItemContainer
+                .querySelector('.update-cart-item-quantity-input')
+                .addEventListener('blur', () => {
+                    saveNewCartItemQuantity(productId, cartItemContainer);
+                });
+        }
+    });
 
 // This function handles the "Place Order" button functionality
 function placeOrder() {

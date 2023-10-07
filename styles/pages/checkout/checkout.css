@@ -44,9 +44,12 @@ and "Save New Cart Item Quantity" button */
     }
 }
 
-.cart-item-container,
-.empty-cart-container {
+.cart-item-container {
     margin-bottom: 12px;
+}
+
+.empty-cart-container {
+    margin-bottom: 22px;
 }
 
 .payment-summary-container {
@@ -184,13 +187,7 @@ and "Save New Cart Item Quantity" button */
     margin-bottom: 15px;
 }
 
-.saved-cart-items-container {
-    display: flex;
-    height: 273px;
-    width: 753px;
-}
-
-.cart-items-section-title, 
+.cart-items-section-title,
 .saved-cart-items-section-title {
     font-weight: 700;
     font-size: 22px;

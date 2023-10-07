@@ -1,12 +1,19 @@
 import { products } from '../data/products.js';
 import { formatCurrency } from '../scripts/utils/format-currency.js';
 
-// initialize `cart` from local storage or use an empty array if no data is found
+/**
+ * This code initializes the variables `cart` and `savedCartItems` by retrieving their
+ * values from localStorage. If the values are not found in the localStorage, it assigns
+ * an empty array to both variables.
+ * */
 export let cart = JSON.parse(localStorage.getItem('cart')) || [];
+export let savedCartItems =
+    JSON.parse(localStorage.getItem('savedCartItems')) || [];
 
-// This function saves the `cart` array to local storage
+// This function saves the `cart` and `savedCartItems` array to localStorage
 function saveToLocalStorage() {
     localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('savedCartItems', JSON.stringify(savedCartItems));
 }
 
 /**
@@ -75,6 +82,20 @@ export function calculateCartQuantity() {
     cart.forEach((cartItem) => (cartQuantity += cartItem.quantity));
 
     return cartQuantity;
+}
+
+/**
+ * This function calculates the total quantity of saved cart items.
+ * @returns the total quantity of saved cart items.
+ */
+export function calculateSavedCartItemsQuantity() {
+    let savedCartItemsQuantity = 0;
+
+    savedCartItems.forEach(
+        (savedCartItem) => (savedCartItemsQuantity += savedCartItem.quantity)
+    );
+
+    return savedCartItemsQuantity;
 }
 
 // This function updates the quantity of a cart item
