@@ -10,6 +10,12 @@ main {
     margin-right: auto;
 }
 
+.cart-item-details-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .cart-items-payment-summary-grid {
     display: grid;
     grid-template-columns: 1fr 325px;

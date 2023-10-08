@@ -11,6 +11,7 @@ import {
     calculateCartItemTotalCost,
     clearCart,
     calculateSavedCartItemsQuantity,
+    savedCartItems
 } from '../data/cart.js';
 
 /* This function generates the HTML for each cart item in the `cart` array. It iterates 
@@ -42,35 +43,44 @@ function generateCartHTML() {
                 <div class="cart-item-details-grid">
                     <img class="product-image" src="${matchingProduct.image}">
 
-                    <div class="cart-item-details">
-                        <div class="product-name">
-                            ${matchingProduct.name}
+                    <div class="cart-item-details-container">
+                        <div>
+                            <div class="product-name">
+                                ${matchingProduct.name}
+                            </div>
+                            <div class="product-price">
+                                $${formatCurrency(
+                                    cartItem.priceInCents * cartItem.quantity
+                                )}
+                            </div>
+                            <div class="product-quantity-container">
+                                <span>
+                                    Quantity: <span class="cart-item-quantity-label">${
+                                        cartItem.quantity
+                                    }</span>
+                                </span>
+                                <span class="update-cart-item-quantity-button link-primary js-update-cart-item-quantity-button link-primary"
+                                    data-product-id="${matchingProduct.id}">
+                                    Update
+                                </span>
+                                <input class="update-cart-item-quantity-input">
+                                <span class="save-new-cart-item-quantity-button link-primary">Save</span>
+                                <span class="delete-cart-item-button js-delete-cart-item-button
+                                link-primary" data-product-id="${
+                                    matchingProduct.id
+                                }">
+                                    Delete
+                                </span>
+                                <p class="js-update-cart-item-quantity-limit-message"></p>
+                            </div>
                         </div>
-                        <div class="product-price">
-                            $${formatCurrency(
-                                cartItem.priceInCents * cartItem.quantity
-                            )}
-                        </div>
-                        <div class="product-quantity">
-                            <span>
-                                Quantity: <span class="cart-item-quantity-label">${
-                                    cartItem.quantity
-                                }</span>
-                            </span>
-                            <span class="update-cart-item-quantity-button link-primary js-update-cart-item-quantity-button link-primary"
-                                data-product-id="${matchingProduct.id}">
-                                Update
-                            </span>
-                            <input class="update-cart-item-quantity-input">
-                            <span class="save-new-cart-item-quantity-button link-primary">Save</span>
-                            <span class="delete-cart-item-button js-delete-cart-item-button 
-                            link-primary" data-product-id="${
+                        <div>
+                            <span class="save-cart-item-button link-primary" data-product-id="${
                                 matchingProduct.id
                             }">
-                                Delete
+                                Save for later
                             </span>
                         </div>
-                        <p class="js-update-cart-item-quantity-limit-message"></p>
                     </div>
 
                     <div class="delivery-options">
@@ -319,6 +329,27 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
 }
 
 /**
+ * This function deletes a cart item from the display and updates elements related to the cart.
+ * @param productId - The unique identifier of the cart item to be deleted from the display.
+ */
+function deleteCartItemDisplay(productId) {
+    removeCartItem(productId);
+
+    const cartItemContainer = document.querySelector(
+        `.js-cart-item-container-${productId}`
+    );
+
+    if (cartItemContainer) {
+        cartItemContainer.remove();
+    }
+
+    updateCartItemVisibility();
+    updatePlaceOrderButtonVisibility();
+    updateCartQuantityDisplay();
+    updateOrderSummaryDisplay();
+}
+
+/**
  * This code attaches a click event listener to the container that holds all "Delete Cart Item"
  * buttons. It uses event delegation to handle the click events for the buttons. If a button is clicked,
  * the code retrieves the button `productId`, removes the cart item from the page, and updates the
@@ -330,19 +361,7 @@ document
         setTimeout(() => {
             if (event.target.classList.contains('js-delete-cart-item-button')) {
                 const productId = event.target.dataset.productId;
-
-                removeCartItem(productId);
-
-                // remove the cart item from the page and update displays
-                const cartItemContainer = document.querySelector(
-                    `.js-cart-item-container-${productId}`
-                );
-
-                cartItemContainer.remove();
-                updateCartItemVisibility();
-                updatePlaceOrderButtonVisibility();
-                updateCartQuantityDisplay();
-                updateOrderSummaryDisplay();
+                deleteCartItemDisplay(productId);
             }
         }, 500);
     });
@@ -452,3 +471,34 @@ function updatePlaceOrderButtonVisibility() {
 }
 
 updatePlaceOrderButtonVisibility();
+
+/**
+ * This function saves a cart item for later by adding it to the savedCartItems array.
+ * @param productId - The unique identifier of the product to be saved for later in the cart.
+ */
+function saveCartItemForLater(productId) {
+    savedCartItems.push({
+        productId
+    })
+}
+
+/**
+ * This code attaches a click event listener to the container that holds all 
+ * "Save Cart Item For Later" buttons. It uses event delegation to handle the click events 
+ * for the buttons. If a button is clicked, the code retrieves the button `productId`. 
+ * It then saves the cart item and updates the cart display.
+ * */
+document
+    .querySelector('.cart-items-container')
+    .addEventListener('click', (event) => {
+        if (
+            event.target.classList.contains(
+                'save-cart-item-button'
+            )
+        ) {
+            const productId = event.target.dataset.productId;
+            
+            saveCartItemForLater(productId);
+            deleteCartItemDisplay(productId);
+        }
+    });
