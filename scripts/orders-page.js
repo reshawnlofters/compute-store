@@ -1,9 +1,9 @@
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/format-currency.js';
 import {
-    calculateOrderQuantity,
     orders,
-    saveToLocalStorage,
+    calculateOrderQuantity,
+    saveOrdersToLocalStorage,
 } from '../data/orders.js';
 
 /* This function generates the HTML for each order in the `orders` array. It iterates 
@@ -207,7 +207,7 @@ function cancelOrder(orderId) {
     // if the order is found, remove it from the orders array
     if (orderIndex !== -1) {
         orders.splice(orderIndex, 1);
-        saveToLocalStorage();
+        saveOrdersToLocalStorage();
 
         // remove the order from the page
         const orderItemContainer = document.querySelector(

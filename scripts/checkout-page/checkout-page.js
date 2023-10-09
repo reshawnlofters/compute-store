@@ -1,6 +1,6 @@
 import { products } from '../../data/products.js';
 import { formatCurrency } from '../utils/format-currency.js';
-import { orders, saveToLocalStorage } from '../../data/orders.js';
+import { orders, saveOrdersToLocalStorage } from '../../data/orders.js';
 import { generateOrderId, calculateOrderArrivalDate } from '../orders-page.js';
 import {
     cart,
@@ -11,7 +11,9 @@ import {
     calculateCartItemTotalCost,
     clearCart,
     savedCartItems,
+    saveToLocalStorage
 } from '../../data/cart.js';
+import { updateSavedCartItemsVisibility } from './saved-cart-items.js';
 
 /* This function generates the HTML for each cart item in the `cart` array. It iterates 
 through each cart item and finds the matching product in the `products` array based on the `productId`.
@@ -151,7 +153,7 @@ function generateEmptyCartHTML() {
 }
 
 // This function updates the cart items visibility based on the cart quantity
-function updateCartItemVisibility() {
+export function updateCartItemVisibility() {
     if (calculateCartQuantity() > 0) {
         generateCartHTML();
     } else {
@@ -320,6 +322,7 @@ function deleteCartItemDisplay(productId) {
     updatePlaceOrderButtonVisibility();
     updateCartQuantityDisplay();
     updateOrderSummaryDisplay();
+    updatePlaceOrderButtonVisibility();
 }
 
 /**
@@ -422,7 +425,7 @@ function placeOrder() {
 
     clearCart();
     clearCart();
-    saveToLocalStorage();
+    saveOrdersToLocalStorage();
 
     // set a flag in localStorage to indicate successful order placement
     localStorage.setItem('orderPlaced', 'true');
@@ -437,9 +440,13 @@ document.querySelector('.place-order-button').addEventListener('click', () => {
 });
 
 // This function updates the "Place Order" button visibility based on the cart quantity
-function updatePlaceOrderButtonVisibility() {
-    if (calculateCartQuantity() === 0) {
-        document.querySelector('.place-order-button').style.display = 'none';
+export function updatePlaceOrderButtonVisibility() {
+    const placeOrderButton = document.querySelector('.place-order-button');
+    
+    if (calculateCartQuantity() > 0) {
+        placeOrderButton.style.display = 'block';
+    } else {
+        placeOrderButton.style.display = 'none';
     }
 }
 
@@ -450,9 +457,24 @@ updatePlaceOrderButtonVisibility();
  * @param productId - The unique identifier of the product to be saved for later in the cart.
  */
 function saveCartItemForLater(productId) {
-    savedCartItems.push({
-        productId,
+    let matchingSavedCartItem;
+
+    // determine if the product is already in the `savedCartItems` array
+    savedCartItems.forEach((savedCartItem) => {
+        if (productId === savedCartItem.productId) {
+            matchingSavedCartItem = savedCartItem;
+        }
     });
+
+    // if the product is not in the `savedCartItems` array, add it to the array 
+    if (!matchingSavedCartItem) {
+        savedCartItems.push({
+            productId,
+        });
+    }
+
+    saveToLocalStorage();
+    updateSavedCartItemsVisibility();
 }
 
 /**

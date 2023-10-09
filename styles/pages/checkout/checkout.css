@@ -191,6 +191,7 @@ and "Save New Cart Item Quantity" button */
 
     margin-top: 11px;
     margin-bottom: 15px;
+    display: none;
 }
 
 .cart-items-section-title,

@@ -82,6 +82,12 @@ input:focus {
     outline: 2px solid rgb(255, 153, 0);
 }
 
+.saved-cart-item-container-grid {
+    display: grid;
+    grid-template-columns: 100px auto;
+    column-gap: 25px;
+}
+
 .saved-cart-item-container {
     height: 273px;
     width: 753px;
@@ -93,10 +99,10 @@ input:focus {
     align-items: center;
 }
 
-.saved-cart-item-container-grid {
-    display: grid;
-    grid-template-columns: 100px auto;
-    column-gap: 25px;
+.saved-cart-item-details-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .empty-cart-container,

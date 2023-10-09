@@ -11,7 +11,7 @@ export let savedCartItems =
     JSON.parse(localStorage.getItem('savedCartItems')) || [];
 
 // This function saves the `cart` and `savedCartItems` array to localStorage
-function saveToLocalStorage() {
+export function saveToLocalStorage() {
     localStorage.setItem('cart', JSON.stringify(cart));
     localStorage.setItem('savedCartItems', JSON.stringify(savedCartItems));
 }
