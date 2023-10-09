@@ -1,7 +1,7 @@
-import { products } from '../data/products.js';
-import { formatCurrency } from './utils/format-currency.js';
-import { orders, saveToLocalStorage } from '../data/orders.js';
-import { generateOrderId, calculateOrderArrivalDate } from './orders-page.js';
+import { products } from '../../data/products.js';
+import { formatCurrency } from '../utils/format-currency.js';
+import { orders, saveToLocalStorage } from '../../data/orders.js';
+import { generateOrderId, calculateOrderArrivalDate } from '../orders-page.js';
 import {
     cart,
     removeCartItem,
@@ -10,9 +10,8 @@ import {
     updateCartItemPriceDisplay,
     calculateCartItemTotalCost,
     clearCart,
-    calculateSavedCartItemsQuantity,
-    savedCartItems
-} from '../data/cart.js';
+    savedCartItems,
+} from '../../data/cart.js';
 
 /* This function generates the HTML for each cart item in the `cart` array. It iterates 
 through each cart item and finds the matching product in the `products` array based on the `productId`.
@@ -151,21 +150,6 @@ function generateEmptyCartHTML() {
     `;
 }
 
-// This function generates the HTML for when the saved cart items section is empty
-function generateEmptySavedCartItemsHTML() {
-    document.querySelector('.saved-cart-items-container').innerHTML = `
-        <div class="empty-saved-cart-items-container">
-            <div class="empty-saved-cart-items-message-container">
-                <div>
-                    <span>Looks like it's empty!</span><br><br>
-                    Why not add something?
-                </div>
-            </div>
-            <img class="empty-saved-cart-items-container-img" src="images/icons/save.png">
-        </div>
-    `;
-}
-
 // This function updates the cart items visibility based on the cart quantity
 function updateCartItemVisibility() {
     if (calculateCartQuantity() > 0) {
@@ -176,17 +160,6 @@ function updateCartItemVisibility() {
 }
 
 updateCartItemVisibility();
-
-// This function updates the saved cart items visibility based on the section quantity
-function updateSavedCartItemsVisibility() {
-    if (calculateSavedCartItemsQuantity() > 0) {
-        generateSavedCartItemsHTML();
-    } else {
-        generateEmptySavedCartItemsHTML();
-    }
-}
-
-updateSavedCartItemsVisibility();
 
 // This function updates the cart quantity displayed on the page
 function updateCartQuantityDisplay() {
@@ -473,31 +446,27 @@ function updatePlaceOrderButtonVisibility() {
 updatePlaceOrderButtonVisibility();
 
 /**
- * This function saves a cart item for later by adding it to the savedCartItems array.
+ * This function saves a cart item for later by adding it to the `savedCartItems` array.
  * @param productId - The unique identifier of the product to be saved for later in the cart.
  */
 function saveCartItemForLater(productId) {
     savedCartItems.push({
-        productId
-    })
+        productId,
+    });
 }
 
 /**
- * This code attaches a click event listener to the container that holds all 
- * "Save Cart Item For Later" buttons. It uses event delegation to handle the click events 
- * for the buttons. If a button is clicked, the code retrieves the button `productId`. 
+ * This code attaches a click event listener to the container that holds all
+ * "Save Cart Item For Later" buttons. It uses event delegation to handle the click events
+ * for the buttons. If a button is clicked, the code retrieves the button `productId`.
  * It then saves the cart item and updates the cart display.
  * */
 document
     .querySelector('.cart-items-container')
     .addEventListener('click', (event) => {
-        if (
-            event.target.classList.contains(
-                'save-cart-item-button'
-            )
-        ) {
+        if (event.target.classList.contains('save-cart-item-button')) {
             const productId = event.target.dataset.productId;
-            
+
             saveCartItemForLater(productId);
             deleteCartItemDisplay(productId);
         }

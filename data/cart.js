@@ -89,13 +89,7 @@ export function calculateCartQuantity() {
  * @returns the total quantity of saved cart items.
  */
 export function calculateSavedCartItemsQuantity() {
-    let savedCartItemsQuantity = 0;
-
-    savedCartItems.forEach(
-        (savedCartItem) => (savedCartItemsQuantity += savedCartItem.quantity)
-    );
-
-    return savedCartItemsQuantity;
+    return savedCartItems.length;
 }
 
 // This function updates the quantity of a cart item
