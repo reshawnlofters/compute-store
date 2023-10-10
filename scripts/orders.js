@@ -58,14 +58,18 @@ function generateOrdersHTML() {
 generateOrdersHTML();
 
 /**
- * Generates HTML for displaying order items.
- * Locates products in the 'products' array to access product details.
+ * Generates HTML for displaying order items with conditional CSS styling based on position.
+ * Applies different styles to the first, last, and in-between items in an order.
+ * Also includes a "Cancel Order" button for the first item using a flag.
+ * @param {Object} order - The order object containing items to be displayed.
+ * @returns {string} The HTML representing the order items with applied styles.
  */
 function generateOrderItemsHTML(order) {
     let orderItemsHTML = '';
+    let cancelOrderButtonGenerated = false;
+    const numberOfItemsInOrder = order.items.length;
 
-    order.items.forEach((orderItem) => {
-        // find and assign the matching product to access product details
+    order.items.forEach((orderItem, index) => {
         const productId = orderItem.productId;
         let matchingProduct;
 
@@ -75,41 +79,87 @@ function generateOrderItemsHTML(order) {
             }
         });
 
-        orderItemsHTML += `
-            <div class="order-details-grid">
-                <div class="product-image-container">
-                   <img src="${matchingProduct.image}">
-                </div>
+        let orderItemClass = 'in-between-order-item-details-grid';
 
-                <div class="product-details">
-                    <div class="product-name">
-                        ${matchingProduct.name}
-                    </div>
-                    <div class="product-delivery-date">
-                        Arriving on: ${order.arrivalDate}
-                    </div>
-                    <div class="product-quantity">
-                        Quantity: ${orderItem.quantity}
-                    </div>
-                    <button class="buy-again-button button-primary">
-                        <img
-                            class="buy-again-icon"
-                            src="images/icons/buy-again.png"
-                        />
-                        <span class="buy-again-message"
-                            >Buy it again</span
-                        >
-                    </button>
-                </div>
+        // check if this is the first order item
+        if (index === 0) {
+            orderItemClass = 'first-order-item-details-grid';
+        }
 
-                <div class="product-actions">
+        // check if this is the last order item
+        if (index === numberOfItemsInOrder - 1) {
+            orderItemClass = 'last-order-item-details-grid';
+        }
+
+        // check if the "Cancel Order" button has not been generated yet
+        if (!cancelOrderButtonGenerated) {
+            orderItemsHTML += `
+                <div class="order-details-grid ${orderItemClass}">
+                    <div class="product-image-container">
+                        <img src="${matchingProduct.image}">
+                    </div>
+
+                    <div class="product-details">
+                        <div class="product-name">
+                            ${matchingProduct.name}
+                        </div>
+                        <div class="product-delivery-date">
+                            Arriving on: ${order.arrivalDate}
+                        </div>
+                        <div class="product-quantity">
+                            Quantity: ${orderItem.quantity}
+                        </div>
+                        <button class="buy-again-button button-primary">
+                            <img
+                                class="buy-again-icon"
+                                src="images/icons/buy-again.png"
+                            />
+                            <span class="buy-again-message"
+                                >Buy it again
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="product-actions">
                         <button
                             class="cancel-order-button button-secondary"
                             data-order-id="${order.id}">
                                 Cancel order
                         </button>
-                </div>
-            </div>`;
+                    </div>
+                </div>`;
+
+            // set the flag to indicate that the button has been generated
+            cancelOrderButtonGenerated = true;
+        } else {
+            // if the button has already been generated, exclude it for subsequent items
+            orderItemsHTML += `
+                <div class="order-details-grid ${orderItemClass}">
+                    <div class="product-image-container">
+                        <img src="${matchingProduct.image}">
+                    </div>
+
+                    <div class="product-details">
+                        <div class="product-name">
+                            ${matchingProduct.name}
+                        </div>
+                        <div class="product-delivery-date">
+                            Arriving on: ${order.arrivalDate}
+                        </div>
+                        <div class="product-quantity">
+                            Quantity: ${orderItem.quantity}
+                        </div>
+                        <button class="buy-again-button button-primary">
+                            <img
+                                class="buy-again-icon"
+                                src="images/icons/buy-again.png"
+                            />
+                            <span class="buy-again-message">Buy it again
+                            </span>
+                        </button>
+                    </div>
+                </div>`;
+        }
     });
 
     return orderItemsHTML;

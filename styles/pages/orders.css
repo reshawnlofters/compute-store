@@ -154,17 +154,24 @@ main {
 }
 
 .order-details-grid {
-    padding: 40px 25px;
-    border: 1px solid rgb(213, 217, 217);
-    border-top: none;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-
     display: grid;
     grid-template-columns: 110px 1fr 220px;
     column-gap: 35px;
     row-gap: 60px;
     align-items: center;
+
+    border: 1px solid rgb(213, 217, 217);
+    border-top: none;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    padding: 40px 25px;
+}
+
+.first-order-item-details-grid,
+.in-between-order-item-details-grid {
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 @media (max-width: 800px) {
