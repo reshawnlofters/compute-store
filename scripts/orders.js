@@ -1,13 +1,15 @@
-import { products } from '../data/products.js';
+import { products } from '../data/home-page.js';
 import { formatCurrency } from './utils/format-currency.js';
 import {
     orders,
     calculateOrderQuantity,
-    saveOrdersToLocalStorage,
-} from '../data/orders.js';
+    updateOrdersInLocalStorage,
+} from '../data/orders-page.js';
 
-/* This function generates the HTML for each order in the `orders` array. It iterates 
-through each order and concatenates the generated HTML to the `ordersHTML` variable.*/
+/**
+ * Generates HTML for displaying orders.
+ * Locates products in the 'products' array to access product details.
+ */
 function generateOrdersHTML() {
     let ordersHTML = '';
 
@@ -44,19 +46,21 @@ function generateOrdersHTML() {
                     </div>
                 </div>
 
-                <!-- call the function to generate the order items HTML -->
                 ${generateOrderItemsHTML(order)}
         </div>`;
     }
 
-    // display the orders on the page
     const ordersGrid = document.querySelector('.orders-grid');
     if (ordersGrid) {
         ordersGrid.innerHTML = ordersHTML;
     }
 }
+generateOrdersHTML();
 
-// This function generates the HTML for order items
+/**
+ * Generates HTML for displaying order items.
+ * Locates products in the 'products' array to access product details.
+ */
 function generateOrderItemsHTML(order) {
     let orderItemsHTML = '';
 
@@ -111,9 +115,6 @@ function generateOrderItemsHTML(order) {
     return orderItemsHTML;
 }
 
-generateOrdersHTML();
-
-// This function generates the HTML for when there are no orders
 function generateEmptyOrdersHTML() {
     const ordersGrid = document.querySelector('.orders-grid');
 
@@ -135,7 +136,9 @@ function generateEmptyOrdersHTML() {
     }
 }
 
-// This function updates the orders visibility based on the quantity of orders
+/**
+ * Updates the visibility of orders based on the quantity of orders.
+ */
 function updateOrdersVisibility() {
     if (calculateOrderQuantity() > 0) {
         generateOrdersHTML();
@@ -143,13 +146,8 @@ function updateOrdersVisibility() {
         generateEmptyOrdersHTML();
     }
 }
-
 updateOrdersVisibility();
 
-/**
- * This function generates a random order ID.
- * @returns the generated order ID.
- */
 export function generateOrderId() {
     const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
     let orderId = '';
@@ -175,8 +173,8 @@ export function generateOrderId() {
 }
 
 /**
- * This function calculates the arrival date of an order based on the current date.
- * @param date - The `Date` object representing the current date.
+ * Calculates the arrival date of an order based on the current date.
+ * @param date - The 'Date' object representing the current date.
  * @param monthNames - An array of month names.
  * @returns a string that represents the estimated arrival date of an order.
  */
@@ -184,32 +182,27 @@ export function calculateOrderArrivalDate(date, monthNames) {
     const dayOfMonth = date.getDate();
 
     if (dayOfMonth + 2 >= 30) {
-        // calculate the next month
         const nextMonth = (date.getMonth() + 1) % 12;
 
-        // display the first day of the next month
+        // arrival date is the first day of the next month
         return `${monthNames[nextMonth]} 1`;
     } else {
-        // display 2 days after the day of the month (2 day shipping)
+        // arrival date is two days after the purchase date
         return `${monthNames[date.getMonth()]} ${dayOfMonth + 2}`;
     }
 }
 
 /**
- * This function cancels an order based on the `orderId`, updates the orders array,
- * and syncs the changes with the page.
+ * Cancels an order using the 'orderId' and updates displays.
  * @param orderId - The unique identifier of the order to be cancelled.
  */
 function cancelOrder(orderId) {
-    // find the index of the order with the specified ID
     const orderIndex = orders.findIndex((order) => order.id === orderId);
 
-    // if the order is found, remove it from the orders array
     if (orderIndex !== -1) {
         orders.splice(orderIndex, 1);
-        saveOrdersToLocalStorage();
+        updateOrdersInLocalStorage();
 
-        // remove the order from the page
         const orderItemContainer = document.querySelector(
             `.order-container-${orderId}`
         );
@@ -218,10 +211,10 @@ function cancelOrder(orderId) {
 }
 
 /**
- * This code attaches a click event listener to the container that holds all "Cancel Order"
- * buttons. It uses event delegation to handle the click events for the buttons.
- * If a button is clicked, a modal appears and the user is prompted to confirm the cancellation.
- * */
+ * Attaches a click event listener to the element that holds all "Cancel Order"
+ * buttons using event delegation. If a button is clicked, a modal appears for the user
+ * to confirm the cancellation.
+ */
 const ordersGrid = document.querySelector('.orders-grid');
 if (ordersGrid) {
     document
@@ -236,8 +229,6 @@ if (ordersGrid) {
                     .querySelector('.modal-cancel-order-button')
                     .addEventListener('click', () => {
                         modal.close();
-
-                        // get the order ID from the data attribute
                         const orderId = event.target.dataset.orderId;
 
                         cancelOrder(orderId);
@@ -253,7 +244,11 @@ if (ordersGrid) {
         });
 }
 
-// This function diplays a modal when an order is successfully placed
+/**
+ * Displays a modal to signify an order was successfully placed.
+ * A flag in local storage is checked to determine if the user is redirected to
+ * the orders page after successfully placing an order.
+ */
 function displayPlacedOrderModal() {
     const orderPlaced = localStorage.getItem('orderPlaced');
 
@@ -261,16 +256,14 @@ function displayPlacedOrderModal() {
         const modal = document.querySelector('.placed-order-modal');
         modal.showModal();
 
-
         document
             .querySelector('.modal-close-window-button')
             .addEventListener('click', () => {
                 modal.close();
             });
 
-        // clear the flag after displaying the modal
+        // clear the flag
         localStorage.removeItem('orderPlaced');
     }
 }
-
 displayPlacedOrderModal();

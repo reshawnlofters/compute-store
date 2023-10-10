@@ -1,5 +1,5 @@
 /**
- * This function takes a price and returns it formatted with 2 decimal places.
+ * Formats prices to two decimal places.
  * @param priceInCents - The price in cents.
  */
 export function formatCurrency(priceInCents) {

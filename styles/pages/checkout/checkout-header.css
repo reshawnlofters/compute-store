@@ -14,7 +14,7 @@
     z-index: 1000;
 }
 
-.header-content {
+.checkout-header-container {
     width: 100%;
     max-width: 1100px;
 
@@ -27,10 +27,9 @@
 }
 
 .checkout-header-left-section .bi {
-    width: 100px;
-    margin-top: 12px;
-    color: black;
     font-size: 40px;
+    color: black;
+    padding: 6px;
 }
 
 /* media queries to modify styles based on screen width */
@@ -60,7 +59,7 @@
     color: rgb(0, 113, 133);
     font-size: 23px;
     text-decoration: none;
-    cursor: pointer;
+    margin-top: 2px;
 }
 
 @media (max-width: 1000px) {

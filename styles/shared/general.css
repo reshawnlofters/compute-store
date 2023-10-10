@@ -15,7 +15,6 @@ select {
     background-color: rgb(255, 216, 20);
     border: 1px solid rgb(252, 210, 0);
     border-radius: 8px;
-    cursor: pointer;
     box-shadow: 0 2px 5px rgba(213, 217, 217, 0.5);
 }
 
@@ -35,7 +34,6 @@ select {
     background: white;
     border: 1px solid rgb(213, 217, 217);
     border-radius: 8px;
-    cursor: pointer;
     box-shadow: 0 2px 5px rgba(213, 217, 217, 0.5);
 }
 
@@ -73,7 +71,6 @@ select {
     border-radius: 8px;
     padding: 3px 5px;
     font-size: 15px;
-    cursor: pointer;
     box-shadow: 0 2px 5px rgba(213, 217, 217, 0.5);
 }
 
@@ -82,13 +79,13 @@ input:focus {
     outline: 2px solid rgb(255, 153, 0);
 }
 
-.saved-cart-item-container-grid {
+.wish-list-product-container-grid {
     display: grid;
     grid-template-columns: 100px auto;
     column-gap: 25px;
 }
 
-.saved-cart-item-container {
+.wish-list-product-container {
     height: 273px;
     width: 753px;
     border: 1px solid rgb(222, 222, 222);
@@ -99,14 +96,14 @@ input:focus {
     align-items: center;
 }
 
-.saved-cart-item-details-container {
+.wish-list-product-details-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
 .empty-cart-container,
-.empty-saved-cart-items-container,
+.empty-wish-list-container,
 .empty-orders-container {
     display: grid;
     grid-template-columns: auto auto;
@@ -114,12 +111,12 @@ input:focus {
     width: auto;
 }
 
-.empty-saved-cart-items-container {
+.empty-wish-list-container {
     width: 753px;
 }
 
 .empty-cart-message-container,
-.empty-saved-cart-items-message-container,
+.empty-wish-list-message-container,
 .empty-orders-message-container {
     display: flex;
     flex-direction: column;
@@ -127,14 +124,14 @@ input:focus {
 }
 
 .empty-cart-message-container span,
-.empty-saved-cart-items-container span,
+.empty-wish-list-container span,
 .empty-orders-message-container span {
     font-size: 18px;
     font-weight: 700;
 }
 
 .empty-cart-container-img,
-.empty-saved-cart-items-container-img,
+.empty-wish-list-container-img,
 .empty-orders-container-img {
     height: 50px;
     align-self: end;
@@ -144,8 +141,8 @@ input:focus {
 .cart-item-container,
 .payment-summary-container,
 .empty-cart-container,
-.empty-saved-cart-items-container,
-.empty-saved-cart-items-container,
+.empty-wish-list-container,
+.empty-wish-list-container,
 .empty-orders-container {
     border: 1px solid rgb(222, 222, 222);
     border-radius: 4px;

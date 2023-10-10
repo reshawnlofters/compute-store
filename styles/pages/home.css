@@ -89,7 +89,6 @@ main {
 
 .product-rating-count {
     color: rgb(1, 124, 182);
-    cursor: pointer;
     margin-top: 3px;
 }
 
@@ -119,7 +118,7 @@ main {
     background-color: #fff200;
 }
 
-.added-to-cart {
+.added-product-to-cart {
     color: rgb(6, 125, 98);
     font-size: 16px;
 
@@ -130,11 +129,11 @@ main {
     opacity: 0;
 }
 
-.added-to-cart-visible {
+.added-product-to-cart-visible {
     opacity: 1;
 }
 
-.added-to-cart img {
+.added-product-to-cart img {
     height: 20px;
     margin-right: 5px;
 }

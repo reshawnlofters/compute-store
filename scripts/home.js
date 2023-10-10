@@ -1,9 +1,14 @@
-import { products } from '../data/products.js';
+import { products } from '../data/home-page.js';
 import { formatCurrency } from './utils/format-currency.js';
-import { addCartItem, calculateCartQuantity } from '../data/cart.js';
+import {
+    addProductToCart,
+    calculateCartQuantity,
+} from '../data/checkout-page.js';
 
-/* This function generates the HTML for each product in the `products` array. It iterates
-through each product and concatenates the generated HTML to the `productsHTML` variable.*/
+/**
+ * Generates HTML for displaying products.
+ * Locates products in the 'products' array to access product details.
+ */
 function generateProductsHTML() {
     let productsHTML = '';
 
@@ -50,7 +55,9 @@ function generateProductsHTML() {
 
                 <div class="products-spacer"></div>
 
-                <div class="added-to-cart js-added-to-cart-${product.id}">
+                <div class="added-product-to-cart js-added-product-to-cart-${
+                    product.id
+                }">
                 <img src="images/icons/checkmark.png">
                     Added
                 </div>
@@ -62,95 +69,84 @@ function generateProductsHTML() {
             </div>`;
     });
 
-    // display the products on the page
     const productsGrid = document.querySelector('.js-products-grid');
     if (productsGrid) {
         productsGrid.innerHTML = productsHTML;
     }
 }
-
 generateProductsHTML();
 
-// This function updates the cart quantity displayed on the page
-function updateCartQuantity() {
-    // get the cart quantity
+function updateCartQuantityDisplay() {
     const cartQuantity = calculateCartQuantity();
 
     document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 }
+updateCartQuantityDisplay();
 
-updateCartQuantity();
-
-/* This code adds click event listeners to each "Add to Cart" button on the page.
-When a button is clicked, the code retrieves the `productId` and gets the quantity 
-selector value associated with product. */
+/**
+ * Attaches a click event listener to the "Add Product To Cart" buttons.
+ * If a button is clicked, the code gets the 'productId' and quantity selector value.
+ * It then adds the product to the cart and resets the quantity selector value.
+ */
 document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
     button.addEventListener('click', () => {
         setTimeout(() => {
             const productId = button.dataset.productId;
-    
-            // get the quantity selector element value and convert it to a number
+
             const quantitySelectorValue = Number(
-                document.querySelector(`.js-quantity-selector-${productId}`).value
+                document.querySelector(`.js-quantity-selector-${productId}`)
+                    .value
             );
-    
-            addCartItem(productId, quantitySelectorValue);
-            displayAddedMessage(productId);
-            updateCartQuantity();
-    
-            // reset the quantity selector value
-            document.querySelector(`.js-quantity-selector-${productId}`).value = 1;
-        }, 500)
+
+            addProductToCart(productId, quantitySelectorValue);
+            displayAddedProductToCartMessage(productId);
+            updateCartQuantityDisplay();
+
+            document.querySelector(
+                `.js-quantity-selector-${productId}`
+            ).value = 1;
+        }, 500);
     });
 });
 
-// object to store added message timeouts in the `displayAddedMessage` function
+// object to store added message timeouts in 'displayAddedProductToCartMessage' function
 const addedMessageTimeouts = {};
 
 /**
- * This function displays an added message for a specific product by adding a class to
- * temporarily make the message visible.
- * @param productId - The unique identifier of the product.
- * It is used to select the specific added message element associated with a product.
+ * Temporarily displays an "Added Product to Cart" message by adding a class to the
+ * message element to make it visibile.
+ * @param productId - The unique identifier of the product added to the cart.
  */
-function displayAddedMessage(productId) {
-    // get the added message element
+function displayAddedProductToCartMessage(productId) {
     let addedMessageElement = document.querySelector(
-        `.js-added-to-cart-${productId}`
+        `.js-added-product-to-cart-${productId}`
     );
 
-    // add a class to the added message element to make it visible
-    addedMessageElement.classList.add('added-to-cart-visible');
+    addedMessageElement.classList.add('added-product-to-cart-visible');
 
-    // check for any previous added message timeouts
+    // check for any previous timeouts
     const previousTimeoutId = addedMessageTimeouts[productId];
 
-    // clear any previous timeouts
     if (previousTimeoutId) {
         clearTimeout(previousTimeoutId);
     }
 
-    // set an added message timeout
     const timeoutId = setInterval(() => {
-        // remove the class added to the added message element to make it invisible
-        addedMessageElement.classList.remove('added-to-cart-visible');
+        addedMessageElement.classList.remove('added-product-to-cart-visible');
     }, 2000);
 
-    // add the added message `timeoutId` to the `addedMessageTimeouts` object
+    // add the added message 'timeoutId' to the 'addedMessageTimeouts' object
     addedMessageTimeouts[productId] = timeoutId;
 }
 
-// This function clears the search bar input when leaving the page
-function clearSearchBarOnLeave() {
-  const searchBar = document.querySelector('.search-bar');
-  
-  window.addEventListener('beforeunload', (event) => {
-    if (searchBar.value.trim() !== '') {
-      event.preventDefault();
-      searchBar.value = '';
-    }
-  });
+function clearSearchBarOnPageLeave() {
+    const searchBar = document.querySelector('.search-bar');
+
+    window.addEventListener('beforeunload', (event) => {
+        if (searchBar.value.trim() !== '') {
+            event.preventDefault();
+            searchBar.value = '';
+        }
+    });
 }
-
-clearSearchBarOnLeave();
-
+clearSearchBarOnPageLeave();
