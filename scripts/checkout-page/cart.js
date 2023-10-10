@@ -71,7 +71,7 @@ function generateCartHTML() {
                                 }">
                                     Delete
                                 </span>
-                                <p class="js-update-cart-item-quantity-limit-message"></p>
+                                <p class="cart-item-quantity-limit-message"></p>
                             </div>
                         </div>
                         <div>
@@ -173,30 +173,29 @@ export function updateCartQuantityDisplay() {
 updateCartQuantityDisplay();
 
 /**
- * Temporarily displays an "Update Cart Item Quantity" error.
- * @param cartItemContainer - The element that holds the error message element.
+ * Temporarily displays a quantity limit message for a cart item.
+ * @param cartItemContainer - The element that contains the message element.
  */
-function displayCartItemQuantityUpdateError(cartItemContainer) {
-    const errorMessageElement = cartItemContainer.querySelector(
-        '.js-update-cart-item-quantity-limit-message'
+function displayCartItemQuantityLimitMessage(cartItemContainer) {
+    const messageElement = cartItemContainer.querySelector(
+        '.cart-item-quantity-limit-message'
     );
 
-    errorMessageElement.innerHTML = '<br>Quantity limit reached (50)';
+    messageElement.innerHTML = '<br>Quantity limit: 50';
 
-    // clear any previous timeouts
     if (cartItemContainer.timeoutId) {
         clearTimeout(cartItemContainer.timeoutId);
     }
 
     cartItemContainer.timeoutId = setTimeout(() => {
-        errorMessageElement.innerHTML = '';
+        messageElement.innerHTML = '';
     }, 4000);
 }
 
 /**
- * Saves a new cart item quantity inputted by the user and updates displays.
- * @param productId - The unique identifier of the cart item to be updated.
- * @param cartItemContainer - The element that holds the quantity label and input field.
+ * Saves the quantity of a cart item inputted by the user and updates displays.
+ * @param productId - The unique identifier of the cart item to be updated in quantity.
+ * @param cartItemContainer - The element that contains the quantity label and input field.
  */
 function saveNewCartItemQuantity(productId, cartItemContainer) {
     const updateCartItemQuantityInputElement = cartItemContainer.querySelector(
@@ -207,22 +206,16 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
         10
     );
 
-    if (isNaN(newCartItemQuantity)) {
+    if (isNaN(newCartItemQuantity) || newCartItemQuantity === '') {
         return;
-    }
-
-    if (newCartItemQuantity === '') {
-        return;
-    }
-
-    if (newCartItemQuantity > 50) {
-        displayCartItemQuantityUpdateError(cartItemContainer);
     } else if (newCartItemQuantity === 0) {
         removeCartItem(productId);
         updateCartVisibility();
         updateCartQuantityDisplay();
+    } else if (newCartItemQuantity > 50) {
+        displayCartItemQuantityLimitMessage(cartItemContainer);
     } else {
-        // update the quantity label
+        // update the quantity label value
         cartItemContainer.querySelector('.cart-item-quantity-label').innerHTML =
             String(newCartItemQuantity);
 
@@ -260,6 +253,23 @@ function removeCartItemDisplay(productId) {
     updatePaymentSummaryDisplay();
     updateCartQuantityDisplay();
 }
+
+/**
+ * Attaches a click event listener to the page. When a click event occurs, the code checks
+ * if the click target is not inside a cart item container. If it is not inside a cart item
+ * container, the code removes the 'is-editing-quantity' class from all cart item containers.
+ * The class displays the elements for updating a cart item quantity.
+ */
+document.addEventListener('click', (event) => {
+    if (!event.target.closest('.cart-item-container')) {
+        const cartItemContainers = document.querySelectorAll(
+            '.cart-item-container'
+        );
+        cartItemContainers.forEach((container) => {
+            container.classList.remove('is-editing-quantity');
+        });
+    }
+});
 
 /**
  * Attaches a click event listener to the element that holds all "Update Cart Item Quantity"

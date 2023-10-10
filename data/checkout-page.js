@@ -17,23 +17,20 @@ export function updateWishListInLocalStorage() {
 }
 
 /**
- * Adds a product to the cart if not already in the cart.
- * Increases the quantity of a product in the cart if the product already exists in the cart.
+ * Adds a product to the cart and increases the quantity of a product already in the cart.
+ * Ensures the quantity of a product added to the cart does not exceed the limit (50).
  * @param productId - The unique identifier of the product to be added to the cart.
  * @param quantitySelectorValue - The quantity of the product the user wants to add to the cart.
  */
 export function addProductToCart(productId, quantitySelectorValue) {
-    let matchingCartItem;
     const product = products.find((product) => product.id === productId);
-
-    cart.forEach((cartItem) => {
-        if (productId === cartItem.productId) {
-            matchingCartItem = cartItem;
-        }
-    });
+    let matchingCartItem = cart.find(
+        (cartItem) => cartItem.productId === productId
+    );
 
     if (matchingCartItem) {
         matchingCartItem.quantity += quantitySelectorValue;
+        matchingCartItem.quantity = Math.min(matchingCartItem.quantity, 50);
     } else {
         cart.push({
             productId,
