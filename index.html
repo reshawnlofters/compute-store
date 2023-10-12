@@ -20,15 +20,14 @@
         <script type="module" src="scripts/home.js" defer></script>
     </head>
     <body>
-        <!-- Header -->
-        <header class="home-header">
-            <div class="home-header-left-section">
-                <a class="header-link" href="index.html">
-                    <i class="bi bi-android"></i>
+        <header class="home-header-container">
+            <div class="home-header-left-section-container">
+                <a class="home-header-logo header-link" href="index.html">
+                    Compute<span>Express</span>
                 </a>
             </div>
 
-            <div class="home-header-middle-section">
+            <div class="home-header-middle-section-container">
                 <div class="search-bar-container">
                     <input
                         class="search-bar"
@@ -41,7 +40,7 @@
                 </div>
             </div>
 
-            <div class="home-header-right-section">
+            <div class="home-header-right-section-container">
                 <a class="orders-link header-link" href="orders.html">
                     <i class="bi bi-bag-check"></i>
                     <span class="orders-text">Orders</span>
@@ -51,16 +50,24 @@
                     <div class="cart-text">
                         Cart
                         <div>
-                            <span class="cart-quantity js-cart-quantity"></span>
+                            <span class="cart-quantity"></span>
                         </div>
                     </div>
                 </a>
             </div>
         </header>
 
-        <!-- Main -->
         <main>
-            <div class="products-grid js-products-grid"></div>
+            <section class="promotions-section">
+                <div class="promotions-section-container"></div>
+            </section>
+
+            <section class="products-section-container">
+                <div class="products-section-title">Featured Products</div>
+                <div class="products-grid-container">
+                    <div class="products-grid"></div>
+                </div>
+            </section>
         </main>
     </body>
 </html>

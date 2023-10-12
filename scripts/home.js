@@ -55,21 +55,21 @@ function generateProductsHTML() {
 
                 <div class="products-spacer"></div>
 
-                <div class="added-product-to-cart js-added-product-to-cart-${
+                <div class="added-product-to-cart-message added-product-to-cart-message-${
                     product.id
                 }">
                 <img src="images/icons/checkmark.png">
                     Added
                 </div>
                 
-                <button class="add-to-cart-button js-add-to-cart-button button-primary"
+                <button class="add-product-to-cart-button button-primary"
                 data-product-id="${product.id}">
                     Add to Cart
                 </button>
             </div>`;
     });
 
-    const productsGrid = document.querySelector('.js-products-grid');
+    const productsGrid = document.querySelector('.products-grid');
     if (productsGrid) {
         productsGrid.innerHTML = productsHTML;
     }
@@ -79,7 +79,7 @@ generateProductsHTML();
 function updateCartQuantityDisplay() {
     const cartQuantity = calculateCartQuantity();
 
-    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+    document.querySelector('.cart-quantity').innerHTML = cartQuantity;
 }
 updateCartQuantityDisplay();
 
@@ -88,7 +88,7 @@ updateCartQuantityDisplay();
  * If a button is clicked, the code gets the 'productId' and quantity selector value.
  * It then adds the product to the cart and resets the quantity selector value.
  */
-document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
+document.querySelectorAll('.add-product-to-cart-button').forEach((button) => {
     button.addEventListener('click', () => {
         setTimeout(() => {
             const productId = button.dataset.productId;
@@ -119,10 +119,10 @@ const addedMessageTimeouts = {};
  */
 function displayAddedProductToCartMessage(productId) {
     let addedMessageElement = document.querySelector(
-        `.js-added-product-to-cart-${productId}`
+        `.added-product-to-cart-message-${productId}`
     );
 
-    addedMessageElement.classList.add('added-product-to-cart-visible');
+    addedMessageElement.classList.add('added-product-to-cart-message-visible');
 
     // check for any previous timeouts
     const previousTimeoutId = addedMessageTimeouts[productId];
@@ -132,7 +132,7 @@ function displayAddedProductToCartMessage(productId) {
     }
 
     const timeoutId = setInterval(() => {
-        addedMessageElement.classList.remove('added-product-to-cart-visible');
+        addedMessageElement.classList.remove('added-product-to-cart-message-visible');
     }, 2000);
 
     // add the added message 'timeoutId' to the 'addedMessageTimeouts' object

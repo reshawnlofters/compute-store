@@ -10,6 +10,10 @@ select {
     cursor: pointer;
 }
 
+.bi {
+    color: black;
+}
+
 .button-primary {
     color: rgb(33, 33, 33);
     background-color: rgb(255, 216, 20);
@@ -76,7 +80,7 @@ select {
 
 select:focus,
 input:focus {
-    outline: 2px solid rgb(255, 153, 0);
+    outline: none;
 }
 
 .wish-list-product-container-grid {
