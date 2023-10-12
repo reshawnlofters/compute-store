@@ -132,7 +132,9 @@ function displayAddedProductToCartMessage(productId) {
     }
 
     const timeoutId = setInterval(() => {
-        addedMessageElement.classList.remove('added-product-to-cart-message-visible');
+        addedMessageElement.classList.remove(
+            'added-product-to-cart-message-visible'
+        );
     }, 2000);
 
     // add the added message 'timeoutId' to the 'addedMessageTimeouts' object
@@ -150,3 +152,35 @@ function clearSearchBarOnPageLeave() {
     });
 }
 clearSearchBarOnPageLeave();
+
+/**
+ * Attaches a scroll event listener to the page. When a user scrolls down, the
+ * 'homeHeaderContainer' and 'homeHeaderOfferContainer' elements are controlled
+ * to achieve a fixed header effect.
+ */
+window.addEventListener('load', () => {
+    const homeHeaderContainer = document.querySelector(
+        '.home-header-container'
+    );
+    const homeHeaderOfferContainer = document.querySelector(
+        '.home-header-offer-container'
+    );
+
+    // Function to adjust the header elements based on scroll position
+    function adjustHeaderOnScroll() {
+        if (window.scrollY > 0) {
+            homeHeaderContainer.style.position = 'fixed';
+            homeHeaderContainer.style.top = '0';
+            homeHeaderOfferContainer.style.display = 'none';
+        } else {
+            homeHeaderContainer.style.position = 'relative';
+            homeHeaderContainer.style.top = '35px';
+            homeHeaderOfferContainer.style.display = 'flex';
+        }
+    }
+    adjustHeaderOnScroll();
+
+    window.addEventListener('scroll', () => {
+        adjustHeaderOnScroll();
+    });
+});

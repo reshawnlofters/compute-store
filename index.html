@@ -7,7 +7,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Open+Sans:wght@300;400;500;600;700&display=swap"
             rel="stylesheet"
         />
         <link
@@ -20,52 +20,72 @@
         <script type="module" src="scripts/home.js" defer></script>
     </head>
     <body>
-        <header class="home-header-container">
-            <div class="home-header-left-section-container">
-                <a class="home-header-logo header-link" href="index.html">
-                    Compute<span>Express</span>
-                </a>
+        <header>
+            <div class="home-header-offer-container">
+                <p>Free Shipping On Orders Over $100</p>
             </div>
-
-            <div class="home-header-middle-section-container">
-                <div class="search-bar-container">
-                    <input
-                        class="search-bar"
-                        type="text"
-                        placeholder="Search"
-                    />
-                    <button class="search-button">
-                        <i class="bi bi-search"></i>
-                    </button>
+            <div class="home-header-container">
+                <div class="home-header-left-section-container">
+                    <a class="home-header-logo header-link" href="index.html">
+                        Compute Express
+                    </a>
                 </div>
-            </div>
-
-            <div class="home-header-right-section-container">
-                <a class="orders-link header-link" href="orders.html">
-                    <i class="bi bi-bag-check"></i>
-                    <span class="orders-text">Orders</span>
-                </a>
-                <a class="cart-link header-link" href="checkout.html">
-                    <i class="bi bi-cart3"></i>
-                    <div class="cart-text">
-                        Cart
-                        <div>
-                            <span class="cart-quantity"></span>
-                        </div>
+                <div class="home-header-middle-section-container">
+                    <div class="search-bar-container">
+                        <input
+                            class="search-bar"
+                            type="text"
+                            placeholder="Search Products"
+                        />
+                        <button class="search-button">
+                            <img
+                                src="images/icons/search.png"
+                                alt="search button"
+                            />
+                        </button>
                     </div>
-                </a>
+                </div>
+                <div class="home-header-right-section-container">
+                    <a
+                        class="orders-link-container header-link"
+                        href="orders.html"
+                    >
+                        <span class="orders-link-text">Orders</span>
+                    </a>
+                    <a
+                        class="checkout-link-container header-link"
+                        href="checkout.html"
+                    >
+                        <i class="bi bi-cart3"></i>
+                        <div class="checkout-link-text">
+                            Cart
+                            <div>
+                                <span class="cart-quantity"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </header>
 
         <main>
             <section class="promotions-section">
-                <div class="promotions-section-container"></div>
+                <div class="promotions-section-container">
+                    <img
+                        src="images/backgrounds/promotion.webp"
+                        alt="promotion image"
+                    />
+                    <div class="overlay"></div>
+                    <button class="shop-now-button">Shop Now</button>
+                </div>
             </section>
 
-            <section class="products-section-container">
-                <div class="products-section-title">Featured Products</div>
-                <div class="products-grid-container">
-                    <div class="products-grid"></div>
+            <section class="products-section">
+                <div class="products-section-container">
+                    <div class="products-section-title">Featured Products</div>
+                    <div class="products-grid-container">
+                        <div class="products-grid"></div>
+                    </div>
                 </div>
             </section>
         </main>
