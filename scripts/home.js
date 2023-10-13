@@ -77,7 +77,7 @@ updateCartQuantityDisplay();
 /**
  * Attaches a click event listener to the "add product to cart" buttons.
  * When a button is clicked, the code retrieves the 'productId' and the product quantity.
- * It then adds the product to the cart, updates the cart quantity display, and triggers 
+ * It then adds the product to the cart, updates the cart quantity display, and triggers
  * a confirmation message display if the product quantity is greater than zero.
  * Finally, it resets the product quantity value to zero.
  */
@@ -93,7 +93,7 @@ document.querySelectorAll('.add-product-to-cart-button').forEach((button) => {
 
             addProductToCart(productId, productQuantity);
             updateCartQuantityDisplay();
-            
+
             if (productQuantity > 0) {
                 displayAddedProductToCartMessage(productId);
             }
@@ -107,8 +107,8 @@ document.querySelectorAll('.add-product-to-cart-button').forEach((button) => {
 
 /**
  * Attaches a click event listener to the 'productsGrid' element, which represents the
- * container for all products. When a click event occurs, the code determines whether 
- * the clicked element is an "increase quantity" or "decrease quantity" button. When an 
+ * container for all products. When a click event occurs, the code determines whether
+ * the clicked element is an "increase quantity" or "decrease quantity" button. When an
  * "increase quantity" button is clicked, the code finds the corresponding product container,
  * retrieves and increments the product quantity, and updates the displayed quantity.
  * Similarly, when a "decrease quantity" button is clicked, it performs the reverse operation by
@@ -117,12 +117,15 @@ document.querySelectorAll('.add-product-to-cart-button').forEach((button) => {
 const productsGrid = document.querySelector('.products-grid');
 if (productsGrid) {
     productsGrid.addEventListener('click', (event) => {
-        if (event.target.classList.contains('increase-product-quantity-button')) {
+        if (
+            event.target.classList.contains('increase-product-quantity-button')
+        ) {
             const productContainer = event.target.closest('.product-container');
 
             if (productContainer) {
-                const productQuantityElement =
-                    productContainer.querySelector('.product-quantity-count');
+                const productQuantityElement = productContainer.querySelector(
+                    '.product-quantity-count'
+                );
                 let productQuantity = parseInt(
                     productQuantityElement.textContent,
                     10
@@ -137,8 +140,9 @@ if (productsGrid) {
             const productContainer = event.target.closest('.product-container');
 
             if (productContainer) {
-                const productQuantityElement =
-                    productContainer.querySelector('.product-quantity-count');
+                const productQuantityElement = productContainer.querySelector(
+                    '.product-quantity-count'
+                );
                 let productQuantity = parseInt(
                     productQuantityElement.textContent,
                     10
@@ -206,15 +210,13 @@ clearSearchBarOnPageLeave();
 
 /**
  * Attaches a scroll event listener to the page. When a user scrolls down, the
- * 'homeHeaderContainer' and 'homeHeaderOfferContainer' elements are controlled
+ * 'homeHeaderContainer' and 'homeHeaderPromoContainer' elements are controlled
  * to achieve a fixed header effect.
  */
 window.addEventListener('load', () => {
-    const homeHeaderContainer = document.querySelector(
-        '.home-header-container'
-    );
-    const homeHeaderOfferContainer = document.querySelector(
-        '.home-header-offer-container'
+    const homeHeaderContainer = document.querySelector('.header-container');
+    const homeHeaderPromoContainer = document.querySelector(
+        '.header-promo-container'
     );
 
     // Function to adjust the header elements based on scroll position
@@ -222,11 +224,11 @@ window.addEventListener('load', () => {
         if (window.scrollY > 0) {
             homeHeaderContainer.style.position = 'fixed';
             homeHeaderContainer.style.top = '0';
-            homeHeaderOfferContainer.style.display = 'none';
+            homeHeaderPromoContainer.style.display = 'none';
         } else {
             homeHeaderContainer.style.position = 'relative';
-            homeHeaderContainer.style.top = '35px';
-            homeHeaderOfferContainer.style.display = 'flex';
+            homeHeaderContainer.style.top = '40px';
+            homeHeaderPromoContainer.style.display = 'flex';
         }
     }
     adjustHeaderOnScroll();
