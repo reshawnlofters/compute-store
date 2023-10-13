@@ -33,7 +33,7 @@ main {
     width: 30px;
 }
 
-.product-quantity-container span,
+.cart-item-quantity-container span,
 .update-cart-item-quantity-button,
 .add-wish-list-product-to-cart-button {
     margin-right: 4px;

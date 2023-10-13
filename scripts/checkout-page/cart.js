@@ -53,7 +53,7 @@ function generateCartHTML() {
                                     cartItem.priceInCents * cartItem.quantity
                                 )}
                             </div>
-                            <div class="product-quantity-container">
+                            <div class="cart-item-quantity-container">
                                 <span>
                                     Quantity: <span class="cart-item-quantity-label">${
                                         cartItem.quantity

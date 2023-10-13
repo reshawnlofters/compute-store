@@ -10,6 +10,15 @@ select {
     cursor: pointer;
 }
 
+ul {
+    list-style-type: none;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
 .bi {
     color: black;
 }

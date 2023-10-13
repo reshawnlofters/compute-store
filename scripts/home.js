@@ -7,14 +7,16 @@ import {
 
 /**
  * Generates HTML for displaying products.
- * Locates products in the 'products' array to access product details.
+ * Iterates through the 'products' array to create product containers
+ * that include images, names, prices, quantity controls, and add-to-cart buttons.
+ * Appends the generated HTML to the 'productsGrid' element for display.
  */
 function generateProductsHTML() {
     let productsHTML = '';
 
     products.forEach((product) => {
         productsHTML += `
-            <div class="product-container">
+            <div class="product-container product-container-${product.id}">
                 <div class="product-image-container">
                     <img class="product-image"
                     src="${product.image}">
@@ -24,48 +26,37 @@ function generateProductsHTML() {
                     ${product.name}
                 </div>
 
-                <div class="product-rating-container">
-                    <img class="product-rating-stars"
-                    src="images/ratings/rating-${
-                        product.rating.stars * 10
-                    }.png">
-                    <div class="product-rating-count link-primary">
-                    ${product.rating.count}
-                    </div>
-                </div>
-
                 <div class="product-price">
                     $${formatCurrency(product.priceInCents)}
                 </div>
 
-                <div class="product-quantity-container">
-                    <select class="js-quantity-selector-${product.id}">
-                    <option selected value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    </select>
-                </div>
-
-                <div class="products-spacer"></div>
-
                 <div class="added-product-to-cart-message added-product-to-cart-message-${
                     product.id
                 }">
-                <img src="images/icons/checkmark.png">
+                    <img src="images/icons/checkmark.png">
                     Added
                 </div>
                 
-                <button class="add-product-to-cart-button button-primary"
-                data-product-id="${product.id}">
-                    Add to Cart
-                </button>
+                <div class="add-product-to-cart-parent-container">
+                    <div class="add-product-to-cart-container">
+                        <div class="input-product-quantity-container">
+                            <div class="product-quantity-controls-container">
+                                <button class="decrease-product-quantity-button">-</button>
+                                <div class="product-quantity-count product-quantity-count-${
+                                    product.id
+                                }">0</div>
+                                <button class="increase-product-quantity-button">+</button>
+                                <div class="vertical-rule"></div>
+                            </div>
+                            <div>
+                                <button class="add-product-to-cart-button"
+                                data-product-id="${product.id}">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>`;
     });
 
@@ -84,30 +75,86 @@ function updateCartQuantityDisplay() {
 updateCartQuantityDisplay();
 
 /**
- * Attaches a click event listener to the "Add Product To Cart" buttons.
- * If a button is clicked, the code gets the 'productId' and quantity selector value.
- * It then adds the product to the cart and resets the quantity selector value.
+ * Attaches a click event listener to the "add product to cart" buttons.
+ * When a button is clicked, the code retrieves the 'productId' and the product quantity.
+ * It then adds the product to the cart, updates the cart quantity display, and triggers 
+ * a confirmation message display if the product quantity is greater than zero.
+ * Finally, it resets the product quantity value to zero.
  */
 document.querySelectorAll('.add-product-to-cart-button').forEach((button) => {
     button.addEventListener('click', () => {
         setTimeout(() => {
             const productId = button.dataset.productId;
 
-            const quantitySelectorValue = Number(
-                document.querySelector(`.js-quantity-selector-${productId}`)
-                    .value
+            const productQuantity = Number(
+                document.querySelector(`.product-quantity-count-${productId}`)
+                    .textContent
             );
 
-            addProductToCart(productId, quantitySelectorValue);
-            displayAddedProductToCartMessage(productId);
+            addProductToCart(productId, productQuantity);
             updateCartQuantityDisplay();
+            
+            if (productQuantity > 0) {
+                displayAddedProductToCartMessage(productId);
+            }
 
             document.querySelector(
-                `.js-quantity-selector-${productId}`
-            ).value = 1;
+                `.product-quantity-count-${productId}`
+            ).textContent = 0;
         }, 500);
     });
 });
+
+/**
+ * Attaches a click event listener to the 'productsGrid' element, which represents the
+ * container for all products. When a click event occurs, the code determines whether 
+ * the clicked element is an "increase quantity" or "decrease quantity" button. When an 
+ * "increase quantity" button is clicked, the code finds the corresponding product container,
+ * retrieves and increments the product quantity, and updates the displayed quantity.
+ * Similarly, when a "decrease quantity" button is clicked, it performs the reverse operation by
+ * decreasing the product quantity, ensuring it doesn't go below zero.
+ */
+const productsGrid = document.querySelector('.products-grid');
+if (productsGrid) {
+    productsGrid.addEventListener('click', (event) => {
+        if (event.target.classList.contains('increase-product-quantity-button')) {
+            const productContainer = event.target.closest('.product-container');
+
+            if (productContainer) {
+                const productQuantityElement =
+                    productContainer.querySelector('.product-quantity-count');
+                let productQuantity = parseInt(
+                    productQuantityElement.textContent,
+                    10
+                );
+
+                productQuantity++;
+                productQuantityElement.innerHTML = productQuantity;
+            }
+        } else if (
+            event.target.classList.contains('decrease-product-quantity-button')
+        ) {
+            const productContainer = event.target.closest('.product-container');
+
+            if (productContainer) {
+                const productQuantityElement =
+                    productContainer.querySelector('.product-quantity-count');
+                let productQuantity = parseInt(
+                    productQuantityElement.textContent,
+                    10
+                );
+
+                productQuantity--;
+
+                if (productQuantity < 0) {
+                    productQuantity = 0;
+                }
+
+                productQuantityElement.innerHTML = productQuantity;
+            }
+        }
+    });
+}
 
 // object to store added message timeouts in 'displayAddedProductToCartMessage' function
 const addedMessageTimeouts = {};
@@ -122,23 +169,27 @@ function displayAddedProductToCartMessage(productId) {
         `.added-product-to-cart-message-${productId}`
     );
 
-    addedMessageElement.classList.add('added-product-to-cart-message-visible');
-
-    // check for any previous timeouts
-    const previousTimeoutId = addedMessageTimeouts[productId];
-
-    if (previousTimeoutId) {
-        clearTimeout(previousTimeoutId);
-    }
-
-    const timeoutId = setInterval(() => {
-        addedMessageElement.classList.remove(
+    if (addedMessageElement) {
+        addedMessageElement.classList.add(
             'added-product-to-cart-message-visible'
         );
-    }, 2000);
 
-    // add the added message 'timeoutId' to the 'addedMessageTimeouts' object
-    addedMessageTimeouts[productId] = timeoutId;
+        // check for any previous timeouts
+        const previousTimeoutId = addedMessageTimeouts[productId];
+
+        if (previousTimeoutId) {
+            clearTimeout(previousTimeoutId);
+        }
+
+        const timeoutId = setInterval(() => {
+            addedMessageElement.classList.remove(
+                'added-product-to-cart-message-visible'
+            );
+        }, 2000);
+
+        // add the added message 'timeoutId' to the 'addedMessageTimeouts' object
+        addedMessageTimeouts[productId] = timeoutId;
+    }
 }
 
 function clearSearchBarOnPageLeave() {
@@ -184,3 +235,6 @@ window.addEventListener('load', () => {
         adjustHeaderOnScroll();
     });
 });
+
+// Displays the current year in the footer copyright notice
+document.querySelector('.current-year').innerHTML = new Date().getFullYear();
