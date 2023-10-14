@@ -1,13 +1,13 @@
 export const products = [
     {
         id: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
-        image: 'images/products/athletic-cotton-socks-6-pairs.jpg',
-        name: 'Black and Gray Athletic Cotton Socks - 6 Pairs',
+        image: 'images/products/2023-apple-macbook-pro.webp',
+        name: 'Apple MacBook Pro 14” 2023',
         rating: {
             stars: 4.5,
             count: 87,
         },
-        priceInCents: 1090,
+        priceInCents: 259900,
         keywords: ['socks', 'sports', 'apparel'],
     },
     {

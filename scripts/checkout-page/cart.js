@@ -161,6 +161,18 @@ export function updateCartVisibility() {
 }
 updateCartVisibility();
 
+/**
+ * Updates the visibility of a cart item based on the quantity.
+ */
+function updateCartItemVisibility() {
+    cart.forEach((cartItem) => {
+        if (cartItem.quantity === 0) {
+            removeCartItem(cartItem.productId);
+        }
+    });
+}
+updateCartItemVisibility();
+
 export function updateCartQuantityDisplay() {
     document.querySelector(
         '.js-return-to-home-link'

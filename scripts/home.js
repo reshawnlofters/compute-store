@@ -37,25 +37,27 @@ function generateProductsHTML() {
                     Added
                 </div>
                 
-                <div class="add-product-to-cart-parent-container">
-                    <div class="add-product-to-cart-container">
-                        <div class="input-product-quantity-container">
-                            <div class="product-quantity-controls-container">
-                                <button class="decrease-product-quantity-button">-</button>
-                                <div class="product-quantity-count product-quantity-count-${
-                                    product.id
-                                }">0</div>
-                                <button class="increase-product-quantity-button">+</button>
-                                <div class="vertical-rule"></div>
+                <div class="add-product-to-cart-container">
+                    <div class="input-product-quantity-container">
+                        <div class="product-quantity-controls-container">
+                            <button class="decrease-product-quantity-button">
+                                <i class="bi bi-dash-lg"></i>
+                            </button>
+                            <div class="product-quantity-count product-quantity-count-${
+                                product.id
+                            }">
+                                0
                             </div>
-                            <div>
-                                <button class="add-product-to-cart-button"
-                                data-product-id="${product.id}">
-                                    Add to Cart
-                                </button>
-                            </div>
+                            <button class="increase-product-quantity-button">
+                                <i class="bi bi-plus-lg"></i>
+                            </button>
+                            <div class="vertical-rule"></div>
                         </div>
                     </div>
+                    <button class="add-product-to-cart-button"
+                    data-product-id="${product.id}">
+                        Add to Cart
+                    </button>
                 </div>
             </div>`;
     });
@@ -70,7 +72,7 @@ generateProductsHTML();
 function updateCartQuantityDisplay() {
     const cartQuantity = calculateCartQuantity();
 
-    document.querySelector('.cart-quantity').innerHTML = cartQuantity;
+    document.querySelector('.cart-quantity-count').innerHTML = cartQuantity;
 }
 updateCartQuantityDisplay();
 
