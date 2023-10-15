@@ -29,7 +29,7 @@
         ></script>
         <script
             type="module"
-            src="scripts/checkout-page/payment-summary.js"
+            src="scripts/checkout-page/order-summary.js"
             defer
         ></script>
         <script
@@ -39,87 +39,75 @@
         ></script>
     </head>
     <body>
-        <!-- Header -->
-        <header class="checkout-header">
-            <div class="checkout-header-container">
-                <div class="checkout-header-left-section">
-                    <a href="index.html">
-                        <i class="bi bi-android"></i>
-                    </a>
-                </div>
+        <header class="checkout-header-container">
+            <section class="checkout-header-left-section">
+                <a class="checkout-header-logo" href="index.html">
+                    Compute Express
+                </a>
+            </section>
 
-                <div class="checkout-header-middle-section">
-                    Checkout (<a
-                        class="return-to-home-link js-return-to-home-link"
-                        href="index.html"
-                    ></a
-                    >)
-                </div>
+            <section class="checkout-header-middle-section">Checkout</section>
 
-                <div class="checkout-header-right-section">
-                    <img src="images/icons/checkout-lock.png" />
-                </div>
-            </div>
+            <section class="checkout-header-right-section">
+                <span class="checkout-header-cart-quantity-count"></span> items
+            </section>
         </header>
 
-        <!-- Main -->
         <main>
-            <div class="cart-items-section-title">Your Cart</div>
+            <div class="cart-section-title">Your Cart</div>
 
-            <div class="cart-items-payment-summary-grid">
-                <div class="cart-items-container"></div>
+            <div class="cart-order-summary-grid">
+                <section class="cart-items-container"></section>
 
-                <div class="payment-summary-container">
-                    <div class="payment-summary-section-title">
-                        Order Summary
-                    </div>
+                <section class="order-summary-section-container">
+                    <div class="order-summary-section-title">Order Summary</div>
 
-                    <div class="payment-summary-row">
+                    <div class="order-summary-row">
                         <div>
-                            Items (<span class="js-payment-summary-items"></span
+                            Items (<span class="js-order-summary-items"></span
                             >):
                         </div>
                         <div
-                            class="payment-summary-money js-payment-summary-items-cost"
+                            class="order-summary-money js-order-summary-items-cost"
                         ></div>
                     </div>
 
-                    <div class="payment-summary-row">
+                    <div class="order-summary-row">
                         <div>Shipping &amp; handling:</div>
                         <div
-                            class="payment-summary-money js-payment-summary-shipping-cost"
+                            class="order-summary-money js-order-summary-shipping-cost"
                         ></div>
                     </div>
 
-                    <div class="payment-summary-row subtotal-row">
+                    <div class="order-summary-row subtotal-row">
                         <div>Total before tax:</div>
                         <div
-                            class="payment-summary-money js-payment-summary-total-before-tax-cost"
+                            class="order-summary-money js-order-summary-total-before-tax-cost"
                         ></div>
                     </div>
 
-                    <div class="payment-summary-row">
+                    <div class="order-summary-row">
                         <div>Estimated tax (13%):</div>
                         <div
-                            class="payment-summary-money js-payment-summary-tax-cost"
+                            class="order-summary-money js-order-summary-tax-cost"
                         ></div>
                     </div>
 
-                    <div class="payment-summary-row total-row">
+                    <div class="order-summary-row total-row">
                         <div>Order total:</div>
                         <div
-                            class="payment-summary-money js-payment-summary-total-cost"
+                            class="order-summary-money js-order-summary-total-cost"
                         ></div>
                     </div>
 
                     <button class="place-order-button button-primary">
-                        Place your order
+                        Place order
                     </button>
-                </div>
+                </section>
             </div>
 
             <div class="wish-list-section-title">Your Wish List</div>
-            <div class="wish-list-container"></div>
+            <section class="wish-list-container"></section>
         </main>
     </body>
 </html>

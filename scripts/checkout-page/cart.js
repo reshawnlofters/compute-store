@@ -4,7 +4,7 @@ import { updateWishListVisibility } from './wish-list.js';
 import {
     updatePaymentSummaryDisplay,
     updatePlaceOrderButtonVisibility,
-} from './payment-summary.js';
+} from './order-summary.js';
 import {
     cart,
     wishList,
@@ -55,22 +55,16 @@ function generateCartHTML() {
                             </div>
                             <div class="cart-item-quantity-container">
                                 <span>
-                                    Quantity: <span class="cart-item-quantity-label">${
+                                    Quantity: <span class="cart-item-quantity-count">${
                                         cartItem.quantity
                                     }</span>
                                 </span>
                                 <span class="update-cart-item-quantity-button link-primary js-update-cart-item-quantity-button link-primary"
-                                    data-product-id="${matchingProduct.id}">
+                                data-product-id="${matchingProduct.id}">
                                     Update
                                 </span>
                                 <input class="update-cart-item-quantity-input">
                                 <span class="save-new-cart-item-quantity-button link-primary">Save</span>
-                                <span class="delete-cart-item-button js-delete-cart-item-button
-                                link-primary" data-product-id="${
-                                    matchingProduct.id
-                                }">
-                                    Delete
-                                </span>
                                 <p class="cart-item-quantity-limit-message"></p>
                             </div>
                         </div>
@@ -78,7 +72,13 @@ function generateCartHTML() {
                             <span class="add-product-to-wish-list-button link-primary" data-product-id="${
                                 matchingProduct.id
                             }">
-                                Save for later
+                                Add to Wish List
+                            </span>
+                            <span class="remove-cart-item-button js-remove-cart-item-button
+                                link-primary" data-product-id="${
+                                    matchingProduct.id
+                                }">
+                                    Remove
                             </span>
                         </div>
                     </div>
@@ -175,11 +175,11 @@ updateCartItemVisibility();
 
 export function updateCartQuantityDisplay() {
     document.querySelector(
-        '.js-return-to-home-link'
-    ).innerHTML = `${calculateCartQuantity()} items`;
+        '.checkout-header-cart-quantity-count'
+    ).innerHTML = `${calculateCartQuantity()}`;
 
     document.querySelector(
-        '.js-payment-summary-items'
+        '.js-order-summary-items'
     ).innerHTML = `${calculateCartQuantity()}`;
 }
 updateCartQuantityDisplay();
@@ -228,11 +228,11 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
         displayCartItemQuantityLimitMessage(cartItemContainer);
     } else {
         // update the quantity label value
-        cartItemContainer.querySelector('.cart-item-quantity-label').innerHTML =
+        cartItemContainer.querySelector('.cart-item-quantity-count').innerHTML =
             String(newCartItemQuantity);
 
         // remove the class added to the container for editing
-        cartItemContainer.classList.remove('is-editing-quantity');
+        cartItemContainer.classList.remove('is-editing-cart-item-quantity');
 
         updateCartItemQuantity(productId, newCartItemQuantity);
         updateCartItemPriceDisplay(
@@ -269,7 +269,7 @@ function removeCartItemDisplay(productId) {
 /**
  * Attaches a click event listener to the page. When a click event occurs, the code checks
  * if the click target is not inside a cart item container. If it is not inside a cart item
- * container, the code removes the 'is-editing-quantity' class from all cart item containers.
+ * container, the code removes the 'is-editing-cart-item-quantity' class from all cart item containers.
  * The class displays the elements for updating a cart item quantity.
  */
 document.addEventListener('click', (event) => {
@@ -278,7 +278,7 @@ document.addEventListener('click', (event) => {
             '.cart-item-container'
         );
         cartItemContainers.forEach((container) => {
-            container.classList.remove('is-editing-quantity');
+            container.classList.remove('is-editing-cart-item-quantity');
         });
     }
 });
@@ -302,7 +302,7 @@ document
                 `.js-cart-item-container-${productId}`
             );
 
-            cartItemContainer.classList.add('is-editing-quantity');
+            cartItemContainer.classList.add('is-editing-cart-item-quantity');
             const saveButton = cartItemContainer.querySelector(
                 '.save-new-cart-item-quantity-button'
             );
@@ -328,7 +328,7 @@ document
     });
 
 /**
- * Attaches a click event listener to the element that holds all "Delete Cart Item"
+ * Attaches a click event listener to the element that holds all "Remove Cart Item"
  * buttons using event delegation. If a button is clicked, the code gets the 'productId',
  * removes the cart item, and updates displays.
  */
@@ -336,7 +336,7 @@ document
     .querySelector('.cart-items-container')
     .addEventListener('click', (event) => {
         setTimeout(() => {
-            if (event.target.classList.contains('js-delete-cart-item-button')) {
+            if (event.target.classList.contains('js-remove-cart-item-button')) {
                 const productId = event.target.dataset.productId;
                 removeCartItem(productId);
                 removeCartItemDisplay(productId);

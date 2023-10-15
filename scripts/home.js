@@ -212,25 +212,25 @@ clearSearchBarOnPageLeave();
 
 /**
  * Attaches a scroll event listener to the page. When a user scrolls down, the
- * 'homeHeaderContainer' and 'homeHeaderPromoContainer' elements are controlled
+ * 'headerContainer' and 'headerPromoContainer' elements are controlled
  * to achieve a fixed header effect.
  */
 window.addEventListener('load', () => {
-    const homeHeaderContainer = document.querySelector('.header-container');
-    const homeHeaderPromoContainer = document.querySelector(
+    const headerContainer = document.querySelector('.header-container');
+    const headerPromoContainer = document.querySelector(
         '.header-promo-container'
     );
 
     // Function to adjust the header elements based on scroll position
     function adjustHeaderOnScroll() {
         if (window.scrollY > 0) {
-            homeHeaderContainer.style.position = 'fixed';
-            homeHeaderContainer.style.top = '0';
-            homeHeaderPromoContainer.style.display = 'none';
+            headerContainer.style.position = 'fixed';
+            headerContainer.style.top = '0';
+            headerPromoContainer.style.display = 'none';
         } else {
-            homeHeaderContainer.style.position = 'relative';
-            homeHeaderContainer.style.top = '40px';
-            homeHeaderPromoContainer.style.display = 'flex';
+            headerContainer.style.position = 'relative';
+            headerContainer.style.top = '40px';
+            headerPromoContainer.style.display = 'flex';
         }
     }
     adjustHeaderOnScroll();
@@ -241,4 +241,4 @@ window.addEventListener('load', () => {
 });
 
 // Displays the current year in the footer copyright notice
-document.querySelector('.current-year').innerHTML = new Date().getFullYear();
+// document.querySelector('.current-year').innerHTML = new Date().getFullYear();

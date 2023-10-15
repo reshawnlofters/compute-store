@@ -19,23 +19,23 @@ export function updatePaymentSummaryDisplay() {
         cartItemTotalCostInCents + shippingHandlingFeeInCents;
 
     document.querySelector(
-        '.js-payment-summary-items-cost'
+        '.js-order-summary-items-cost'
     ).innerHTML = `$${formatCurrency(cartItemTotalCostInCents)}`;
 
     document.querySelector(
-        '.js-payment-summary-shipping-cost'
+        '.js-order-summary-shipping-cost'
     ).innerHTML = `$${formatCurrency(shippingHandlingFeeInCents)}`;
 
     document.querySelector(
-        '.js-payment-summary-total-before-tax-cost'
+        '.js-order-summary-total-before-tax-cost'
     ).innerHTML = `$${formatCurrency(cartTotalBeforeTaxInCents)}`;
 
     document.querySelector(
-        '.js-payment-summary-tax-cost'
+        '.js-order-summary-tax-cost'
     ).innerHTML = `$${formatCurrency(cartTotalBeforeTaxInCents * 0.13)}`;
 
     document.querySelector(
-        '.js-payment-summary-total-cost'
+        '.js-order-summary-total-cost'
     ).innerHTML = `$${formatCurrency(cartTotalBeforeTaxInCents * 1.13)}`;
 }
 updatePaymentSummaryDisplay();

@@ -5,6 +5,11 @@
     font-family: 'Open Sans', sans-serif;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+}
+
 button,
 select {
     cursor: pointer;
@@ -15,8 +20,8 @@ ul {
 }
 
 a {
-  color: white;
-  text-decoration: none;
+    color: white;
+    text-decoration: none;
 }
 
 .bi {
@@ -152,7 +157,7 @@ input:focus {
 }
 
 .cart-item-container,
-.payment-summary-container,
+.order-summary-section-container,
 .empty-cart-container,
 .empty-wish-list-container,
 .empty-wish-list-container,

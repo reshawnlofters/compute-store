@@ -24,7 +24,7 @@
 
 .shop-now-button {
     position: absolute;
-    top: 50%;
+    top: 75%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
@@ -32,7 +32,7 @@
     color: black;
     border: none;
     border-radius: 30px;
-    padding: 18px 35px;
+    padding: 18px 38px;
     text-transform: uppercase;
 }
 
@@ -54,7 +54,6 @@
     padding-top: 40px;
 }
 
-/* Divides the products grid into fewer columns based on screen width */
 @media (max-width: 2200px) {
     .products-section-container {
         padding: 0 15%;
@@ -199,34 +198,107 @@
     opacity: 1;
 }
 
-.footer-grid {
-    display: grid;
-    grid-template-columns: 500px 300px auto;
-    column-gap: 50px;
-    height: 230px;
-    background-color: #282828;
-    color: white;
-    padding: 35px;
-}
+/* 
+.footer-hr {
+    border-bottom: 1px solid darkgray;
+} */
 
-.footer-about-section-container,
-.footer-links-section-container,
-.footer-hours-section-container,
-.footer-copyright-section-container {
+footer {
     display: flex;
-    flex-direction: column;
-}
-
-.footer-section-title {
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 14px;
-}
-
-.footer-copyright-section-container {
-    align-items: center;
     justify-content: center;
-    background-color: black;
+    flex-direction: column;
+    background-color: #282828;
+    padding: 0 25% 0 25%;
+}
+
+.footer-about-section-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 50px;
     color: white;
-    padding: 14px 0;
+    padding: 80px 0 40px 0;
+}
+
+.footer-about-section-container {
+    max-width: 800px;
+}
+
+.footer-about-section-title {
+    font-size: 18px;
+    margin-bottom: 40px;
+}
+
+.footer-about-section-container p {
+    font-size: 14px;
+}
+
+.newsletter-input-container {
+    display: flex;
+}
+
+.footer-newsletter-section-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+}
+
+.newsletter-input-container input {
+    background-color: inherit;
+    border: none;
+    border-bottom: 1px solid white;
+    width: 200px;
+}
+
+.newsletter-input-container .sign-up-button {
+    background-color: white;
+    color: black;
+    font-size: 12px;
+    border: none;
+    text-transform: uppercase;
+    padding: 8px 28px;
+}
+
+.footer-misc-section-container {
+    color: gray;
+    font-size: 13px;
+}
+
+@media (max-width: 2280px) {
+    footer {
+        padding: 0 22%;
+    }
+}
+
+@media (max-width: 2220px) {
+    footer {
+        padding: 0 20%;
+    }
+}
+
+@media (max-width: 1880px) {
+    footer {
+        padding: 0 15%;
+    }
+}
+
+@media (max-width: 1880px) {
+    footer {
+        padding: 0 12%;
+    }
+}
+
+@media (max-width: 1480px) {
+    footer {
+        padding: 0 10%;
+    }
+}
+
+@media (max-width: 1420px) {
+    footer {
+        padding: 0 10%;
+    }
+
+    .footer-about-section-container {
+        max-width: 700px;
+    }
 }

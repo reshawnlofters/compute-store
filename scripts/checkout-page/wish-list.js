@@ -10,7 +10,7 @@ import { updateCartQuantityDisplay, updateCartVisibility } from './cart.js';
 import {
     updatePaymentSummaryDisplay,
     updatePlaceOrderButtonVisibility,
-} from './payment-summary.js';
+} from './order-summary.js';
 
 /**
  * Generates HTML for displaying wish list products.
@@ -51,10 +51,10 @@ function generateWishListHTML() {
                             }">
                                 Add to Cart
                             </span>
-                            <span class="delete-wish-list-product-button link-primary" data-product-id="${
+                            <span class="remove-wish-list-product-button link-primary" data-product-id="${
                                 matchingProduct.id
                             }">
-                                Delete
+                                Remove
                             </span>
                         </div>
                     </div>
@@ -141,7 +141,7 @@ document
     });
 
 /**
- * Attaches a click event listener to the element that holds all "Delete Wish List Item"
+ * Attaches a click event listener to the element that holds all "Remove Wish List Item"
  * buttons using event delegation. If a button is clicked, the code gets the 'productId',
  * removes the product from the wish list, and updates displays.
  */
@@ -149,9 +149,7 @@ document
     .querySelector('.wish-list-container')
     .addEventListener('click', (event) => {
         if (
-            event.target.classList.contains(
-                'delete-wish-list-product-button'
-            )
+            event.target.classList.contains('remove-wish-list-product-button')
         ) {
             const productId = event.target.dataset.productId;
 

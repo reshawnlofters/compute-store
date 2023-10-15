@@ -5,7 +5,6 @@ main {
 
     margin-top: 140px;
     margin-bottom: 100px;
-
     margin-left: auto;
     margin-right: auto;
 }
@@ -16,7 +15,7 @@ main {
     justify-content: space-between;
 }
 
-.cart-items-payment-summary-grid {
+.cart-order-summary-grid {
     display: grid;
     grid-template-columns: 1fr 325px;
     column-gap: 12px;
@@ -33,16 +32,16 @@ main {
     width: 30px;
 }
 
-.cart-item-quantity-container span,
-.update-cart-item-quantity-button,
+.cart-item-quantity-count,
+.add-product-to-wish-list-button,
 .add-wish-list-product-to-cart-button {
-    margin-right: 4px;
+    margin-right: 8px;
 }
 
-/* style to display the "Update Cart Item Quantity" input field 
-and "Save New Cart Item Quantity" button */
-.is-editing-quantity .update-cart-item-quantity-input,
-.is-editing-quantity .save-new-cart-item-quantity-button {
+/* style to display the "update cart item quantity" input and 
+"save new cart item quantity" button */
+.is-editing-cart-item-quantity .update-cart-item-quantity-input,
+.is-editing-cart-item-quantity .save-new-cart-item-quantity-button {
     display: initial;
 }
 
@@ -51,7 +50,7 @@ and "Save New Cart Item Quantity" button */
         max-width: 500px;
     }
 
-    .cart-items-payment-summary-grid {
+    .cart-order-summary-grid {
         grid-template-columns: 1fr;
     }
 }
@@ -64,12 +63,12 @@ and "Save New Cart Item Quantity" button */
     margin-bottom: 22px;
 }
 
-.payment-summary-container {
+.order-summary-section-container {
     padding-bottom: 5px;
 }
 
 @media (max-width: 1000px) {
-    .payment-summary-container {
+    .order-summary-section-container {
         grid-row: 1;
         margin-bottom: 12px;
     }
@@ -154,13 +153,13 @@ and "Save New Cart Item Quantity" button */
     font-size: 15px;
 }
 
-.payment-summary-section-title {
+.order-summary-section-title {
     font-weight: 700;
     font-size: 18px;
     margin-bottom: 12px;
 }
 
-.payment-summary-row {
+.order-summary-row {
     display: grid;
     grid-template-columns: 1fr auto;
 
@@ -168,11 +167,11 @@ and "Save New Cart Item Quantity" button */
     margin-bottom: 9px;
 }
 
-.payment-summary-money {
+.order-summary-money {
     text-align: right;
 }
 
-.subtotal-row .payment-summary-money {
+.subtotal-row .order-summary-money {
     border-top: 1px solid rgb(222, 222, 222);
 }
 
@@ -200,7 +199,7 @@ and "Save New Cart Item Quantity" button */
     display: none;
 }
 
-.cart-items-section-title,
+.cart-section-title,
 .wish-list-section-title {
     font-weight: 700;
     font-size: 22px;
