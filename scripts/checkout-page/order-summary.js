@@ -10,7 +10,7 @@ import {
 
 /**
  * Updates the order summary display by calculating the quantity of cart items,
- * shipping cost, cart total before tax, total tax, and cart total after tax.
+ * shipping cost, total tax, and cart total after tax.
  */
 export function updatePaymentSummaryDisplay() {
     let cartItemTotalCostInCents = calculateCartItemTotalCost();
@@ -25,10 +25,6 @@ export function updatePaymentSummaryDisplay() {
     document.querySelector(
         '.js-order-summary-shipping-cost'
     ).innerHTML = `$${formatCurrency(shippingHandlingFeeInCents)}`;
-
-    document.querySelector(
-        '.js-order-summary-total-before-tax-cost'
-    ).innerHTML = `$${formatCurrency(cartTotalBeforeTaxInCents)}`;
 
     document.querySelector(
         '.js-order-summary-tax-cost'

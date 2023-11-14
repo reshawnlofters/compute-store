@@ -15,35 +15,18 @@
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
         />
         <link rel="stylesheet" href="styles/shared/general.css" />
-        <link
-            rel="stylesheet"
-            href="styles/pages/checkout/checkout-header.css"
-        />
+        <link rel="stylesheet" href="styles/pages/checkout/checkout-header.css" />
         <link rel="stylesheet" href="styles/pages/checkout/checkout.css" />
         <script type="module" src="data/home-page.js" defer></script>
         <script type="module" src="data/checkout-page.js" defer></script>
-        <script
-            type="module"
-            src="scripts/checkout-page/cart.js"
-            defer
-        ></script>
-        <script
-            type="module"
-            src="scripts/checkout-page/order-summary.js"
-            defer
-        ></script>
-        <script
-            type="module"
-            src="scripts/checkout-page/wish-list.js"
-            defer
-        ></script>
+        <script type="module" src="scripts/checkout-page/cart.js" defer></script>
+        <script type="module" src="scripts/checkout-page/order-summary.js" defer></script>
+        <script type="module" src="scripts/checkout-page/wish-list.js" defer></script>
     </head>
     <body>
         <header class="checkout-header-container">
             <section class="checkout-header-left-section">
-                <a class="checkout-header-logo" href="index.html">
-                    Compute Express
-                </a>
+                <a class="checkout-header-logo" href="index.html"> Compute </a>
             </section>
 
             <section class="checkout-header-middle-section">Checkout</section>
@@ -63,46 +46,28 @@
                     <div class="order-summary-section-title">Order Summary</div>
 
                     <div class="order-summary-row">
-                        <div>
-                            Items (<span class="js-order-summary-items"></span
-                            >):
+                        <div class="discription">
+                            Items (<span class="js-order-summary-items"></span>)
                         </div>
-                        <div
-                            class="order-summary-money js-order-summary-items-cost"
-                        ></div>
+                        <div class="order-summary-money js-order-summary-items-cost"></div>
                     </div>
 
                     <div class="order-summary-row">
-                        <div>Shipping &amp; handling:</div>
-                        <div
-                            class="order-summary-money js-order-summary-shipping-cost"
-                        ></div>
-                    </div>
-
-                    <div class="order-summary-row subtotal-row">
-                        <div>Total before tax:</div>
-                        <div
-                            class="order-summary-money js-order-summary-total-before-tax-cost"
-                        ></div>
+                        <div class="discription">Shipping</div>
+                        <div class="order-summary-money js-order-summary-shipping-cost"></div>
                     </div>
 
                     <div class="order-summary-row">
-                        <div>Estimated tax (13%):</div>
-                        <div
-                            class="order-summary-money js-order-summary-tax-cost"
-                        ></div>
+                        <div class="discription">GST/HST</div>
+                        <div class="order-summary-money js-order-summary-tax-cost"></div>
                     </div>
 
                     <div class="order-summary-row total-row">
-                        <div>Order total:</div>
-                        <div
-                            class="order-summary-money js-order-summary-total-cost"
-                        ></div>
+                        <div>Total</div>
+                        <div class="order-summary-money js-order-summary-total-cost"></div>
                     </div>
 
-                    <button class="place-order-button button-primary">
-                        Place order
-                    </button>
+                    <button class="place-order-button button-primary">Complete purchase</button>
                 </section>
             </div>
 
