@@ -15,24 +15,23 @@ import {
 export function updatePaymentSummaryDisplay() {
     let cartItemTotalCostInCents = calculateCartItemTotalCost();
     let shippingHandlingFeeInCents = cartItemTotalCostInCents === 0 ? 0 : 499;
-    let cartTotalBeforeTaxInCents =
-        cartItemTotalCostInCents + shippingHandlingFeeInCents;
+    let cartTotalBeforeTaxInCents = cartItemTotalCostInCents + shippingHandlingFeeInCents;
 
-    document.querySelector(
-        '.js-order-summary-items-cost'
-    ).innerHTML = `$${formatCurrency(cartItemTotalCostInCents)}`;
+    document.querySelector('.js-order-summary-items-cost').innerHTML = `$${formatCurrency(
+        cartItemTotalCostInCents
+    )}`;
 
-    document.querySelector(
-        '.js-order-summary-shipping-cost'
-    ).innerHTML = `$${formatCurrency(shippingHandlingFeeInCents)}`;
+    document.querySelector('.js-order-summary-shipping-cost').innerHTML = `$${formatCurrency(
+        shippingHandlingFeeInCents
+    )}`;
 
-    document.querySelector(
-        '.js-order-summary-tax-cost'
-    ).innerHTML = `$${formatCurrency(cartTotalBeforeTaxInCents * 0.13)}`;
+    document.querySelector('.js-order-summary-tax-cost').innerHTML = `$${formatCurrency(
+        cartTotalBeforeTaxInCents * 0.13
+    )}`;
 
-    document.querySelector(
-        '.js-order-summary-total-cost'
-    ).innerHTML = `$${formatCurrency(cartTotalBeforeTaxInCents * 1.13)}`;
+    document.querySelector('.js-order-summary-total-cost').innerHTML = `$${formatCurrency(
+        cartTotalBeforeTaxInCents * 1.13
+    )}`;
 }
 updatePaymentSummaryDisplay();
 

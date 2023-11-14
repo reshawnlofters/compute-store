@@ -1,10 +1,6 @@
 import { products } from '../data/home-page.js';
 import { formatCurrency } from './utils/format-currency.js';
-import {
-    orders,
-    calculateOrderQuantity,
-    updateOrdersInLocalStorage,
-} from '../data/orders-page.js';
+import { orders, calculateOrderQuantity, updateOrdersInLocalStorage } from '../data/orders-page.js';
 
 /**
  * Generates HTML for displaying orders.
@@ -29,19 +25,19 @@ function generateOrdersHTML() {
                 <div class="order-header">
                     <div class="order-header-left-section">
                         <div class="order-date">
-                            <div class="order-header-label">
-                                Order Placed:
+                            <div class="order-header-label label-primary">
+                                Order Placed
                             </div>
                             <div>${order.orderDate}</div>
                         </div>
                         <div class="order-total">
-                            <div class="order-header-label">Total:</div>
+                            <div class="order-header-label label-primary">Total</div>
                             <div>$${formatCurrency(order.priceInCents)}</div>
                         </div>
                     </div>
 
                     <div class="order-header-right-section">
-                        <div class="order-header-label">Order ID:</div>
+                        <div class="order-header-label label-primary">Order ID</div>
                         <div>${order.id}</div>
                     </div>
                 </div>
@@ -110,10 +106,7 @@ function generateOrderItemsHTML(order) {
                             Quantity: ${orderItem.quantity}
                         </div>
                         <button class="buy-again-button button-primary">
-                            <img
-                                class="buy-again-icon"
-                                src="images/icons/buy-again.png"
-                            />
+                            <i class="bi bi-arrow-clockwise"></i>
                             <span class="buy-again-message"
                                 >Buy it again
                             </span>
@@ -150,10 +143,7 @@ function generateOrderItemsHTML(order) {
                             Quantity: ${orderItem.quantity}
                         </div>
                         <button class="buy-again-button button-primary">
-                            <img
-                                class="buy-again-icon"
-                                src="images/icons/buy-again.png"
-                            />
+                             <i class="bi bi-arrow-clockwise"></i>
                             <span class="buy-again-message">Buy it again
                             </span>
                         </button>
@@ -253,9 +243,7 @@ function cancelOrder(orderId) {
         orders.splice(orderIndex, 1);
         updateOrdersInLocalStorage();
 
-        const orderItemContainer = document.querySelector(
-            `.order-container-${orderId}`
-        );
+        const orderItemContainer = document.querySelector(`.order-container-${orderId}`);
         orderItemContainer.remove();
     }
 }
@@ -267,31 +255,25 @@ function cancelOrder(orderId) {
  */
 const ordersGrid = document.querySelector('.orders-grid');
 if (ordersGrid) {
-    document
-        .querySelector('.orders-grid')
-        .addEventListener('click', (event) => {
-            if (event.target.classList.contains('cancel-order-button')) {
-                // get modal element
-                const modal = document.querySelector('.cancel-order-modal');
-                modal.showModal();
+    document.querySelector('.orders-grid').addEventListener('click', (event) => {
+        if (event.target.classList.contains('cancel-order-button')) {
+            // get modal element
+            const modal = document.querySelector('.cancel-order-modal');
+            modal.showModal();
 
-                document
-                    .querySelector('.modal-cancel-order-button')
-                    .addEventListener('click', () => {
-                        modal.close();
-                        const orderId = event.target.dataset.orderId;
+            document.querySelector('.modal-cancel-order-button').addEventListener('click', () => {
+                modal.close();
+                const orderId = event.target.dataset.orderId;
 
-                        cancelOrder(orderId);
-                        updateOrdersVisibility();
-                    });
+                cancelOrder(orderId);
+                updateOrdersVisibility();
+            });
 
-                document
-                    .querySelector('.modal-close-button')
-                    .addEventListener('click', () => {
-                        modal.close();
-                    });
-            }
-        });
+            document.querySelector('.modal-close-button').addEventListener('click', () => {
+                modal.close();
+            });
+        }
+    });
 }
 
 /**
@@ -306,11 +288,9 @@ function displayPlacedOrderModal() {
         const modal = document.querySelector('.placed-order-modal');
         modal.showModal();
 
-        document
-            .querySelector('.modal-close-window-button')
-            .addEventListener('click', () => {
-                modal.close();
-            });
+        document.querySelector('.modal-close-window-button').addEventListener('click', () => {
+            modal.close();
+        });
 
         // clear the flag
         localStorage.removeItem('orderPlaced');

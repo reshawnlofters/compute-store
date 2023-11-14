@@ -41,7 +41,6 @@ a {
 }
 
 .button-secondary {
-    color: rgb(33, 33, 33);
     background: white;
     border: 1px solid rgb(213, 217, 217);
     border-radius: 8px;
@@ -72,6 +71,10 @@ a {
 
 .link-primary:hover {
     color: rgb(196, 80, 0);
+}
+
+.label-primary {
+    color: #707070;
 }
 
 /* styles for the product quantity dropdown selectors */
@@ -140,7 +143,7 @@ input:focus {
 .empty-cart-container-img,
 .empty-wish-list-container-img,
 .empty-orders-container-img {
-    height: 40px;
+    height: 35px;
     align-self: end;
     justify-self: end;
 }
@@ -156,4 +159,7 @@ input:focus {
     border-radius: 8px;
     padding: 25px;
     margin-bottom: 20px;
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 8px 0px, rgba(0, 0, 0, 0.04) 0px 2px 8px 0px;
+    /* box-shadow: rgba(0, 0, 0, 0.04) 0px 0px 8px 0px, rgba(0, 0, 0, 0.02) 0px 0px 4px 0px,
+        rgba(0, 0, 0, 0.04) 0px 0px 1px 1px; */
 }

@@ -1,9 +1,6 @@
 import { products } from '../data/home-page.js';
 import { formatCurrency } from './utils/format-currency.js';
-import {
-    addProductToCart,
-    calculateCartQuantity,
-} from '../data/checkout-page.js';
+import { addProductToCart, calculateCartQuantity } from '../data/checkout-page.js';
 
 /**
  * Generates HTML for displaying products.
@@ -89,8 +86,7 @@ document.querySelectorAll('.add-product-to-cart-button').forEach((button) => {
             const productId = button.dataset.productId;
 
             const productQuantity = Number(
-                document.querySelector(`.product-quantity-count-${productId}`)
-                    .textContent
+                document.querySelector(`.product-quantity-count-${productId}`).textContent
             );
 
             addProductToCart(productId, productQuantity);
@@ -100,9 +96,7 @@ document.querySelectorAll('.add-product-to-cart-button').forEach((button) => {
                 displayAddedProductToCartMessage(productId);
             }
 
-            document.querySelector(
-                `.product-quantity-count-${productId}`
-            ).textContent = 0;
+            document.querySelector(`.product-quantity-count-${productId}`).textContent = 0;
         }, 500);
     });
 });
@@ -119,36 +113,24 @@ document.querySelectorAll('.add-product-to-cart-button').forEach((button) => {
 const productsGrid = document.querySelector('.products-grid');
 if (productsGrid) {
     productsGrid.addEventListener('click', (event) => {
-        if (
-            event.target.classList.contains('increase-product-quantity-button')
-        ) {
+        if (event.target.classList.contains('increase-product-quantity-button')) {
             const productContainer = event.target.closest('.product-container');
 
             if (productContainer) {
-                const productQuantityElement = productContainer.querySelector(
-                    '.product-quantity-count'
-                );
-                let productQuantity = parseInt(
-                    productQuantityElement.textContent,
-                    10
-                );
+                const productQuantityElement =
+                    productContainer.querySelector('.product-quantity-count');
+                let productQuantity = parseInt(productQuantityElement.textContent, 10);
 
                 productQuantity++;
                 productQuantityElement.innerHTML = productQuantity;
             }
-        } else if (
-            event.target.classList.contains('decrease-product-quantity-button')
-        ) {
+        } else if (event.target.classList.contains('decrease-product-quantity-button')) {
             const productContainer = event.target.closest('.product-container');
 
             if (productContainer) {
-                const productQuantityElement = productContainer.querySelector(
-                    '.product-quantity-count'
-                );
-                let productQuantity = parseInt(
-                    productQuantityElement.textContent,
-                    10
-                );
+                const productQuantityElement =
+                    productContainer.querySelector('.product-quantity-count');
+                let productQuantity = parseInt(productQuantityElement.textContent, 10);
 
                 productQuantity--;
 
@@ -171,14 +153,10 @@ const addedMessageTimeouts = {};
  * @param productId - The unique identifier of the product added to the cart.
  */
 function displayAddedProductToCartMessage(productId) {
-    let addedMessageElement = document.querySelector(
-        `.added-product-to-cart-message-${productId}`
-    );
+    let addedMessageElement = document.querySelector(`.added-product-to-cart-message-${productId}`);
 
     if (addedMessageElement) {
-        addedMessageElement.classList.add(
-            'added-product-to-cart-message-visible'
-        );
+        addedMessageElement.classList.add('added-product-to-cart-message-visible');
 
         // check for any previous timeouts
         const previousTimeoutId = addedMessageTimeouts[productId];
@@ -188,9 +166,7 @@ function displayAddedProductToCartMessage(productId) {
         }
 
         const timeoutId = setInterval(() => {
-            addedMessageElement.classList.remove(
-                'added-product-to-cart-message-visible'
-            );
+            addedMessageElement.classList.remove('added-product-to-cart-message-visible');
         }, 2000);
 
         // add the added message 'timeoutId' to the 'addedMessageTimeouts' object
@@ -217,9 +193,7 @@ clearSearchBarOnPageLeave();
  */
 window.addEventListener('load', () => {
     const headerContainer = document.querySelector('.header-container');
-    const headerPromoContainer = document.querySelector(
-        '.header-promo-container'
-    );
+    const headerPromoContainer = document.querySelector('.header-promo-container');
 
     // Function to adjust the header elements based on scroll position
     function adjustHeaderOnScroll() {

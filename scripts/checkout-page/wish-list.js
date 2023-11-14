@@ -7,10 +7,7 @@ import {
     updateWishListInLocalStorage,
 } from '../../data/checkout-page.js';
 import { updateCartQuantityDisplay, updateCartVisibility } from './cart.js';
-import {
-    updatePaymentSummaryDisplay,
-    updatePlaceOrderButtonVisibility,
-} from './order-summary.js';
+import { updatePaymentSummaryDisplay, updatePlaceOrderButtonVisibility } from './order-summary.js';
 
 /**
  * Generates HTML for displaying wish list products.
@@ -96,17 +93,13 @@ updateWishListVisibility();
  * @param productId - The unique identifier of the product to be removed.
  */
 function removeWishListProduct(productId) {
-    const productIndex = wishList.findIndex(
-        (product) => product.productId === productId
-    );
+    const productIndex = wishList.findIndex((product) => product.productId === productId);
 
     if (productIndex !== -1) {
         wishList.splice(productIndex, 1);
     }
 
-    const productContainer = document.querySelector(
-        `.js-wish-list-product-container-${productId}`
-    );
+    const productContainer = document.querySelector(`.js-wish-list-product-container-${productId}`);
 
     if (productContainer) {
         productContainer.remove();
@@ -120,40 +113,30 @@ function removeWishListProduct(productId) {
  * buttons using event delegation. If a button is clicked, the code gets the 'productId',
  * adds the product to the cart, and removes the product from the wish list.
  */
-document
-    .querySelector('.wish-list-container')
-    .addEventListener('click', (event) => {
-        if (
-            event.target.classList.contains(
-                'add-wish-list-product-to-cart-button'
-            )
-        ) {
-            const productId = event.target.dataset.productId;
+document.querySelector('.wish-list-container').addEventListener('click', (event) => {
+    if (event.target.classList.contains('add-wish-list-product-to-cart-button')) {
+        const productId = event.target.dataset.productId;
 
-            addProductToCart(productId, 1);
-            removeWishListProduct(productId);
-            updateCartVisibility();
-            updateWishListVisibility();
-            updateCartQuantityDisplay();
-            updatePaymentSummaryDisplay();
-            updatePlaceOrderButtonVisibility();
-        }
-    });
+        addProductToCart(productId, 1);
+        removeWishListProduct(productId);
+        updateCartVisibility();
+        updateWishListVisibility();
+        updateCartQuantityDisplay();
+        updatePaymentSummaryDisplay();
+        updatePlaceOrderButtonVisibility();
+    }
+});
 
 /**
  * Attaches a click event listener to the element that holds all "Remove Wish List Item"
  * buttons using event delegation. If a button is clicked, the code gets the 'productId',
  * removes the product from the wish list, and updates displays.
  */
-document
-    .querySelector('.wish-list-container')
-    .addEventListener('click', (event) => {
-        if (
-            event.target.classList.contains('remove-wish-list-product-button')
-        ) {
-            const productId = event.target.dataset.productId;
+document.querySelector('.wish-list-container').addEventListener('click', (event) => {
+    if (event.target.classList.contains('remove-wish-list-product-button')) {
+        const productId = event.target.dataset.productId;
 
-            removeWishListProduct(productId);
-            updateWishListVisibility();
-        }
-    });
+        removeWishListProduct(productId);
+        updateWishListVisibility();
+    }
+});

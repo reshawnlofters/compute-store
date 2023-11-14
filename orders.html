@@ -19,48 +19,43 @@
         <script type="module" src="scripts/home.js" defer></script>
     </head>
     <body>
-        <!-- Header -->
-        <header class="home-header">
-            <div class="home-header-left-section">
-                <a class="header-link" href="index.html">
-                    <i class="bi bi-android"></i>
-                </a>
-            </div>
-
-            <div class="home-header-middle-section">
-                <div class="search-bar-container">
-                    <input
-                        class="search-bar"
-                        type="text"
-                        placeholder="Search"
-                    />
-                    <button class="search-button">
-                        <i class="bi bi-search"></i>
-                    </button>
+        <header>
+            <div class="header-container">
+                <div class="header-left-section-container">
+                    <a class="header-logo" href="index.html">Compute</a>
                 </div>
-            </div>
-
-            <div class="home-header-right-section">
-                <a class="orders-link header-link" href="orders.html">
-                    <i class="bi bi-bag-check"></i>
-                    <span class="orders-text">Orders</span>
-                </a>
-                <a class="cart-link header-link" href="checkout.html">
-                    <i class="bi bi-cart3"></i>
-                    <div class="cart-text">
-                        Cart 
-                        <div>
-                            <span class="cart-quantity"></span>
-                        </div>
+                <div class="header-middle-section-container">
+                    <div class="search-bar-container">
+                        <input
+                            class="search-bar"
+                            type="text"
+                            placeholder="Search Products"
+                        />
+                        <button class="search-button">
+                            <img
+                                src="images/icons/search.png"
+                                alt="search button"
+                            />
+                        </button>
                     </div>
-                </a>
+                </div>
+                <div class="header-right-section-container">
+                    <a class="header-orders-link" href="orders.html">
+                        Orders
+                    </a>
+                    <a class="header-checkout-link" href="checkout.html">
+                        <div class="header-cart-quantity-count-container">
+                            <i class="bi bi-cart3"></i>
+                            <span class="cart-quantity-count"></span>
+                        </div>
+                        Cart
+                    </a>
+                </div>
             </div>
         </header>
 
-        <!-- Main -->
         <main>
             <div class="orders-section-title">Your Orders</div>
-
             <div class="orders-grid"></div>
             <dialog class="placed-order-modal">
                 <h3>Success!</h3>

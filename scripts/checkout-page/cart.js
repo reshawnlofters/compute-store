@@ -1,10 +1,7 @@
 import { products } from '../../data/home-page.js';
 import { formatCurrency } from '../utils/format-currency.js';
 import { updateWishListVisibility } from './wish-list.js';
-import {
-    updatePaymentSummaryDisplay,
-    updatePlaceOrderButtonVisibility,
-} from './order-summary.js';
+import { updatePaymentSummaryDisplay, updatePlaceOrderButtonVisibility } from './order-summary.js';
 import {
     cart,
     wishList,
@@ -33,9 +30,7 @@ function generateCartHTML() {
         });
 
         cartItemHTML += `
-            <div class="cart-item-container js-cart-item-container-${
-                matchingProduct.id
-            }">
+            <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
                 <div class="cart-item-details-grid">
                     <img class="product-image" src="${matchingProduct.image}">
 
@@ -45,9 +40,7 @@ function generateCartHTML() {
                                 ${matchingProduct.name}
                             </div>
                             <div class="product-price">
-                                $${formatCurrency(
-                                    cartItem.priceInCents * cartItem.quantity
-                                )}
+                                $${formatCurrency(cartItem.priceInCents * cartItem.quantity)}
                             </div>
                             <div class="cart-item-quantity-container">
                                 <span>
@@ -71,9 +64,7 @@ function generateCartHTML() {
                                 Add to Wish List
                             </span>
                             <span class="remove-cart-item-button js-remove-cart-item-button
-                                link-primary" data-product-id="${
-                                    matchingProduct.id
-                                }">
+                                link-primary" data-product-id="${matchingProduct.id}">
                                     Remove
                             </span>
                         </div>
@@ -174,9 +165,7 @@ export function updateCartQuantityDisplay() {
         '.checkout-header-cart-quantity-count'
     ).innerHTML = `${calculateCartQuantity()}`;
 
-    document.querySelector(
-        '.js-order-summary-items'
-    ).innerHTML = `${calculateCartQuantity()}`;
+    document.querySelector('.js-order-summary-items').innerHTML = `${calculateCartQuantity()}`;
 }
 updateCartQuantityDisplay();
 
@@ -185,9 +174,7 @@ updateCartQuantityDisplay();
  * @param cartItemContainer - The element that contains the message element.
  */
 function displayCartItemQuantityLimitMessage(cartItemContainer) {
-    const messageElement = cartItemContainer.querySelector(
-        '.cart-item-quantity-limit-message'
-    );
+    const messageElement = cartItemContainer.querySelector('.cart-item-quantity-limit-message');
 
     messageElement.innerHTML = '<br>Quantity limit: 50';
 
@@ -209,10 +196,7 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
     const updateCartItemQuantityInputElement = cartItemContainer.querySelector(
         '.update-cart-item-quantity-input'
     );
-    const newCartItemQuantity = parseInt(
-        updateCartItemQuantityInputElement.value.trim(),
-        10
-    );
+    const newCartItemQuantity = parseInt(updateCartItemQuantityInputElement.value.trim(), 10);
 
     if (isNaN(newCartItemQuantity) || newCartItemQuantity === '') {
         return;
@@ -231,11 +215,7 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
         cartItemContainer.classList.remove('is-editing-cart-item-quantity');
 
         updateCartItemQuantity(productId, newCartItemQuantity);
-        updateCartItemPriceDisplay(
-            productId,
-            cartItemContainer,
-            newCartItemQuantity
-        );
+        updateCartItemPriceDisplay(productId, cartItemContainer, newCartItemQuantity);
         updateCartQuantityDisplay();
         updatePaymentSummaryDisplay();
     }
@@ -248,9 +228,7 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
  * @param productId - The unique identifier of the cart item to be removed.
  */
 function removeCartItemDisplay(productId) {
-    const cartItemContainer = document.querySelector(
-        `.js-cart-item-container-${productId}`
-    );
+    const cartItemContainer = document.querySelector(`.js-cart-item-container-${productId}`);
 
     if (cartItemContainer) {
         cartItemContainer.remove();
@@ -270,9 +248,7 @@ function removeCartItemDisplay(productId) {
  */
 document.addEventListener('click', (event) => {
     if (!event.target.closest('.cart-item-container')) {
-        const cartItemContainers = document.querySelectorAll(
-            '.cart-item-container'
-        );
+        const cartItemContainers = document.querySelectorAll('.cart-item-container');
         cartItemContainers.forEach((container) => {
             container.classList.remove('is-editing-cart-item-quantity');
         });
@@ -285,60 +261,48 @@ document.addEventListener('click', (event) => {
  * cart item container is retrieved. A class is then added to the container to reveal an
  * input field and button to save changes.
  */
-document
-    .querySelector('.cart-items-container')
-    .addEventListener('click', (event) => {
-        if (
-            event.target.classList.contains(
-                'js-update-cart-item-quantity-button'
-            )
-        ) {
-            const productId = event.target.dataset.productId;
-            const cartItemContainer = document.querySelector(
-                `.js-cart-item-container-${productId}`
-            );
+document.querySelector('.cart-items-container').addEventListener('click', (event) => {
+    if (event.target.classList.contains('js-update-cart-item-quantity-button')) {
+        const productId = event.target.dataset.productId;
+        const cartItemContainer = document.querySelector(`.js-cart-item-container-${productId}`);
 
-            cartItemContainer.classList.add('is-editing-cart-item-quantity');
-            const saveButton = cartItemContainer.querySelector(
-                '.save-new-cart-item-quantity-button'
-            );
+        cartItemContainer.classList.add('is-editing-cart-item-quantity');
+        const saveButton = cartItemContainer.querySelector('.save-new-cart-item-quantity-button');
 
-            saveButton.addEventListener('click', () => {
-                saveNewCartItemQuantity(productId, cartItemContainer);
+        saveButton.addEventListener('click', () => {
+            saveNewCartItemQuantity(productId, cartItemContainer);
+        });
+
+        cartItemContainer
+            .querySelector('.update-cart-item-quantity-input')
+            .addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    saveNewCartItemQuantity(productId, cartItemContainer);
+                }
             });
 
-            cartItemContainer
-                .querySelector('.update-cart-item-quantity-input')
-                .addEventListener('keydown', (event) => {
-                    if (event.key === 'Enter') {
-                        saveNewCartItemQuantity(productId, cartItemContainer);
-                    }
-                });
-
-            cartItemContainer
-                .querySelector('.update-cart-item-quantity-input')
-                .addEventListener('blur', () => {
-                    saveNewCartItemQuantity(productId, cartItemContainer);
-                });
-        }
-    });
+        cartItemContainer
+            .querySelector('.update-cart-item-quantity-input')
+            .addEventListener('blur', () => {
+                saveNewCartItemQuantity(productId, cartItemContainer);
+            });
+    }
+});
 
 /**
  * Attaches a click event listener to the element that holds all "Remove Cart Item"
  * buttons using event delegation. If a button is clicked, the code gets the 'productId',
  * removes the cart item, and updates displays.
  */
-document
-    .querySelector('.cart-items-container')
-    .addEventListener('click', (event) => {
-        setTimeout(() => {
-            if (event.target.classList.contains('js-remove-cart-item-button')) {
-                const productId = event.target.dataset.productId;
-                removeCartItem(productId);
-                removeCartItemDisplay(productId);
-            }
-        }, 500);
-    });
+document.querySelector('.cart-items-container').addEventListener('click', (event) => {
+    setTimeout(() => {
+        if (event.target.classList.contains('js-remove-cart-item-button')) {
+            const productId = event.target.dataset.productId;
+            removeCartItem(productId);
+            removeCartItemDisplay(productId);
+        }
+    }, 500);
+});
 
 /**
  * Adds a product to the wish list by adding it to the 'wishList' array.
@@ -368,16 +332,12 @@ function addProductToWishList(productId) {
  * buttons using event delegation. If a button is clicked, the code gets the 'productId',
  * adds the product to the wish list, and updates displays.
  */
-document
-    .querySelector('.cart-items-container')
-    .addEventListener('click', (event) => {
-        if (
-            event.target.classList.contains('add-product-to-wish-list-button')
-        ) {
-            const productId = event.target.dataset.productId;
+document.querySelector('.cart-items-container').addEventListener('click', (event) => {
+    if (event.target.classList.contains('add-product-to-wish-list-button')) {
+        const productId = event.target.dataset.productId;
 
-            addProductToWishList(productId);
-            removeCartItem(productId);
-            removeCartItemDisplay(productId);
-        }
-    });
+        addProductToWishList(productId);
+        removeCartItem(productId);
+        removeCartItemDisplay(productId);
+    }
+});
