@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 70px;
+    height: 80px;
     background-color: white;
     font-size: 22px;
     font-weight: 500;
@@ -10,8 +10,9 @@
     top: 0;
     left: 0;
     right: 0;
-    border-bottom: 1px solid rgba(25, 25, 25, 0.05);
+    border-bottom: 1px solid rgba(25, 25, 25, 0.1);
     padding: 0 10%;
+    z-index: 1;
 }
 
 .checkout-header-logo {

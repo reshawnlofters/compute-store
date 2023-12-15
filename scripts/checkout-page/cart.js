@@ -1,7 +1,7 @@
 import { products } from '../../data/home-page.js';
 import { formatCurrency } from '../utils/format-currency.js';
 import { updateWishListVisibility } from './wish-list.js';
-import { updatePaymentSummaryDisplay, updatePlaceOrderButtonVisibility } from './order-summary.js';
+import { updateOrderSummaryDisplay, updatePlaceOrderButtonVisibility } from './order-summary.js';
 import {
     cart,
     wishList,
@@ -165,7 +165,7 @@ export function updateCartQuantityDisplay() {
         '.checkout-header-cart-quantity-count'
     ).innerHTML = `${calculateCartQuantity()}`;
 
-    document.querySelector('.js-order-summary-items').innerHTML = `${calculateCartQuantity()}`;
+    document.querySelector('.order-summary-items').innerHTML = `${calculateCartQuantity()}`;
 }
 updateCartQuantityDisplay();
 
@@ -217,7 +217,7 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
         updateCartItemQuantity(productId, newCartItemQuantity);
         updateCartItemPriceDisplay(productId, cartItemContainer, newCartItemQuantity);
         updateCartQuantityDisplay();
-        updatePaymentSummaryDisplay();
+        updateOrderSummaryDisplay();
     }
 
     updateCartItemQuantityInputElement.blur();
@@ -236,7 +236,7 @@ function removeCartItemDisplay(productId) {
 
     updateCartVisibility();
     updatePlaceOrderButtonVisibility();
-    updatePaymentSummaryDisplay();
+    updateOrderSummaryDisplay();
     updateCartQuantityDisplay();
 }
 

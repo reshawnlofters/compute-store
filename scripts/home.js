@@ -200,11 +200,15 @@ window.addEventListener('load', () => {
         if (window.scrollY > 0) {
             headerContainer.style.position = 'fixed';
             headerContainer.style.top = '0';
-            headerPromoContainer.style.display = 'none';
+            if (headerPromoContainer) {
+                headerPromoContainer.style.display = 'none';
+            }
         } else {
             headerContainer.style.position = 'relative';
             headerContainer.style.top = '40px';
-            headerPromoContainer.style.display = 'flex';
+            if (headerPromoContainer) {
+                headerPromoContainer.style.display = 'flex';
+            }
         }
     }
     adjustHeaderOnScroll();

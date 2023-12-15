@@ -8,32 +8,92 @@ import {
     clearCart,
 } from '../../data/checkout-page.js';
 
+let promoCodeValidityFlag = false;
+let orderTotalCost = 0;
+
+function validatePromoCode(promoCode) {
+    if (promoCode.toLowerCase() === 'demo') {
+        document.querySelector('.valid-promo-code-message').style.display = 'block';
+        document.querySelector('.invalid-promo-code-message').style.display = 'none';
+        promoCodeValidityFlag = true;
+        // applyPromoCode();
+    } else {
+        document.querySelector('.valid-promo-code-message').style.display = 'none';
+        document.querySelector('.invalid-promo-code-message').style.display = 'block';
+        promoCodeValidityFlag = false;
+    }
+
+    document.querySelector('.promo-code-input').value = ''; // Clear the input field
+
+    updateOrderSummaryDisplay();
+}
+
+document.querySelector('.apply-promo-code-button').addEventListener('click', () => {
+    const promoCode = document.querySelector('.promo-code-input').value;
+    if (promoCode.trim() !== '') {
+        validatePromoCode(promoCode);
+    }
+});
+
 /**
- * Updates the order summary display by calculating the quantity of cart items,
+ * Updates the order summary display by calculating the quantity of cart items in cents,
  * shipping cost, total tax, and cart total after tax.
  */
-export function updatePaymentSummaryDisplay() {
-    let cartItemTotalCostInCents = calculateCartItemTotalCost();
-    let shippingHandlingFeeInCents = cartItemTotalCostInCents === 0 ? 0 : 499;
-    let cartTotalBeforeTaxInCents = cartItemTotalCostInCents + shippingHandlingFeeInCents;
+export function updateOrderSummaryDisplay() {
+    let cartItemCost = calculateCartItemTotalCost();
+    let shippingCost = 0;
+    let discount = 0;
 
-    document.querySelector('.js-order-summary-items-cost').innerHTML = `$${formatCurrency(
-        cartItemTotalCostInCents
+    if (cartItemCost > 0 && cartItemCost < 10000) {
+        shippingCost = 899;
+    }
+    if (promoCodeValidityFlag) {
+        discount = cartItemCost * 0.15;
+        // update actual total
+        // update local storage
+    }
+
+    document.querySelector('.order-summary-items-cost').innerHTML = `$${formatCurrency(
+        cartItemCost
     )}`;
 
-    document.querySelector('.js-order-summary-shipping-cost').innerHTML = `$${formatCurrency(
-        shippingHandlingFeeInCents
+    document.querySelector('.order-summary-shipping-cost').innerHTML = `$${formatCurrency(
+        shippingCost
     )}`;
 
-    document.querySelector('.js-order-summary-tax-cost').innerHTML = `$${formatCurrency(
-        cartTotalBeforeTaxInCents * 0.13
+    document.querySelector('.order-summary-discount').innerHTML = `-$${formatCurrency(discount)}`;
+
+    document.querySelector('.order-summary-tax-cost').innerHTML = `$${formatCurrency(
+        (cartItemCost - discount + shippingCost) * 0.13
     )}`;
 
-    document.querySelector('.js-order-summary-total-cost').innerHTML = `$${formatCurrency(
-        cartTotalBeforeTaxInCents * 1.13
+    orderTotalCost = (cartItemCost - discount + shippingCost) * 1.13;
+
+    document.querySelector('.order-summary-total-cost').innerHTML = `$${formatCurrency(
+        orderTotalCost
     )}`;
 }
-updatePaymentSummaryDisplay();
+
+updateOrderSummaryDisplay();
+
+function removePromoCode() {
+    document.querySelector('.valid-promo-code-message').style.display = 'none';
+    promoCodeValidityFlag = false;
+    updateOrderSummaryDisplay();
+
+    // update actual total
+    // update local storage
+}
+
+document.querySelector('.remove-promo-code-button').addEventListener('click', () => {
+    removePromoCode();
+});
+
+// function applyPromoCode() {
+//     document.querySelector('.order-summary-total-cost').innerHTML = `$${formatCurrency(
+//         cartTotalBeforeTax * 1.13
+//     )}`;
+// }
 
 function placeOrder() {
     let date = new Date();
@@ -56,7 +116,7 @@ function placeOrder() {
     orders.push({
         id: generateOrderId(),
         items: [...cart],
-        priceInCents: (calculateCartItemTotalCost() + 999) * 1.13,
+        price: orderTotalCost,
         orderDate: `${monthNames[date.getMonth()]} ${date.getDate()}`,
         arrivalDate: `${calculateOrderArrivalDate(date, monthNames)}`,
     });
@@ -69,20 +129,13 @@ function placeOrder() {
     localStorage.setItem('orderPlaced', 'true');
 }
 
-/**
- * Attaches a click event listener to the "Place Order" button. If the button is clicked,
- * the order is placed and the user is redirected to the orders page.
- */
 document.querySelector('.place-order-button').addEventListener('click', () => {
     setTimeout(() => {
         placeOrder();
-        window.location.href = 'orders.html';
+        window.location.href = 'orders.html'; // Redirect user to the orders page
     }, 1000);
 });
 
-/**
- * Updates the visibility of the "Place Order" button based on the quantity of cart items.
- */
 export function updatePlaceOrderButtonVisibility() {
     const placeOrderButton = document.querySelector('.place-order-button');
 
@@ -92,4 +145,5 @@ export function updatePlaceOrderButtonVisibility() {
         placeOrderButton.style.display = 'none';
     }
 }
+
 updatePlaceOrderButtonVisibility();

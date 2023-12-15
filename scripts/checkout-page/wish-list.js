@@ -7,7 +7,7 @@ import {
     updateWishListInLocalStorage,
 } from '../../data/checkout-page.js';
 import { updateCartQuantityDisplay, updateCartVisibility } from './cart.js';
-import { updatePaymentSummaryDisplay, updatePlaceOrderButtonVisibility } from './order-summary.js';
+import { updateOrderSummaryDisplay, updatePlaceOrderButtonVisibility } from './order-summary.js';
 
 /**
  * Generates HTML for displaying wish list products.
@@ -122,7 +122,7 @@ document.querySelector('.wish-list-container').addEventListener('click', (event)
         updateCartVisibility();
         updateWishListVisibility();
         updateCartQuantityDisplay();
-        updatePaymentSummaryDisplay();
+        updateOrderSummaryDisplay();
         updatePlaceOrderButtonVisibility();
     }
 });
