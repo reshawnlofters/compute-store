@@ -16,7 +16,6 @@ function validatePromoCode(promoCode) {
         document.querySelector('.valid-promo-code-message').style.display = 'block';
         document.querySelector('.invalid-promo-code-message').style.display = 'none';
         promoCodeValidityFlag = true;
-        // applyPromoCode();
     } else {
         document.querySelector('.valid-promo-code-message').style.display = 'none';
         document.querySelector('.invalid-promo-code-message').style.display = 'block';
@@ -24,7 +23,6 @@ function validatePromoCode(promoCode) {
     }
 
     document.querySelector('.promo-code-input').value = ''; // Clear the input field
-
     updateOrderSummaryDisplay();
 }
 
@@ -40,38 +38,25 @@ document.querySelector('.apply-promo-code-button').addEventListener('click', () 
  * shipping cost, total tax, and cart total after tax.
  */
 export function updateOrderSummaryDisplay() {
-    let cartItemCost = calculateCartItemTotalCost();
+    let itemsCost = calculateCartItemTotalCost();
     let shippingCost = 0;
     let discount = 0;
 
-    if (cartItemCost > 0 && cartItemCost < 10000) {
+    if (itemsCost > 0 && itemsCost < 10000) {
         shippingCost = 899;
     }
     if (promoCodeValidityFlag) {
-        discount = cartItemCost * 0.15;
-        // update actual total
-        // update local storage
+        discount = itemsCost * 0.15;
     }
 
-    document.querySelector('.order-summary-items-cost').innerHTML = `$${formatCurrency(
-        cartItemCost
-    )}`;
-
-    document.querySelector('.order-summary-shipping-cost').innerHTML = `$${formatCurrency(
-        shippingCost
-    )}`;
-
-    document.querySelector('.order-summary-discount').innerHTML = `-$${formatCurrency(discount)}`;
-
-    document.querySelector('.order-summary-tax-cost').innerHTML = `$${formatCurrency(
-        (cartItemCost - discount + shippingCost) * 0.13
-    )}`;
-
-    orderTotalCost = (cartItemCost - discount + shippingCost) * 1.13;
-
-    document.querySelector('.order-summary-total-cost').innerHTML = `$${formatCurrency(
-        orderTotalCost
-    )}`;
+    document.querySelector('.order-summary-items-cost').innerHTML = formatCurrency(itemsCost);
+    document.querySelector('.order-summary-shipping-cost').innerHTML = formatCurrency(shippingCost);
+    document.querySelector('.order-summary-discount').innerHTML = formatCurrency(discount);
+    document.querySelector('.order-summary-tax-cost').innerHTML = formatCurrency(
+        (itemsCost - discount + shippingCost) * 0.13
+    );
+    orderTotalCost = (itemsCost - discount + shippingCost) * 1.13;
+    document.querySelector('.order-summary-total-cost').innerHTML = formatCurrency(orderTotalCost);
 }
 
 updateOrderSummaryDisplay();
@@ -80,20 +65,11 @@ function removePromoCode() {
     document.querySelector('.valid-promo-code-message').style.display = 'none';
     promoCodeValidityFlag = false;
     updateOrderSummaryDisplay();
-
-    // update actual total
-    // update local storage
 }
 
 document.querySelector('.remove-promo-code-button').addEventListener('click', () => {
     removePromoCode();
 });
-
-// function applyPromoCode() {
-//     document.querySelector('.order-summary-total-cost').innerHTML = `$${formatCurrency(
-//         cartTotalBeforeTax * 1.13
-//     )}`;
-// }
 
 function placeOrder() {
     let date = new Date();
@@ -112,7 +88,7 @@ function placeOrder() {
         'December',
     ];
 
-    // add order to orders array
+    // Add order to orders array
     orders.push({
         id: generateOrderId(),
         items: [...cart],
@@ -125,7 +101,7 @@ function placeOrder() {
     clearCart();
     updateOrdersInLocalStorage();
 
-    // set a flag in local storage to signify successful order placement
+    // Set a flag in local storage to true for successful order placement
     localStorage.setItem('orderPlaced', 'true');
 }
 

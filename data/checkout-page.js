@@ -28,9 +28,8 @@ export function addProductToCart(productId, productQuantity) {
     if (!product) {
         return;
     }
-    let matchingCartItem = cart.find(
-        (cartItem) => cartItem.productId === productId
-    );
+
+    let matchingCartItem = cart.find((cartItem) => cartItem.productId === productId);
 
     if (matchingCartItem) {
         matchingCartItem.quantity += productQuantity;
@@ -51,9 +50,7 @@ export function addProductToCart(productId, productQuantity) {
  * @param productId - The unique identifier of the cart item to be removed.
  */
 export function removeCartItem(productId) {
-    const cartItemIndex = cart.findIndex(
-        (cartItem) => cartItem.productId === productId
-    );
+    const cartItemIndex = cart.findIndex((cartItem) => cartItem.productId === productId);
 
     if (cartItemIndex !== -1) {
         cart.splice(cartItemIndex, 1);
@@ -88,19 +85,14 @@ export function updateCartItemQuantity(productId, newCartItemQuantity) {
  * @param cartItemContainer - The element that holds the price element.
  * @param newCartItemQuantity - The new cart item quantity inputted by the user.
  */
-export function updateCartItemPriceDisplay(
-    productId,
-    cartItemContainer,
-    newCartItemQuantity
-) {
-    const cartItemPriceElement =
-        cartItemContainer.querySelector('.product-price');
+export function updateCartItemPriceDisplay(productId, cartItemContainer, newCartItemQuantity) {
+    const cartItemPriceElement = cartItemContainer.querySelector('.product-price');
 
     products.forEach((product) => {
         if (product.id === productId) {
-            cartItemPriceElement.innerHTML = `$${formatCurrency(
+            cartItemPriceElement.innerHTML = formatCurrency(
                 product.priceInCents * newCartItemQuantity
-            )}`;
+            );
         }
     });
 }
@@ -109,9 +101,7 @@ export function calculateCartItemTotalCost() {
     let cartItemTotalCostInCents = 0;
 
     cart.forEach(
-        (cartItem) =>
-            (cartItemTotalCostInCents +=
-                cartItem.priceInCents * cartItem.quantity)
+        (cartItem) => (cartItemTotalCostInCents += cartItem.priceInCents * cartItem.quantity)
     );
 
     return cartItemTotalCostInCents;

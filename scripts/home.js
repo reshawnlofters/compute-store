@@ -24,16 +24,9 @@ function generateProductsHTML() {
                 </div>
 
                 <div class="product-price">
-                    $${formatCurrency(product.priceInCents)}
+                    ${formatCurrency(product.priceInCents)}
                 </div>
 
-                <div class="added-product-to-cart-message added-product-to-cart-message-${
-                    product.id
-                }">
-                    <img src="images/icons/checkmark.png">
-                    Added
-                </div>
-                
                 <div class="add-product-to-cart-container">
                     <div class="input-product-quantity-container">
                         <div class="product-quantity-controls-container">
@@ -89,10 +82,9 @@ document.querySelectorAll('.add-product-to-cart-button').forEach((button) => {
                 document.querySelector(`.product-quantity-count-${productId}`).textContent
             );
 
-            addProductToCart(productId, productQuantity);
-            updateCartQuantityDisplay();
-
             if (productQuantity > 0) {
+                addProductToCart(productId, productQuantity);
+                updateCartQuantityDisplay();
                 displayAddedProductToCartMessage(productId);
             }
 
@@ -144,34 +136,34 @@ if (productsGrid) {
     });
 }
 
-// object to store added message timeouts in 'displayAddedProductToCartMessage' function
-const addedMessageTimeouts = {};
+const addedProductToCartMessageTimeouts = {};
 
 /**
- * Temporarily displays an "Added Product to Cart" message by adding a class to the
- * message element to make it visibile.
- * @param productId - The unique identifier of the product added to the cart.
+ * Temporarily displays an "Added Product to Cart" message by updating the innerHTML of
+ * the specified button element and managing a timeout for a smooth transition.
+ *
+ * @param {string} productId - The unique identifier of the product added to the cart.
  */
 function displayAddedProductToCartMessage(productId) {
-    let addedMessageElement = document.querySelector(`.added-product-to-cart-message-${productId}`);
+    const button = document.querySelector(
+        `.add-product-to-cart-button[data-product-id="${productId}"]`
+    );
 
-    if (addedMessageElement) {
-        addedMessageElement.classList.add('added-product-to-cart-message-visible');
-
-        // check for any previous timeouts
-        const previousTimeoutId = addedMessageTimeouts[productId];
-
-        if (previousTimeoutId) {
-            clearTimeout(previousTimeoutId);
-        }
-
-        const timeoutId = setInterval(() => {
-            addedMessageElement.classList.remove('added-product-to-cart-message-visible');
-        }, 2000);
-
-        // add the added message 'timeoutId' to the 'addedMessageTimeouts' object
-        addedMessageTimeouts[productId] = timeoutId;
+    // Check for any previous timeouts and clear them
+    const previousTimeouts = addedProductToCartMessageTimeouts[productId];
+    if (previousTimeouts) {
+        clearTimeout(previousTimeouts);
     }
+
+    button.innerHTML = 'Added';
+
+    // Set a timeout to revert the innerHTML back to 'Add to Cart'
+    const timeoutId = setTimeout(() => {
+        button.innerHTML = 'Add to Cart';
+    }, 1000);
+
+    // Store the timeoutId for later reference
+    addedProductToCartMessageTimeouts[productId] = timeoutId;
 }
 
 function clearSearchBarOnPageLeave() {
@@ -187,31 +179,22 @@ function clearSearchBarOnPageLeave() {
 clearSearchBarOnPageLeave();
 
 /**
- * Attaches a scroll event listener to the page. When a user scrolls down, the
- * 'headerContainer' and 'headerPromoContainer' elements are controlled
- * to achieve a fixed header effect.
+ * Attaches a scroll event listener to the page
+ * When a user scrolls down, the promotion header disappears
  */
 window.addEventListener('load', () => {
-    const headerContainer = document.querySelector('.header-container');
-    const headerPromoContainer = document.querySelector('.header-promo-container');
+    const promoHeader = document.querySelector('.promo-header-container');
+    const header = document.querySelector('.header-container');
 
-    // Function to adjust the header elements based on scroll position
     function adjustHeaderOnScroll() {
         if (window.scrollY > 0) {
-            headerContainer.style.position = 'fixed';
-            headerContainer.style.top = '0';
-            if (headerPromoContainer) {
-                headerPromoContainer.style.display = 'none';
-            }
+            promoHeader.style.top = '-60px';
+            header.style.top = '0';
         } else {
-            headerContainer.style.position = 'relative';
-            headerContainer.style.top = '40px';
-            if (headerPromoContainer) {
-                headerPromoContainer.style.display = 'flex';
-            }
+            promoHeader.style.top = '0';
+            header.style.top = '50px';
         }
     }
-    adjustHeaderOnScroll();
 
     window.addEventListener('scroll', () => {
         adjustHeaderOnScroll();

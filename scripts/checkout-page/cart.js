@@ -40,7 +40,7 @@ function generateCartHTML() {
                                 ${matchingProduct.name}
                             </div>
                             <div class="product-price">
-                                $${formatCurrency(cartItem.priceInCents * cartItem.quantity)}
+                                ${formatCurrency(cartItem.priceInCents * cartItem.quantity)}
                             </div>
                             <div class="cart-item-quantity-container">
                                 <span>

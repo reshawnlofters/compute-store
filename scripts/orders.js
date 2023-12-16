@@ -32,7 +32,7 @@ function generateOrdersHTML() {
                         </div>
                         <div class="order-total">
                             <div class="order-header-label label-primary">Total</div>
-                            <div>$${formatCurrency(order.price)}</div>
+                            <div>${formatCurrency(order.price)}</div>
                         </div>
                     </div>
 

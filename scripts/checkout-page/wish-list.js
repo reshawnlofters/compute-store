@@ -39,7 +39,7 @@ function generateWishListHTML() {
                                 ${matchingProduct.name}
                             </div>
                             <div class="product-price">
-                                $${formatCurrency(matchingProduct.priceInCents)}
+                                ${formatCurrency(matchingProduct.priceInCents)}
                             </div>
                         </div>
                         <div>

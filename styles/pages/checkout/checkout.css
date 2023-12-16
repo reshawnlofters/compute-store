@@ -151,7 +151,7 @@ main {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
 }
 
 .valid-promo-code-message {
@@ -173,7 +173,8 @@ main {
 .valid-promo-code-message,
 .invalid-promo-code-message {
     font-size: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    margin-top: -20px;
 }
 
 .promo-code-input {
