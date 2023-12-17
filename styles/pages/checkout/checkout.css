@@ -73,7 +73,7 @@ main {
 .cart-item-details-grid {
     display: grid;
     grid-template-columns: 100px 1fr 1fr;
-    column-gap: 25px;
+    column-gap: 30px;
 }
 
 @media (max-width: 1000px) {
@@ -121,95 +121,74 @@ main {
 .delivery-option {
     display: grid;
     grid-template-columns: 24px 1fr;
-    margin-bottom: 12px;
     cursor: pointer;
+    margin-bottom: 15px;
 }
 
 .delivery-option-input {
-    margin-left: 0px;
     cursor: pointer;
 }
 
 .delivery-option-date {
-    color: rgb(0, 118, 0);
-    font-weight: 500;
-    margin-bottom: 3px;
-}
-
-.delivery-option-price {
-    color: rgb(120, 120, 120);
     font-size: 15px;
-}
-
-.order-summary-section-title {
-    font-weight: 700;
-    font-size: 18px;
-    margin-bottom: 25px;
+    margin-left: 8px;
+    color: #707070;
 }
 
 .promo-code-container {
     display: flex;
-    justify-content: space-between;
     width: 100%;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .valid-promo-code-message {
     color: #707070;
-    display: none;
 }
 
 .valid-promo-code-message span {
-    color: #0047ff;
     text-decoration: underline;
     cursor: pointer;
 }
 
 .invalid-promo-code-message {
     color: #e74c39;
-    display: none;
 }
 
 .valid-promo-code-message,
 .invalid-promo-code-message {
+    display: none;
     font-size: 15px;
-    margin-bottom: 25px;
-    margin-top: -20px;
+    margin-top: -15px;
+    margin-bottom: 20px;
 }
 
 .promo-code-input {
     flex: 1;
-    border: 2px solid rgb(207, 212, 217);
+    border: 1px solid rgb(207, 212, 217);
+    outline: none;
     padding: 10px 10px 10px 15px;
     margin-right: 10px;
-}
-
-.promo-code-input,
-.apply-promo-code-button {
-    font-size: 14px;
-    border-radius: 6px;
-}
-.promo-code-input:focus {
-    border-color: #9ecaed;
-    box-shadow: 0 0 5px #9ecaed;
 }
 
 .promo-code-input::placeholder {
     color: darkgray;
 }
 
-.apply-promo-code-button {
+.add-promo-code-button {
     color: white;
-    background-color: gray;
-    font-weight: 500;
     border: none;
-    padding: 10px;
+    padding: 10px 20px;
+}
+
+.promo-code-input,
+.add-promo-code-button {
+    font-size: 14px;
+    border-radius: 0;
 }
 
 .order-summary-row {
     display: grid;
     grid-template-columns: 1fr auto;
-
     font-size: 15px;
     margin-bottom: 9px;
 }
@@ -218,37 +197,28 @@ main {
     text-align: right;
 }
 
-.subtotal-row .order-summary-money {
-    border-top: 1px solid rgb(222, 222, 222);
-}
-
-.subtotal-row div {
-    padding-top: 9px;
-}
-
 .order-summary-top-rows-container {
-    border-bottom: 1px solid rgb(222, 222, 222);
-    padding-bottom: 10px;
-    margin-bottom: 25px;
+    border-top: 1px solid rgb(222, 222, 222);
+    border-bottom: 1px solid black;
+    padding: 15px 0;
 }
 
 .order-total-row {
-    color: rgb(177, 39, 4);
+    font-size: 16px;
     font-weight: 700;
-    font-size: 18px;
-    margin-bottom: 30px;
+    margin: 10px 0 30px 0;
 }
 
 .place-order-button {
+    display: none;
     width: 100%;
     padding: 14px 0;
-    margin-bottom: 25px;
-    display: none;
+    margin-bottom: 20px;
 }
 
 .cart-section-title,
 .wish-list-section-title {
-    font-weight: 700;
+    font-weight: 600;
     font-size: 22px;
     margin-bottom: 18px;
 }

@@ -179,16 +179,17 @@ function clearSearchBarOnPageLeave() {
 clearSearchBarOnPageLeave();
 
 /**
- * Attaches a scroll event listener to the page
- * When a user scrolls down, the promotion header disappears
+ * Attaches a scroll event listener to the page.
+ * Disappears the promotion header when a user scrolls down.
  */
 window.addEventListener('load', () => {
     const promoHeader = document.querySelector('.promo-header-container');
     const header = document.querySelector('.header-container');
 
+    // Function to adjust headers based on scroll position
     function adjustHeaderOnScroll() {
         if (window.scrollY > 0) {
-            promoHeader.style.top = '-60px';
+            promoHeader.style.top = '-50px';
             header.style.top = '0';
         } else {
             promoHeader.style.top = '0';
@@ -198,6 +199,18 @@ window.addEventListener('load', () => {
 
     window.addEventListener('scroll', () => {
         adjustHeaderOnScroll();
+    });
+});
+
+/**
+ * Smooth scroll to the products section when the "Shop Now" button is clicked.
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    const shopNowButton = document.querySelector('.shop-now-button');
+    const productsSectionContainer = document.getElementById('products-section-container');
+
+    shopNowButton.addEventListener('click', () => {
+        productsSectionContainer.scrollIntoView({ behavior: 'smooth' });
     });
 });
 

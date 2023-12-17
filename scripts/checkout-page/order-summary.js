@@ -9,7 +9,7 @@ import {
 } from '../../data/checkout-page.js';
 
 let promoCodeValidityFlag = false;
-let orderTotalCost = 0;
+let orderTotal = 0;
 
 function validatePromoCode(promoCode) {
     if (promoCode.toLowerCase() === 'demo') {
@@ -26,7 +26,7 @@ function validatePromoCode(promoCode) {
     updateOrderSummaryDisplay();
 }
 
-document.querySelector('.apply-promo-code-button').addEventListener('click', () => {
+document.querySelector('.add-promo-code-button').addEventListener('click', () => {
     const promoCode = document.querySelector('.promo-code-input').value;
     if (promoCode.trim() !== '') {
         validatePromoCode(promoCode);
@@ -34,29 +34,38 @@ document.querySelector('.apply-promo-code-button').addEventListener('click', () 
 });
 
 /**
- * Updates the order summary display by calculating the quantity of cart items in cents,
- * shipping cost, total tax, and cart total after tax.
+ * Updates the order summary display with precise calculations for item costs,
+ * shipping, discounts, taxes, and the overall total after tax.
  */
 export function updateOrderSummaryDisplay() {
-    let itemsCost = calculateCartItemTotalCost();
-    let shippingCost = 0;
+    const subtotal = calculateCartItemTotalCost();
+    let shipping = 0;
     let discount = 0;
 
-    if (itemsCost > 0 && itemsCost < 10000) {
-        shippingCost = 899;
-    }
-    if (promoCodeValidityFlag) {
-        discount = itemsCost * 0.15;
+    // Apply shipping cost if applicable
+    if (subtotal > 0 && subtotal < 10000) {
+        shipping = 899;
     }
 
-    document.querySelector('.order-summary-items-cost').innerHTML = formatCurrency(itemsCost);
-    document.querySelector('.order-summary-shipping-cost').innerHTML = formatCurrency(shippingCost);
-    document.querySelector('.order-summary-discount').innerHTML = formatCurrency(discount);
-    document.querySelector('.order-summary-tax-cost').innerHTML = formatCurrency(
-        (itemsCost - discount + shippingCost) * 0.13
+    // Apply discount for a valid promo code
+    if (promoCodeValidityFlag) {
+        discount = subtotal * 0.15;
+    }
+
+    // Update item cost, shipping cost, discount, tax, and total cost
+    document.querySelector('.order-summary-subtotal').innerHTML = formatCurrency(subtotal);
+
+    // Display 'FREE' shipping if item cost exceeds $100
+    document.querySelector('.order-summary-shipping').innerHTML =
+        subtotal > 10000 ? 'FREE' : formatCurrency(shipping);
+
+    document.querySelector('.order-summary-discount').innerHTML = `-${formatCurrency(discount)}`;
+    document.querySelector('.order-summary-tax').innerHTML = formatCurrency(
+        (subtotal - discount + shipping) * 0.13
     );
-    orderTotalCost = (itemsCost - discount + shippingCost) * 1.13;
-    document.querySelector('.order-summary-total-cost').innerHTML = formatCurrency(orderTotalCost);
+
+    orderTotal = (subtotal - discount + shipping) * 1.13;
+    document.querySelector('.order-summary-total').innerHTML = formatCurrency(orderTotal);
 }
 
 updateOrderSummaryDisplay();
@@ -92,7 +101,7 @@ function placeOrder() {
     orders.push({
         id: generateOrderId(),
         items: [...cart],
-        price: orderTotalCost,
+        price: orderTotal,
         orderDate: `${monthNames[date.getMonth()]} ${date.getDate()}`,
         arrivalDate: `${calculateOrderArrivalDate(date, monthNames)}`,
     });

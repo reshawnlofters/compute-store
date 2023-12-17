@@ -43,25 +43,21 @@
                 <section class="cart-items-container"></section>
 
                 <section class="order-summary-section-container">
-                    <div class="order-summary-section-title">Order Summary</div>
-
                     <div class="promo-code-container">
                         <input class="promo-code-input" type="text" placeholder="Add promo code" />
-                        <button class="apply-promo-code-button button-primary">Apply</button>
+                        <button class="add-promo-code-button button-primary">Add</button>
                     </div>
 
                     <span class="valid-promo-code-message"
                         >Promotion code applied
-                        <span class="remove-promo-code-button">Remove</span></span
+                        <span class="remove-promo-code-button link-primary">Remove</span></span
                     >
-                    <span class="invalid-promo-code-message">Promotion code not found</span>
+                    <span class="invalid-promo-code-message">Promotion code is not valid</span>
 
                     <div class="order-summary-top-rows-container">
                         <div class="order-summary-row">
-                            <div class="label-primary">
-                                Items (<span class="order-summary-items"></span>)
-                            </div>
-                            <div class="order-summary-money order-summary-items-cost"></div>
+                            <div class="label-primary">Subtotal</div>
+                            <div class="order-summary-money order-summary-subtotal"></div>
                         </div>
                         <div class="order-summary-row">
                             <div class="label-primary">Discounts</div>
@@ -69,17 +65,17 @@
                         </div>
                         <div class="order-summary-row">
                             <div class="label-primary">Shipping</div>
-                            <div class="order-summary-money order-summary-shipping-cost"></div>
+                            <div class="order-summary-money order-summary-shipping"></div>
                         </div>
                         <div class="order-summary-row">
-                            <div class="label-primary">GST/HST</div>
-                            <div class="order-summary-money order-summary-tax-cost"></div>
+                            <div class="label-primary">Tax</div>
+                            <div class="order-summary-money order-summary-tax"></div>
                         </div>
                     </div>
 
                     <div class="order-summary-row order-total-row">
                         <div>Total</div>
-                        <div class="order-summary-money order-summary-total-cost"></div>
+                        <div class="order-summary-money order-summary-total"></div>
                     </div>
                     <button class="place-order-button button-primary">Complete purchase</button>
                 </section>
