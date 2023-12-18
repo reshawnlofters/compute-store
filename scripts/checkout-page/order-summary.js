@@ -51,6 +51,11 @@ export function updateOrderSummaryDisplay() {
     if (promoCodeValidityFlag) {
         discount = subtotal * 0.15;
     }
+    if (discount > 0) {
+        document.querySelector('.order-summary-discount').style.color = '#c9002e';
+    }  else {
+        document.querySelector('.order-summary-discount').style.color = 'black';
+    }
 
     // Update item cost, shipping cost, discount, tax, and total cost
     document.querySelector('.order-summary-subtotal').innerHTML = formatCurrency(subtotal);

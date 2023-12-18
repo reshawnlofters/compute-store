@@ -189,11 +189,11 @@ window.addEventListener('load', () => {
     // Function to adjust headers based on scroll position
     function adjustHeaderOnScroll() {
         if (window.scrollY > 0) {
-            promoHeader.style.top = '-50px';
+            promoHeader.style.top = '-45px';
             header.style.top = '0';
         } else {
             promoHeader.style.top = '0';
-            header.style.top = '50px';
+            header.style.top = '45px';
         }
     }
 

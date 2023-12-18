@@ -42,10 +42,8 @@ main {
     margin-right: 8px;
 }
 
-/* style to display the "update cart item quantity" input and 
-"save new cart item quantity" button */
-.is-editing-cart-item-quantity .update-cart-item-quantity-input,
-.is-editing-cart-item-quantity .save-new-cart-item-quantity-button {
+.editing-cart-item-quantity .update-cart-item-quantity-input, 
+.editing-cart-item-quantity .save-new-cart-item-quantity-button {
     display: initial;
 }
 
@@ -72,14 +70,14 @@ main {
 
 .cart-item-details-grid {
     display: grid;
-    grid-template-columns: 100px 1fr 1fr;
-    column-gap: 30px;
+    grid-template-columns: 100px 245px 1fr;
+    grid-gap: 30px;
 }
 
 @media (max-width: 1000px) {
     .cart-item-details-grid {
         grid-template-columns: 100px 1fr;
-        row-gap: 30px;
+        column-gap: 30px;
     }
 }
 
@@ -97,7 +95,6 @@ main {
 }
 
 .product-price {
-    color: rgb(177, 39, 4);
     font-weight: 700;
     margin-bottom: 5px;
 }

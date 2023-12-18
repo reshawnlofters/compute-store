@@ -31,9 +31,10 @@ a {
 .button-primary {
     background-color: #221f20;
     color: white;
-    border: none;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 14px;
+    border: none;
+    transition: all 100ms ease 0s;
 }
 
 .button-primary:hover {
@@ -51,6 +52,10 @@ a {
 .link-primary {
     color: rgb(1, 124, 182);
     cursor: pointer;
+}
+
+.link-primary:hover {
+    color: #034dcd;
 }
 
 .label-primary {
