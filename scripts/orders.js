@@ -139,7 +139,6 @@ function generateOrderItemHTML(order) {
 }
 
 function generateEmptyOrdersHTML() {
-    const ordersGrid = document.querySelector('.orders-grid');
     if (ordersGrid) {
         ordersGrid.innerHTML = `
             <div class="empty-orders-container">
@@ -194,32 +193,38 @@ export function generateOrderId() {
 
 /**
  * Calculates the estimated arrival date of an order based on the current date.
- * @param date - The 'Date' object representing the current date.
- * @param monthNames - An array of month names.
- * @returns a string that represents the estimated arrival date of an order.
+ * @param {Date} date - The 'Date' object representing the current date.
+ * @param {string[]} monthNames - An array of month names.
+ * @returns {string} A string that represents the estimated arrival date of an order.
  */
 export function calculateOrderArrivalDate(date, monthNames) {
+    if (!Array.isArray(monthNames) || monthNames.length < 12) {
+        throw new Error('Invalid monthNames array. It must be an array with at least 12 elements.');
+    }
+
     const dayOfMonth = date.getDate();
 
     if (dayOfMonth + 2 >= 30) {
         const nextMonth = (date.getMonth() + 1) % 12;
         return `${monthNames[nextMonth]} 1`; // Arrives the first day of the next month
     } else {
-        return `${monthNames[date.getMonth()]} ${dayOfMonth + 2}`; // Arrivals in two days
+        return `${monthNames[date.getMonth()]} ${dayOfMonth + 2}`; // Arrives in two days
     }
 }
 
 /**
  * Cancels an order using the 'orderId' and updates displays.
- * @param orderId - The unique identifier of the order to be cancelled.
+ * @param {string} orderId - The unique identifier of the order to be cancelled.
  */
 function cancelOrder(orderId) {
     const orderIndex = orders.findIndex((order) => order.id === orderId);
 
     if (orderIndex !== -1) {
+        // Remove the order from the orders array
         orders.splice(orderIndex, 1);
         updateOrdersInLocalStorage();
 
+        // Remove the order item container from the DOM
         const orderItemContainer = document.querySelector(`.order-container-${orderId}`);
         orderItemContainer.remove();
     }
@@ -232,18 +237,25 @@ function cancelOrder(orderId) {
  */
 if (ordersGrid) {
     ordersGrid.addEventListener('click', (event) => {
-        if (event.target.classList.contains('cancel-order-button')) {
+        const cancelOrderButton = event.target.closest('.cancel-order-button');
+
+        if (cancelOrderButton) {
             const modal = document.querySelector('.cancel-order-modal');
+
+            // Display the confirmation modal
             modal.showModal();
 
+            // Confirm cancellation
             document.querySelector('.modal-cancel-order-button').addEventListener('click', () => {
                 modal.close();
-                const orderId = event.target.dataset.orderId;
+                const orderId = cancelOrderButton.dataset.orderId;
 
+                // Trigger the cancelOrder function and update visibility
                 cancelOrder(orderId);
                 updateOrdersVisibility();
             });
 
+            // Cancel the action and close the modal
             document.querySelector('.modal-close-button').addEventListener('click', () => {
                 modal.close();
             });
@@ -252,28 +264,40 @@ if (ordersGrid) {
 }
 
 /**
- * Displays a modal to indicate an order was successfully placed.
- * A flag in local storage is checked to determine if the user is redirected to
+ * Displays a modal to indicate a successfully placed order.
+ * Checks a flag in local storage to determine if the user is redirected to
  * the orders page after placing an order.
  */
 function displayPlacedOrderModal() {
+    // Retrieve the 'orderPlaced' flag from local storage
     const orderPlaced = localStorage.getItem('orderPlaced');
 
+    // Check if the order has been successfully placed
     if (orderPlaced === 'true') {
         const modal = document.querySelector('.placed-order-modal');
-        modal.showModal();
 
-        document.querySelector('.modal-close-window-button').addEventListener('click', () => {
-            modal.close();
-        });
+        if (modal) {
+            modal.showModal();
 
-        // Clear the flag in local storage
+            // Add an event listener to close the modal when the close button is clicked
+            document.querySelector('.modal-close-window-button').addEventListener('click', () => {
+                modal.close();
+            });
+        }
+
+        // Clear the 'orderPlaced' flag in local storage
         localStorage.removeItem('orderPlaced');
     }
 }
 
 displayPlacedOrderModal();
 
+/**
+ * Handles the "Buy Again" button click event.
+ * If a "Buy Again" button is clicked, the corresponding product is added to the cart,
+ * and the user is redirected to the cart page.
+ * @param {Event} event - The click event.
+ */
 function handleBuyProductAgainButtonClick(event) {
     const productDetailsContainer = event.target.closest('.product-details');
 
@@ -292,11 +316,7 @@ function handleBuyProductAgainButtonClick(event) {
     }
 }
 
-/**
- * Attaches a click event listener to the container for orders using event delegation.
- * If a "Buy Again" button is clicked, the corresponding product is added to the cart,
- * and the user is redirected to the cart page.
- */
+// Attaches a click event listener to the container for orders using event delegation
 if (ordersGrid) {
     ordersGrid.addEventListener('click', handleBuyProductAgainButtonClick);
 }

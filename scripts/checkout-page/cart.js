@@ -12,6 +12,8 @@ import {
     updateWishListInLocalStorage,
 } from '../../data/checkout-page.js';
 
+const cartItemContainer = document.querySelector('.cart-items-container');
+
 function generateCartHTML() {
     let cartHTML = '';
 
@@ -89,11 +91,11 @@ function generateCartHTML() {
             </div>`;
     });
 
-    document.querySelector('.cart-items-container').innerHTML = cartHTML;
+    cartItemContainer.innerHTML = cartHTML;
 }
 
 function generateEmptyCartHTML() {
-    document.querySelector('.cart-items-container').innerHTML = `
+    cartItemContainer.innerHTML = `
         <div class="empty-cart-container">
             <div class="empty-cart-message-container">
                 <div>
@@ -141,7 +143,7 @@ updateCartQuantityDisplay();
 function displayCartItemQuantityLimitMessage(cartItemContainer) {
     const messageElement = cartItemContainer.querySelector('.cart-item-quantity-limit-message');
 
-    // Set the message to indicate a quantity limit of 50
+    // Set the message to indicate the quantity limit
     messageElement.innerHTML = '<br>Quantity limit: 50';
 
     // Clear any existing timeout to prevent multiple messages
@@ -236,6 +238,11 @@ function removeCartItemDisplay(productId) {
     updateCartQuantityDisplay();
 }
 
+/**
+ * Handles clicks outside cart item containers.
+ * Removes 'editing-cart-item-quantity' class from all cart item containers.
+ * @param {Event} event - The click event.
+ */
 function handleClickOutsideCartItemContainer(event) {
     if (!event.target.closest('.cart-item-container')) {
         const cartItemContainers = document.querySelectorAll('.cart-item-container');
@@ -245,11 +252,6 @@ function handleClickOutsideCartItemContainer(event) {
     }
 }
 
-/**
- * Click event listener to handle interactions outside of cart item containers.
- * If the click target is not inside a cart item container, remove the
- * 'editing-cart-quantity' class from all cart item containers.
- */
 document.addEventListener('click', handleClickOutsideCartItemContainer);
 
 /**
@@ -259,66 +261,76 @@ document.addEventListener('click', handleClickOutsideCartItemContainer);
  * Clicking the "Save" button or blurring the input field triggers the update of the cart item quantity.
  */
 document.querySelector('.cart-items-container').addEventListener('click', (event) => {
-    if (event.target.classList.contains('js-update-cart-item-quantity-button')) {
-        const productId = event.target.dataset.productId;
+    const updateButton = event.target.closest('.js-update-cart-item-quantity-button');
+    if (updateButton) {
+        const productId = updateButton.dataset.productId;
         const cartItemContainer = document.querySelector(`.js-cart-item-container-${productId}`);
 
-        cartItemContainer.classList.add('editing-cart-item-quantity');
-        const saveButton = cartItemContainer.querySelector('.save-new-cart-item-quantity-button');
-        const inputField = cartItemContainer.querySelector('.update-cart-item-quantity-input');
+        if (cartItemContainer) {
+            cartItemContainer.classList.add('editing-cart-item-quantity');
 
-        saveButton.addEventListener('click', () =>
-            saveNewCartItemQuantity(productId, cartItemContainer)
-        );
-        inputField.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') {
-                saveNewCartItemQuantity(productId, cartItemContainer);
-            }
-        });
-        inputField.addEventListener('blur', () =>
-            saveNewCartItemQuantity(productId, cartItemContainer)
-        );
+            const saveButton = cartItemContainer.querySelector(
+                '.save-new-cart-item-quantity-button'
+            );
+            const inputField = cartItemContainer.querySelector('.update-cart-item-quantity-input');
+
+            const saveHandler = () => saveNewCartItemQuantity(productId, cartItemContainer);
+
+            saveButton.addEventListener('click', saveHandler);
+            inputField.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    saveHandler();
+                }
+            });
+            inputField.addEventListener('blur', saveHandler);
+        }
     }
 });
 
 /**
- * Attaches a click event listener to the element that holds all "Remove Cart Item"
- * buttons using event delegation. If a button is clicked, the code retrieves the 'productId',
- * removes the cart item, and updates displays.
+ * Handles the click event on "Remove Cart Item" buttons within the cart.
+ * If a button is clicked, retrieves the 'productId', removes the cart item, and updates displays.
+ * @param {Event} event - The click event.
  */
-document
-    .querySelector('.cart-items-container')
-    .addEventListener('click', handleRemoveCartItemButtonClick);
-
 function handleRemoveCartItemButtonClick(event) {
-    if (event.target.classList.contains('remove-cart-item-button')) {
-        const productId = event.target.dataset.productId;
+    const removeButton = event.target.closest('.remove-cart-item-button');
+    if (removeButton) {
+        const productId = removeButton.dataset.productId;
         removeCartItem(productId);
         removeCartItemDisplay(productId);
     }
 }
 
+document
+    .querySelector('.cart-items-container')
+    .addEventListener('click', handleRemoveCartItemButtonClick);
+
 /**
  * Adds a product to the wish list by adding it to the 'wishList' array.
  * If the product is already in the wish list, no duplicates are added.
- * @param productId - The unique identifier of the product to be added to the wish list.
+ * @param {string} productId - The unique identifier of the product to be added to the wish list.
  */
 function addCartItemToWishList(productId) {
-    const matchingProduct = wishList.find((product) => productId === product.productId);
+    const isProductAlreadyInWishList = wishList.some((product) => product.productId === productId);
 
-    if (!matchingProduct) {
-        wishList.push({
-            productId,
-        });
+    if (!isProductAlreadyInWishList) {
+        wishList.push({ productId });
+        updateWishListInLocalStorage();
+        updateWishListVisibility();
     }
-
-    updateWishListInLocalStorage();
-    updateWishListVisibility();
 }
 
+/**
+ * Handles the click event for adding a product to the wish list.
+ * If a button is clicked, the code retrieves the 'productId',
+ * adds the product to the wish list, and updates displays.
+ * @param {Event} event - The click event object.
+ */
 function handleAddToWishListButtonClick(event) {
-    if (event.target.classList.contains('add-product-to-wish-list-button')) {
-        const productId = event.target.dataset.productId;
+    const addToWishListButton = event.target.closest('.add-product-to-wish-list-button');
+
+    if (addToWishListButton) {
+        const productId = addToWishListButton.dataset.productId;
 
         addCartItemToWishList(productId);
         removeCartItem(productId);
@@ -326,11 +338,6 @@ function handleAddToWishListButtonClick(event) {
     }
 }
 
-/**
- * Attaches a click event listener to the element that holds all "Add Product to Wish List"
- * buttons using event delegation. If a button is clicked, the code retrieves the 'productId',
- * adds the product to the wish list, and updates displays.
- */
 document
     .querySelector('.cart-items-container')
     .addEventListener('click', handleAddToWishListButtonClick);

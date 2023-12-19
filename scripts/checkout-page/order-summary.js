@@ -8,21 +8,25 @@ import {
     clearCart,
 } from '../../data/checkout-page.js';
 
-let promoCodeValidityFlag = false;
+let isPromoCodeValid = false;
 let orderTotal = 0;
 
+/**
+ * Validates a promotional code and updates the UI accordingly.
+ * @param {string} promoCode - The promotional code to validate.
+ */
 function validatePromoCode(promoCode) {
     if (promoCode.toLowerCase() === 'demo') {
         document.querySelector('.valid-promo-code-message').style.display = 'block';
         document.querySelector('.invalid-promo-code-message').style.display = 'none';
-        promoCodeValidityFlag = true;
+        isPromoCodeValid = true;
     } else {
         document.querySelector('.valid-promo-code-message').style.display = 'none';
         document.querySelector('.invalid-promo-code-message').style.display = 'block';
-        promoCodeValidityFlag = false;
+        isPromoCodeValid = false;
     }
 
-    document.querySelector('.promo-code-input').value = ''; // Clear the input field
+    document.querySelector('.promo-code-input').value = ''; // Clear input field
     updateOrderSummaryDisplay();
 }
 
@@ -34,30 +38,19 @@ document.querySelector('.add-promo-code-button').addEventListener('click', () =>
 });
 
 /**
- * Updates the order summary display with precise calculations for item costs,
+ * Updates the order summary display with calculations for subtotal,
  * shipping, discounts, taxes, and the overall total after tax.
  */
 export function updateOrderSummaryDisplay() {
     const subtotal = calculateCartItemTotalCost();
-    let shipping = 0;
-    let discount = 0;
+    const shipping = subtotal > 0 && subtotal < 10000 ? 899 : 0;
+    const discount = isPromoCodeValid ? subtotal * 0.15 : 0;
 
-    // Apply shipping cost if applicable
-    if (subtotal > 0 && subtotal < 10000) {
-        shipping = 899;
-    }
+    // Apply discount color
+    const discountColor = discount > 0 ? '#c9002e' : 'black';
+    document.querySelector('.order-summary-discount').style.color = discountColor;
 
-    // Apply discount for a valid promo code
-    if (promoCodeValidityFlag) {
-        discount = subtotal * 0.15;
-    }
-    if (discount > 0) {
-        document.querySelector('.order-summary-discount').style.color = '#c9002e';
-    } else {
-        document.querySelector('.order-summary-discount').style.color = 'black';
-    }
-
-    // Update item cost, shipping cost, discount, tax, and total cost
+    // Update subtotal, shipping cost, discount, tax, and total cost
     document.querySelector('.order-summary-subtotal').innerHTML = formatCurrency(subtotal);
 
     // Display 'FREE' shipping if item cost exceeds $100
@@ -75,18 +68,22 @@ export function updateOrderSummaryDisplay() {
 
 updateOrderSummaryDisplay();
 
+/**
+ * Removes the applied promotional code and updates the order summary display.
+ */
 function removePromoCode() {
     document.querySelector('.valid-promo-code-message').style.display = 'none';
-    promoCodeValidityFlag = false;
+    isPromoCodeValid = false;
     updateOrderSummaryDisplay();
 }
 
-document.querySelector('.remove-promo-code-button').addEventListener('click', () => {
-    removePromoCode();
-});
+document.querySelector('.remove-promo-code-button').addEventListener('click', removePromoCode);
 
+/**
+ * Places an order, adds it to the orders array, and updates local storage.
+ */
 function placeOrder() {
-    let date = new Date();
+    const date = new Date();
     const monthNames = [
         'January',
         'February',
@@ -108,32 +105,33 @@ function placeOrder() {
         items: [...cart],
         price: orderTotal,
         date: `${monthNames[date.getMonth()]} ${date.getDate()}`,
-        arrivalDate: `${calculateOrderArrivalDate(date, monthNames)}`,
+        arrivalDate: calculateOrderArrivalDate(date, monthNames),
     });
 
     clearCart();
-    clearCart();
     updateOrdersInLocalStorage();
 
-    // Set a flag in local storage to true for successful order placement
+    // Set a flag in local storage to indicate the order was placed
     localStorage.setItem('orderPlaced', 'true');
 }
 
 document.querySelector('.place-order-button').addEventListener('click', () => {
-    setTimeout(() => {
-        placeOrder();
-        window.location.href = 'orders.html'; // Redirect user to the orders page
-    }, 1000);
+    placeOrder();
+    navigateToOrdersPage();
 });
 
+function navigateToOrdersPage() {
+    window.location.href = 'orders.html';
+}
+
+/**
+ * Updates the visibility of the place order button based on the cart quantity.
+ */
 export function updatePlaceOrderButtonVisibility() {
     const placeOrderButton = document.querySelector('.place-order-button');
+    const isCartNotEmpty = calculateCartQuantity() > 0;
 
-    if (calculateCartQuantity() > 0) {
-        placeOrderButton.style.display = 'block';
-    } else {
-        placeOrderButton.style.display = 'none';
-    }
+    placeOrderButton.style.display = isCartNotEmpty ? 'block' : 'none';
 }
 
 updatePlaceOrderButtonVisibility();

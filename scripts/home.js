@@ -2,12 +2,8 @@ import { products } from '../data/home-page.js';
 import { formatCurrency } from './utils/format-currency.js';
 import { addProductToCart, calculateCartQuantity } from '../data/checkout-page.js';
 
-/**
- * Generates HTML for displaying products.
- * Iterates through the 'products' array to create product containers
- * that include images, names, prices, quantity controls, and add-to-cart buttons.
- * Appends the generated HTML to the 'productsGrid' element for display.
- */
+const productsGrid = document.querySelector('.products-grid');
+
 function generateProductsHTML() {
     let productsHTML = '';
 
@@ -15,8 +11,7 @@ function generateProductsHTML() {
         productsHTML += `
             <div class="product-container product-container-${product.id}">
                 <div class="product-image-container">
-                    <img class="product-image"
-                    src="${product.image}">
+                    <img class="product-image" src="${product.image}">
                 </div>
 
                 <div class="product-name limit-text-to-2-lines">
@@ -30,118 +25,92 @@ function generateProductsHTML() {
                 <div class="add-product-to-cart-container">
                     <div class="input-product-quantity-container">
                         <div class="product-quantity-controls-container">
-                            <button class="decrease-product-quantity-button">
-                                <i class="bi bi-dash-lg"></i>
-                            </button>
-                            <div class="product-quantity-count product-quantity-count-${
+                            <button class="decrease-product-quantity-button" data-product-id="${
                                 product.id
                             }">
+                                <i class="bi bi-dash-lg"></i>
+                            </button>
+                            <div class="product-quantity-count" data-product-id="${product.id}">
                                 0
                             </div>
-                            <button class="increase-product-quantity-button">
+                            <button class="increase-product-quantity-button" data-product-id="${
+                                product.id
+                            }">
                                 <i class="bi bi-plus-lg"></i>
                             </button>
                             <div class="vertical-rule"></div>
                         </div>
                     </div>
-                    <button class="add-product-to-cart-button"
-                    data-product-id="${product.id}">
+                    <button class="add-product-to-cart-button" data-product-id="${product.id}">
                         Add to Cart
                     </button>
                 </div>
             </div>`;
     });
 
-    const productsGrid = document.querySelector('.products-grid');
     if (productsGrid) {
         productsGrid.innerHTML = productsHTML;
+        attachEventListeners();
     }
 }
+
 generateProductsHTML();
-
-function updateCartQuantityDisplay() {
-    const cartQuantity = calculateCartQuantity();
-
-    document.querySelector('.cart-quantity-count').innerHTML = cartQuantity;
-}
-updateCartQuantityDisplay();
-
-/**
- * Attaches a click event listener to the "add product to cart" buttons.
- * When a button is clicked, the code retrieves the 'productId' and the product quantity.
- * It then adds the product to the cart, updates the cart quantity display, and triggers
- * a confirmation message display if the product quantity is greater than zero.
- * Finally, it resets the product quantity value to zero.
- */
-document.querySelectorAll('.add-product-to-cart-button').forEach((button) => {
-    button.addEventListener('click', () => {
-        setTimeout(() => {
-            const productId = button.dataset.productId;
-
-            const productQuantity = Number(
-                document.querySelector(`.product-quantity-count-${productId}`).textContent
-            );
-
-            if (productQuantity > 0) {
-                addProductToCart(productId, productQuantity);
-                updateCartQuantityDisplay();
-                displayAddedProductToCartMessage(productId);
-            }
-
-            document.querySelector(`.product-quantity-count-${productId}`).textContent = 0;
-        }, 500);
-    });
-});
 
 /**
  * Attaches a click event listener to the 'productsGrid' element, which represents the
- * container for all products. When a click event occurs, the code determines whether
- * the clicked element is an "increase quantity" or "decrease quantity" button. When an
- * "increase quantity" button is clicked, the code finds the corresponding product container,
- * retrieves and increments the product quantity, and updates the displayed quantity.
- * Similarly, when a "decrease quantity" button is clicked, it performs the reverse operation by
- * decreasing the product quantity, ensuring it doesn't go below zero.
+ * container for all products. Handles interactions with "Add to Cart," "Increase Quantity,"
+ * and "Decrease Quantity" buttons. Updates product quantity and triggers relevant actions,
+ * such as adding the product to the cart and displaying confirmation messages.
  */
-const productsGrid = document.querySelector('.products-grid');
-if (productsGrid) {
+function attachEventListeners() {
     productsGrid.addEventListener('click', (event) => {
-        if (event.target.classList.contains('increase-product-quantity-button')) {
-            const productContainer = event.target.closest('.product-container');
+        const targetButton = event.target.closest(
+            '.add-product-to-cart-button, .increase-product-quantity-button, .decrease-product-quantity-button'
+        );
 
-            if (productContainer) {
-                const productQuantityElement =
-                    productContainer.querySelector('.product-quantity-count');
-                let productQuantity = parseInt(productQuantityElement.textContent, 10);
+        if (targetButton) {
+            const productId = targetButton.dataset.productId;
+            const productContainer = targetButton.closest('.product-container');
+            const productQuantityElement =
+                productContainer.querySelector('.product-quantity-count');
 
+            let productQuantity = parseInt(productQuantityElement.textContent, 10);
+
+            if (targetButton.classList.contains('add-product-to-cart-button')) {
+                // Add to Cart button clicked
+                setTimeout(() => {
+                    if (productQuantity > 0) {
+                        addProductToCart(productId, productQuantity);
+                        updateCartQuantityDisplay();
+                        displayAddedProductToCartMessage(productId);
+                    }
+                    productQuantityElement.textContent = 0;
+                }, 500);
+            } else if (targetButton.classList.contains('increase-product-quantity-button')) {
+                // Increase Quantity button clicked
                 productQuantity++;
-                productQuantityElement.innerHTML = productQuantity;
+            } else if (targetButton.classList.contains('decrease-product-quantity-button')) {
+                // Decrease Quantity button clicked
+                productQuantity = Math.max(0, productQuantity - 1);
             }
-        } else if (event.target.classList.contains('decrease-product-quantity-button')) {
-            const productContainer = event.target.closest('.product-container');
 
-            if (productContainer) {
-                const productQuantityElement =
-                    productContainer.querySelector('.product-quantity-count');
-                let productQuantity = parseInt(productQuantityElement.textContent, 10);
-
-                productQuantity--;
-
-                if (productQuantity < 0) {
-                    productQuantity = 0;
-                }
-
-                productQuantityElement.innerHTML = productQuantity;
-            }
+            productQuantityElement.textContent = productQuantity;
         }
     });
 }
 
+function updateCartQuantityDisplay() {
+    const cartQuantity = calculateCartQuantity();
+    document.querySelector('.cart-quantity-count').innerHTML = cartQuantity;
+}
+
+updateCartQuantityDisplay();
+
 const addedProductToCartMessageTimeouts = {};
 
 /**
- * Temporarily displays an "Added Product to Cart" message by updating the innerHTML of
- * the specified button element and managing a timeout for a smooth transition.
- *
+ * Temporarily updates the innerHTML of the specified "Add to Cart" button to display
+ * an "Added" message, and reverts it back after a timeout for a smooth transition.
  * @param {string} productId - The unique identifier of the product added to the cart.
  */
 function displayAddedProductToCartMessage(productId) {
@@ -149,12 +118,13 @@ function displayAddedProductToCartMessage(productId) {
         `.add-product-to-cart-button[data-product-id="${productId}"]`
     );
 
-    // Check for any previous timeouts and clear them
-    const previousTimeouts = addedProductToCartMessageTimeouts[productId];
-    if (previousTimeouts) {
-        clearTimeout(previousTimeouts);
+    // Clear any previous timeouts
+    const previousTimeout = addedProductToCartMessageTimeouts[productId];
+    if (previousTimeout) {
+        clearTimeout(previousTimeout);
     }
 
+    // Display "Added" message
     button.innerHTML = 'Added';
 
     // Set a timeout to revert the innerHTML back to 'Add to Cart'
@@ -169,13 +139,16 @@ function displayAddedProductToCartMessage(productId) {
 function clearSearchBarOnPageLeave() {
     const searchBar = document.querySelector('.search-bar');
 
-    window.addEventListener('beforeunload', (event) => {
-        if (searchBar.value.trim() !== '') {
-            event.preventDefault();
-            searchBar.value = '';
-        }
-    });
+    if (searchBar) {
+        window.addEventListener('beforeunload', (event) => {
+            if (searchBar.value.trim() !== '') {
+                event.preventDefault();
+                searchBar.value = '';
+            }
+        });
+    }
 }
+
 clearSearchBarOnPageLeave();
 
 /**
@@ -205,8 +178,17 @@ window.addEventListener('load', () => {
         }
     }
 
+    // Throttle scroll event using requestAnimationFrame
+    let isScrolling = false;
+
     window.addEventListener('scroll', () => {
-        adjustHeaderOnScroll();
+        if (!isScrolling) {
+            window.requestAnimationFrame(() => {
+                adjustHeaderOnScroll();
+                isScrolling = false;
+            });
+            isScrolling = true;
+        }
     });
 });
 
@@ -217,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const shopNowButton = document.querySelector('.shop-now-button');
     const productsSectionContainer = document.getElementById('products-section-container');
 
-    if (shopNowButton) {
+    if (shopNowButton && productsSectionContainer) {
         shopNowButton.addEventListener('click', () => {
             productsSectionContainer.scrollIntoView({ behavior: 'smooth' });
         });
