@@ -189,11 +189,19 @@ window.addEventListener('load', () => {
     // Function to adjust headers based on scroll position
     function adjustHeaderOnScroll() {
         if (window.scrollY > 0) {
-            promoHeader.style.top = '-45px';
-            header.style.top = '0';
+            if (promoHeader) {
+                promoHeader.style.top = '-45px';
+            }
+            if (header) {
+                header.style.top = '0';
+            }
         } else {
-            promoHeader.style.top = '0';
-            header.style.top = '45px';
+            if (promoHeader) {
+                promoHeader.style.top = '0';
+            }
+            if (header) {
+                header.style.top = '45px';
+            }
         }
     }
 
@@ -209,9 +217,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const shopNowButton = document.querySelector('.shop-now-button');
     const productsSectionContainer = document.getElementById('products-section-container');
 
-    shopNowButton.addEventListener('click', () => {
-        productsSectionContainer.scrollIntoView({ behavior: 'smooth' });
-    });
+    if (shopNowButton) {
+        shopNowButton.addEventListener('click', () => {
+            productsSectionContainer.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
 });
 
 // Displays the current year in the footer copyright notice

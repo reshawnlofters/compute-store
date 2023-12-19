@@ -4,13 +4,8 @@ html {
 
 main {
     max-width: 1150px;
-    padding-left: 30px;
-    padding-right: 30px;
-    margin-top: 140px;
-    margin-bottom: 100px;
-
-    margin-left: auto;
-    margin-right: auto;
+    padding: 0 30px;
+    margin: 140px auto;
 }
 
 .cart-item-details-container {
@@ -42,7 +37,7 @@ main {
     margin-right: 8px;
 }
 
-.editing-cart-item-quantity .update-cart-item-quantity-input, 
+.editing-cart-item-quantity .update-cart-item-quantity-input,
 .editing-cart-item-quantity .save-new-cart-item-quantity-button {
     display: initial;
 }
@@ -211,11 +206,4 @@ main {
     width: 100%;
     padding: 14px 0;
     margin-bottom: 20px;
-}
-
-.cart-section-title,
-.wish-list-section-title {
-    font-weight: 600;
-    font-size: 22px;
-    margin-bottom: 18px;
 }

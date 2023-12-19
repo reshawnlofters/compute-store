@@ -1,34 +1,25 @@
 import { products } from '../data/home-page.js';
 import { formatCurrency } from './utils/format-currency.js';
 import { orders, calculateOrderQuantity, updateOrdersInLocalStorage } from '../data/orders-page.js';
+import { addProductToCart } from '../data/checkout-page.js';
 
-/**
- * Generates HTML for displaying orders.
- * Locates products in the 'products' array to access product details.
- */
+const ordersGrid = document.querySelector('.orders-grid');
+
 function generateOrdersHTML() {
     let ordersHTML = '';
 
     for (let i = orders.length - 1; i >= 0; i--) {
         const order = orders[i];
-        const productId = order.productId;
-        let matchingProduct;
-
-        products.forEach((product) => {
-            if (product.id === productId) {
-                matchingProduct = product;
-            }
-        });
 
         ordersHTML += `
             <div class="order-container-${order.id}">
-                <div class="order-header">
+                <div class="order-header-container">
                     <div class="order-header-left-section">
                         <div class="order-date">
                             <div class="order-header-label label-primary">
                                 Order Placed
                             </div>
-                            <div>${order.orderDate}</div>
+                            <div>${order.date}, ${new Date().getFullYear()}</div>
                         </div>
                         <div class="order-total">
                             <div class="order-header-label label-primary">Total</div>
@@ -41,55 +32,46 @@ function generateOrdersHTML() {
                         <div>${order.id}</div>
                     </div>
                 </div>
-
-                ${generateOrderItemsHTML(order)}
-        </div>`;
+                ${generateOrderItemHTML(order)}
+            </div>`;
     }
 
-    const ordersGrid = document.querySelector('.orders-grid');
     if (ordersGrid) {
         ordersGrid.innerHTML = ordersHTML;
     }
 }
-generateOrdersHTML();
 
 /**
- * Generates HTML for displaying order items with conditional CSS styling based on position.
- * Applies different styles to the first, last, and in-between items in an order.
- * Also includes a "Cancel Order" button for the first item using a flag.
- * @param {Object} order - The order object containing items to be displayed.
- * @returns {string} The HTML representing the order items with applied styles.
+ * Generates HTML for displaying order items with conditional CSS styling based on positions.
+ * Applies different styles to the first, last, and inner order items.
+ * Also, includes a "Cancel Order" button using a flag.
+ * @param order - The order object containing items to be displayed.
+ * @returns The HTML representing the order items with applied styles.
  */
-function generateOrderItemsHTML(order) {
-    let orderItemsHTML = '';
-    let cancelOrderButtonGenerated = false;
-    const numberOfItemsInOrder = order.items.length;
+function generateOrderItemHTML(order) {
+    let orderItemHTML = '';
+    let isCancelOrderButtonGenerated = false;
+    const numberOfOrderItems = order.items.length;
 
     order.items.forEach((orderItem, index) => {
-        const productId = orderItem.productId;
-        let matchingProduct;
+        const matchingProduct = products.find((product) => product.id === orderItem.productId);
+        let orderItemClass = 'inner-order-item-details-grid';
 
-        products.forEach((product) => {
-            if (product.id === productId) {
-                matchingProduct = product;
-            }
-        });
-
-        let orderItemClass = 'in-between-order-item-details-grid';
-
-        // check if this is the first order item
+        // Check for the first order item
         if (index === 0) {
             orderItemClass = 'first-order-item-details-grid';
         }
 
-        // check if this is the last order item
-        if (index === numberOfItemsInOrder - 1) {
+        // Check for the last order item
+        if (index === numberOfOrderItems - 1) {
             orderItemClass = 'last-order-item-details-grid';
         }
 
-        // check if the "Cancel Order" button has not been generated yet
-        if (!cancelOrderButtonGenerated) {
-            orderItemsHTML += `
+        const buyProductAgainButtonId = `buy-product-again-button-${order.id}-${orderItem.productId}`;
+
+        // Check if the "Cancel Order" button has not been generated yet
+        if (!isCancelOrderButtonGenerated) {
+            orderItemHTML += `
                 <div class="order-details-grid ${orderItemClass}">
                     <div class="product-image-container">
                         <img src="${matchingProduct.image}">
@@ -100,12 +82,12 @@ function generateOrderItemsHTML(order) {
                             ${matchingProduct.name}
                         </div>
                         <div class="product-delivery-date">
-                            Arriving on: ${order.arrivalDate}
+                            Estimated Arrival: ${order.arrivalDate}, ${new Date().getFullYear()}
                         </div>
                         <div class="product-quantity">
                             Quantity: ${orderItem.quantity}
                         </div>
-                        <button class="buy-again-button button-primary">
+                        <button class="buy-product-again-button button-primary" id="${buyProductAgainButtonId}">
                             <i class="bi bi-arrow-clockwise"></i>
                             <span class="buy-again-message"
                                 >Buy it again
@@ -115,18 +97,18 @@ function generateOrderItemsHTML(order) {
 
                     <div class="product-actions">
                         <button
-                            class="cancel-order-button button-secondary"
+                            class="cancel-order-button button-primary"
                             data-order-id="${order.id}">
                                 Cancel order
                         </button>
                     </div>
                 </div>`;
 
-            // set the flag to indicate that the button has been generated
-            cancelOrderButtonGenerated = true;
+            // Set the flag to indicate the button has been generated
+            isCancelOrderButtonGenerated = true;
         } else {
-            // if the button has already been generated, exclude it for subsequent items
-            orderItemsHTML += `
+            // If the button has already been generated, exclude it for subsequent items
+            orderItemHTML += `
                 <div class="order-details-grid ${orderItemClass}">
                     <div class="product-image-container">
                         <img src="${matchingProduct.image}">
@@ -137,14 +119,15 @@ function generateOrderItemsHTML(order) {
                             ${matchingProduct.name}
                         </div>
                         <div class="product-delivery-date">
-                            Arriving on: ${order.arrivalDate}
+                            Estimated Arrival: ${order.arrivalDate}, ${new Date().getFullYear()}
                         </div>
                         <div class="product-quantity">
                             Quantity: ${orderItem.quantity}
                         </div>
-                        <button class="buy-again-button button-primary">
-                             <i class="bi bi-arrow-clockwise"></i>
-                            <span class="buy-again-message">Buy it again
+                        <button class="buy-product-again-button button-primary" id="${buyProductAgainButtonId}">
+                            <i class="bi bi-arrow-clockwise"></i>
+                            <span class="buy-again-message"
+                                >Buy it again
                             </span>
                         </button>
                     </div>
@@ -152,12 +135,11 @@ function generateOrderItemsHTML(order) {
         }
     });
 
-    return orderItemsHTML;
+    return orderItemHTML;
 }
 
 function generateEmptyOrdersHTML() {
     const ordersGrid = document.querySelector('.orders-grid');
-
     if (ordersGrid) {
         ordersGrid.innerHTML = `
             <div class="empty-orders-container">
@@ -178,27 +160,25 @@ function generateEmptyOrdersHTML() {
 
 /**
  * Updates the visibility of orders based on the quantity of orders.
+ * If there are orders, it generates the ordersHTML; otherwise, it generates
+ * HTML for when there are no orders.
  */
 function updateOrdersVisibility() {
-    if (calculateOrderQuantity() > 0) {
-        generateOrdersHTML();
-    } else {
-        generateEmptyOrdersHTML();
-    }
+    const orderQuantity = calculateOrderQuantity();
+    orderQuantity > 0 ? generateOrdersHTML() : generateEmptyOrdersHTML();
 }
+
 updateOrdersVisibility();
 
 export function generateOrderId() {
-    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
     let orderId = '';
+    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
     for (let i = 0; i < 8; i++) {
         const randomIndex = Math.floor(Math.random() * characters.length);
         orderId += characters.charAt(randomIndex);
     }
-
     orderId += '-';
-
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             const randomIndex = Math.floor(Math.random() * characters.length);
@@ -213,7 +193,7 @@ export function generateOrderId() {
 }
 
 /**
- * Calculates the arrival date of an order based on the current date.
+ * Calculates the estimated arrival date of an order based on the current date.
  * @param date - The 'Date' object representing the current date.
  * @param monthNames - An array of month names.
  * @returns a string that represents the estimated arrival date of an order.
@@ -223,12 +203,9 @@ export function calculateOrderArrivalDate(date, monthNames) {
 
     if (dayOfMonth + 2 >= 30) {
         const nextMonth = (date.getMonth() + 1) % 12;
-
-        // arrival date is the first day of the next month
-        return `${monthNames[nextMonth]} 1`;
+        return `${monthNames[nextMonth]} 1`; // Arrives the first day of the next month
     } else {
-        // arrival date is two days after the purchase date
-        return `${monthNames[date.getMonth()]} ${dayOfMonth + 2}`;
+        return `${monthNames[date.getMonth()]} ${dayOfMonth + 2}`; // Arrivals in two days
     }
 }
 
@@ -253,11 +230,9 @@ function cancelOrder(orderId) {
  * buttons using event delegation. If a button is clicked, a modal appears for the user
  * to confirm the cancellation.
  */
-const ordersGrid = document.querySelector('.orders-grid');
 if (ordersGrid) {
-    document.querySelector('.orders-grid').addEventListener('click', (event) => {
+    ordersGrid.addEventListener('click', (event) => {
         if (event.target.classList.contains('cancel-order-button')) {
-            // get modal element
             const modal = document.querySelector('.cancel-order-modal');
             modal.showModal();
 
@@ -277,9 +252,9 @@ if (ordersGrid) {
 }
 
 /**
- * Displays a modal to signify an order was successfully placed.
+ * Displays a modal to indicate an order was successfully placed.
  * A flag in local storage is checked to determine if the user is redirected to
- * the orders page after successfully placing an order.
+ * the orders page after placing an order.
  */
 function displayPlacedOrderModal() {
     const orderPlaced = localStorage.getItem('orderPlaced');
@@ -292,8 +267,40 @@ function displayPlacedOrderModal() {
             modal.close();
         });
 
-        // clear the flag
+        // Clear the flag in local storage
         localStorage.removeItem('orderPlaced');
     }
 }
+
 displayPlacedOrderModal();
+
+function handleBuyProductAgainButtonClick(event) {
+    const productDetailsContainer = event.target.closest('.product-details');
+
+    if (productDetailsContainer) {
+        const productNameElement = productDetailsContainer.querySelector('.product-name');
+        const productName = productNameElement ? productNameElement.textContent.trim() : '';
+
+        const matchingProduct = products.find((product) => product.name === productName);
+
+        if (matchingProduct) {
+            addProductToCart(matchingProduct.id, 1);
+            navigateToCartPage();
+        } else {
+            console.error('Matching product not found.');
+        }
+    }
+}
+
+/**
+ * Attaches a click event listener to the container for orders using event delegation.
+ * If a "Buy Again" button is clicked, the corresponding product is added to the cart,
+ * and the user is redirected to the cart page.
+ */
+if (ordersGrid) {
+    ordersGrid.addEventListener('click', handleBuyProductAgainButtonClick);
+}
+
+function navigateToCartPage() {
+    window.location.href = 'checkout.html';
+}

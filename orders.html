@@ -13,45 +13,27 @@
         />
         <link rel="stylesheet" href="styles/shared/general.css" />
         <link rel="stylesheet" href="styles/shared/header.css" />
-        <link rel="stylesheet" href="styles/pages/orders.css" />
+        <link rel="stylesheet" href="styles/pages/orders/orders-header.css" />
+        <link rel="stylesheet" href="styles/pages/orders/orders.css" />
         <script type="module" src="data/orders-page.js" defer></script>
         <script type="module" src="scripts/orders.js" defer></script>
         <script type="module" src="scripts/home.js" defer></script>
     </head>
     <body>
-        <header>
-            <div class="header-container">
-                <div class="header-left-section-container">
-                    <a class="header-logo" href="index.html">Compute</a>
-                </div>
-                <div class="header-middle-section-container">
-                    <div class="search-bar-container">
-                        <input
-                            class="search-bar"
-                            type="text"
-                            placeholder="Search Products"
-                        />
-                        <button class="search-button">
-                            <img
-                                src="images/icons/search.png"
-                                alt="search button"
-                            />
-                        </button>
-                    </div>
-                </div>
-                <div class="header-right-section-container">
-                    <a class="header-orders-link" href="orders.html">
-                        Orders
-                    </a>
-                    <a class="header-checkout-link" href="checkout.html">
+        <header class="orders-header-container">
+            <section class="orders-header-left-section">
+                <a class="orders-header-logo" href="index.html"> Compute </a>
+            </section>
+            <section class="orders-header-middle-section">Orders</section>
+            <section class="orders-header-right-section">
+                <a class="header-checkout-link" href="checkout.html">
                         <div class="header-cart-quantity-count-container">
                             <i class="bi bi-cart3"></i>
                             <span class="cart-quantity-count"></span>
                         </div>
                         Cart
                     </a>
-                </div>
-            </div>
+            </section>
         </header>
 
         <main>

@@ -53,7 +53,7 @@ export function updateOrderSummaryDisplay() {
     }
     if (discount > 0) {
         document.querySelector('.order-summary-discount').style.color = '#c9002e';
-    }  else {
+    } else {
         document.querySelector('.order-summary-discount').style.color = 'black';
     }
 
@@ -107,7 +107,7 @@ function placeOrder() {
         id: generateOrderId(),
         items: [...cart],
         price: orderTotal,
-        orderDate: `${monthNames[date.getMonth()]} ${date.getDate()}`,
+        date: `${monthNames[date.getMonth()]} ${date.getDate()}`,
         arrivalDate: `${calculateOrderArrivalDate(date, monthNames)}`,
     });
 

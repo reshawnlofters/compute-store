@@ -12,15 +12,11 @@ import {
     updateWishListInLocalStorage,
 } from '../../data/checkout-page.js';
 
-function findProductById(productId) {
-    return products.find((product) => product.id === productId);
-}
-
 function generateCartHTML() {
     let cartHTML = '';
 
     cart.forEach((cartItem) => {
-        const matchingProduct = findProductById(cartItem.productId);
+        const matchingProduct = products.find((product) => product.id === cartItem.productId);
 
         cartHTML += `
             <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
