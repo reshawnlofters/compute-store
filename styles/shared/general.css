@@ -28,12 +28,17 @@ a {
     color: black;
 }
 
+input {
+    border: 1px solid #ccc;
+}
+
 .button-primary {
     background-color: #221f20;
     color: white;
     font-weight: 600;
     font-size: 14px;
     border: none;
+    border-radius: 4px;
     transition: all 100ms ease 0s;
 }
 
@@ -65,7 +70,7 @@ a {
 .wish-list-product-container-grid {
     display: grid;
     grid-template-columns: 100px auto;
-    column-gap: 30px;
+    grid-gap: 40px;
 }
 
 .cart-item-container,
@@ -126,6 +131,7 @@ a {
 .empty-wish-list-container,
 .empty-orders-container {
     background-color: white;
+    border-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.04) 0px 0px 8px 0px, rgba(0, 0, 0, 0.02) 0px 0px 4px 0px,
         rgba(0, 0, 0, 0.04) 0px 0px 1px 1px;
     padding: 25px;
@@ -138,4 +144,23 @@ a {
     font-weight: 600;
     font-size: 22px;
     margin-bottom: 18px;
+}
+
+input[type='number'] {
+    border-radius: 4px;
+    outline: none;
+    padding: 8px;
+}
+
+/* Remove the default number input spin buttons */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button,
+input[type='number'] {
+    -webkit-appearance: none;
+}
+
+input[type='number'] {
+    -webkit-appearance: textfield; /* Safari and Chrome */
+    -moz-appearance: textfield; /* Firefox */
+    appearance: textfield;
 }

@@ -53,7 +53,6 @@ main {
     width: 45%;
     top: 50%;
     left: 50%;
-
     transform: translate(-50%, -50%);
     border: none;
     border-radius: 8px;
@@ -150,7 +149,7 @@ main {
 .order-details-grid {
     display: grid;
     grid-template-columns: 110px 1fr 220px;
-    column-gap: 35px;
+    column-gap: 40px;
     row-gap: 60px;
     align-items: center;
     border: 1px solid rgb(213, 217, 217);

@@ -43,10 +43,10 @@ function generateCartHTML() {
                                 data-product-id="${matchingProduct.id}">
                                     Update
                                 </span>
-                                <input class="update-cart-item-quantity-input">
+                                <input class="update-cart-item-quantity-input" type="number"  autocomplete="new-quantity">
                                 <span class="save-new-cart-item-quantity-button link-primary">Save</span>
+                                </div>
                                 <p class="cart-item-quantity-limit-message"></p>
-                            </div>
                         </div>
                         <div>
                             <span class="add-product-to-wish-list-button link-primary" data-product-id="${

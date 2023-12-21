@@ -38,7 +38,7 @@ function generateProductsHTML() {
                             }">
                                 <i class="bi bi-plus-lg"></i>
                             </button>
-                            <div class="vertical-rule"></div>
+                            <div class="vr"></div>
                         </div>
                     </div>
                     <button class="add-product-to-cart-button" data-product-id="${product.id}">
@@ -206,5 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Displays the current year in the footer copyright notice
-// document.querySelector('.current-year').innerHTML = new Date().getFullYear();
+/**
+ * Displays the current year in the footer copyright notice
+ */
+document.querySelector('.current-year').innerHTML = new Date().getFullYear();
