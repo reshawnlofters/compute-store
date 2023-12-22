@@ -68,23 +68,17 @@ function generateCartHTML() {
                         <div class="delivery-option">
                             <input type="radio" checked class="delivery-option-input"
                                 name="delivery-option-${matchingProduct.id}">
-                            <div class="delivery-option-date">
-                                Tuesday, June 21
-                            </div>
+                            <div class="delivery-option-date"></div>
                         </div>
                         <div class="delivery-option">
                             <input type="radio" class="delivery-option-input"
                                 name="delivery-option-${matchingProduct.id}">
-                            <div class="delivery-option-date">
-                                Wednesday, June 15
-                            </div>
+                            <div class="delivery-option-date"></div>
                         </div>
                         <div class="delivery-option">
                             <input type="radio" class="delivery-option-input"
                                 name="delivery-option-${matchingProduct.id}">
-                            <div class="delivery-option-date">
-                                Monday, June 13
-                            </div>
+                            <div class="delivery-option-date"></div>
                         </div>
                     </div>
                 </div>
@@ -239,6 +233,52 @@ function removeCartItemDisplay(productId) {
 }
 
 /**
+ * Update delivery date options based on the current day.
+ * Delivery dates are up to 3 days after the current day.
+ */
+export function updateDeliveryDateOptions() {
+    document.querySelectorAll('.delivery-option-date').forEach((dateElement, index) => {
+        const currentDate = new Date();
+        const daysToAdd = (index % 3) + 1;
+        const formattedDeliveryDate = calculateFormattedDeliveryDate(currentDate, daysToAdd);
+        dateElement.textContent = formattedDeliveryDate;
+    });
+}
+
+updateDeliveryDateOptions();
+
+/**
+ * Calculate the formatted delivery date.
+ * @param {Date} currentDate - The current date.
+ * @param {number} daysToAdd - The number of days to add.
+ * @returns {string} The formatted date string.
+ */
+function calculateFormattedDeliveryDate(currentDate, daysToAdd) {
+    const deliveryDate = new Date(currentDate);
+    deliveryDate.setDate(currentDate.getDate() + daysToAdd);
+    return deliveryDate.toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+    });
+}
+
+/**
+ * Add an event listener to each delivery date option for radio button selection.
+ * When a delivery option date is clicked, the respective radio button is checked.
+ */
+export function addEventListenersToDeliveryDateOptions() {
+    document.querySelectorAll('.delivery-option-date').forEach((dateElement) => {
+        dateElement.addEventListener('click', () => {
+            const radioButton = dateElement.parentNode.querySelector('.delivery-option-input');
+            radioButton.checked = true;
+        });
+    });
+}
+
+addEventListenersToDeliveryDateOptions();
+
+/**
  * Handles clicks outside cart item containers.
  * Removes 'editing-cart-item-quantity' class from all cart item containers.
  * @param {Event} event - The click event.
@@ -298,6 +338,8 @@ function handleRemoveCartItemButtonClick(event) {
         const productId = removeButton.dataset.productId;
         removeCartItem(productId);
         removeCartItemDisplay(productId);
+        updateDeliveryDateOptions();
+        addEventListenersToDeliveryDateOptions();
     }
 }
 
@@ -335,6 +377,8 @@ function handleAddToWishListButtonClick(event) {
         addCartItemToWishList(productId);
         removeCartItem(productId);
         removeCartItemDisplay(productId);
+        updateDeliveryDateOptions();
+        addEventListenersToDeliveryDateOptions();
     }
 }
 

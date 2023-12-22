@@ -6,9 +6,13 @@ import {
     calculateWishListQuantity,
     updateWishListInLocalStorage,
 } from '../../data/checkout-page.js';
-import { updateCartQuantityDisplay, updateCartVisibility } from './cart.js';
+import {
+    updateCartQuantityDisplay,
+    updateCartVisibility,
+    updateDeliveryDateOptions,
+    addEventListenersToDeliveryDateOptions,
+} from './cart.js';
 import { updateOrderSummaryDisplay, updatePlaceOrderButtonVisibility } from './order-summary.js';
-
 const wishListContainer = document.querySelector('.wish-list-container');
 
 /**
@@ -100,6 +104,8 @@ document.querySelector('.wish-list-container').addEventListener('click', (event)
         addProductToCart(productId, 1);
         removeWishListProduct(productId);
         updateCartVisibility();
+        updateDeliveryDateOptions();
+        addEventListenersToDeliveryDateOptions();
         updateWishListVisibility();
         updateCartQuantityDisplay();
         updateOrderSummaryDisplay();

@@ -96,7 +96,7 @@ main {
 .modal-close-button,
 .modal-cancel-order-button {
     font-size: 15px;
-    padding: 12px 25px;
+    padding: 15px 25px;
     outline: none;
 }
 
@@ -143,7 +143,7 @@ main {
 
 .order-details-grid {
     display: grid;
-    grid-template-columns: 110px 1fr 220px;
+    grid-template-columns: 110px 1fr auto;
     column-gap: 40px;
     row-gap: 60px;
     background-color: white;
@@ -204,7 +204,6 @@ main {
     align-items: center;
     justify-content: center;
     font-size: 15px;
-    padding: 12px 20px;
 }
 
 .buy-product-again-button .bi {
@@ -217,9 +216,9 @@ main {
     align-self: start;
 }
 
+.buy-product-again-button,
 .cancel-order-button {
-    width: 100%;
-    padding: 12px;
+    padding: 12px 20px;
 }
 
 @media (max-width: 800px) {

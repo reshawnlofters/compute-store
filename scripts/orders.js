@@ -82,7 +82,7 @@ function generateOrderItemHTML(order) {
                             ${matchingProduct.name}
                         </div>
                         <div class="product-delivery-date">
-                            Estimated Arrival: ${order.arrivalDate}, ${new Date().getFullYear()}
+                            Delivery Date: ${orderItem.deliveryDate}, ${new Date().getFullYear()}
                         </div>
                         <div class="product-quantity">
                             Quantity: ${orderItem.quantity}
@@ -119,7 +119,7 @@ function generateOrderItemHTML(order) {
                             ${matchingProduct.name}
                         </div>
                         <div class="product-delivery-date">
-                            Estimated Arrival: ${order.arrivalDate}, ${new Date().getFullYear()}
+                            Delivery Date: ${orderItem.deliveryDate}, ${new Date().getFullYear()}
                         </div>
                         <div class="product-quantity">
                             Quantity: ${orderItem.quantity}
@@ -189,27 +189,6 @@ export function generateOrderId() {
     }
 
     return orderId;
-}
-
-/**
- * Calculates the estimated arrival date of an order based on the current date.
- * @param {Date} date - The 'Date' object representing the current date.
- * @param {string[]} monthNames - An array of month names.
- * @returns {string} A string that represents the estimated arrival date of an order.
- */
-export function calculateOrderArrivalDate(date, monthNames) {
-    if (!Array.isArray(monthNames) || monthNames.length < 12) {
-        throw new Error('Invalid monthNames array. It must be an array with at least 12 elements.');
-    }
-
-    const dayOfMonth = date.getDate();
-
-    if (dayOfMonth + 2 >= 30) {
-        const nextMonth = (date.getMonth() + 1) % 12;
-        return `${monthNames[nextMonth]} 1`; // Arrives the first day of the next month
-    } else {
-        return `${monthNames[date.getMonth()]} ${dayOfMonth + 2}`; // Arrives in two days
-    }
 }
 
 /**
@@ -301,9 +280,10 @@ displayPlacedOrderModal();
  * @param {Event} event - The click event.
  */
 function handleBuyProductAgainButtonClick(event) {
-    const productDetailsContainer = event.target.closest('.product-details');
+    const buyAgainButton = event.target.closest('.buy-product-again-button');
 
-    if (productDetailsContainer) {
+    if (buyAgainButton) {
+        const productDetailsContainer = buyAgainButton.closest('.product-details');
         const productNameElement = productDetailsContainer.querySelector('.product-name');
         const productName = productNameElement ? productNameElement.textContent.trim() : '';
 

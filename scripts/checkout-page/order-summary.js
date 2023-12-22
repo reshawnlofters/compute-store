@@ -1,6 +1,6 @@
 import { formatCurrency } from '../utils/format-currency.js';
 import { orders, updateOrdersInLocalStorage } from '../../data/orders-page.js';
-import { generateOrderId, calculateOrderArrivalDate } from '../orders.js';
+import { generateOrderId } from '../orders.js';
 import {
     cart,
     calculateCartQuantity,
@@ -83,6 +83,7 @@ document.querySelector('.remove-promo-code-button').addEventListener('click', re
  * Places an order, adds it to the orders array, and updates local storage.
  */
 function placeOrder() {
+    const selectedDeliveryDates = getSelectedDeliveryDates();
     const date = new Date();
     const monthNames = [
         'January',
@@ -100,19 +101,34 @@ function placeOrder() {
     ];
 
     // Add order to orders array
-    orders.push({
+    const order = {
         id: generateOrderId(),
-        items: [...cart],
+        items: cart.map((cartItem, index) => ({
+            ...cartItem,
+            deliveryDate: selectedDeliveryDates[index],
+        })),
         price: orderTotal,
         date: `${monthNames[date.getMonth()]} ${date.getDate()}`,
-        arrivalDate: calculateOrderArrivalDate(date, monthNames),
-    });
+    };
+
+    orders.push(order);
 
     clearCart();
     updateOrdersInLocalStorage();
 
     // Set a flag in local storage to indicate the order was placed
     localStorage.setItem('orderPlaced', 'true');
+}
+
+function getSelectedDeliveryDates() {
+    const selectedDeliveryDates = [];
+    document.querySelectorAll('.delivery-option-input:checked').forEach((radioButton) => {
+        const dateElement = radioButton
+            .closest('.delivery-option')
+            .querySelector('.delivery-option-date');
+        selectedDeliveryDates.push(dateElement.textContent.trim());
+    });
+    return selectedDeliveryDates;
 }
 
 document.querySelector('.place-order-button').addEventListener('click', () => {
