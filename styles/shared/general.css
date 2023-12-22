@@ -38,7 +38,7 @@ input {
     font-weight: 600;
     font-size: 14px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     transition: all 100ms ease 0s;
 }
 
@@ -75,7 +75,6 @@ input {
 
 .cart-item-container,
 .wish-list-product-container {
-    background-color: white;
     height: 243px;
     width: 705px;
     display: flex;
@@ -131,7 +130,7 @@ input {
 .empty-wish-list-container,
 .empty-orders-container {
     background-color: white;
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.04) 0px 0px 8px 0px, rgba(0, 0, 0, 0.02) 0px 0px 4px 0px,
         rgba(0, 0, 0, 0.04) 0px 0px 1px 1px;
     padding: 25px;

@@ -55,9 +55,9 @@
     font-weight: 600;
     color: black;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     text-align: center;
-    padding: 15px 28px;
+    padding: 14px 25px;
     transform: translate(-50%, -50%);
     transition: all 100ms ease 0s;
 }
@@ -163,7 +163,7 @@
     background-color: #221f20;
     color: white;
     border: 1px solid transparent;
-    border-radius: 4px;
+    border-radius: 5px;
     transition: all 100ms ease 0s;
 }
 
@@ -204,12 +204,9 @@
 
 .add-product-to-cart-button,
 .product-quantity-count {
-    font-size: 13.5px;
+    font-size: 14px;
     font-weight: 600;
-}
-
-.add-product-to-cart-button {
-    border-radius: 4px;
+    border-radius: 5px;
 }
 
 .product-quantity-count {

@@ -251,8 +251,10 @@ if (ordersGrid) {
                 const orderId = cancelOrderButton.dataset.orderId;
 
                 // Trigger the cancelOrder function and update visibility
-                cancelOrder(orderId);
-                updateOrdersVisibility();
+                setTimeout(() => {
+                    cancelOrder(orderId);
+                    updateOrdersVisibility();
+                }, 500);
             });
 
             // Cancel the action and close the modal
@@ -279,8 +281,8 @@ function displayPlacedOrderModal() {
         if (modal) {
             modal.showModal();
 
-            // Add an event listener to close the modal when the close button is clicked
-            document.querySelector('.modal-close-window-button').addEventListener('click', () => {
+            // Add an event listener to close the modal when the view order button is clicked
+            document.querySelector('.modal-view-order-button').addEventListener('click', () => {
                 modal.close();
             });
         }

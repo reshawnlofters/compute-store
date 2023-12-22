@@ -121,7 +121,9 @@ document.querySelector('.place-order-button').addEventListener('click', () => {
 });
 
 function navigateToOrdersPage() {
-    window.location.href = 'orders.html';
+    setTimeout(() => {
+        window.location.href = 'orders.html';
+    }, 500);
 }
 
 /**
