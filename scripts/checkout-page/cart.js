@@ -270,8 +270,8 @@ function calculateFormattedDeliveryDate(currentDate, daysToAdd) {
 export function addEventListenersToDeliveryDateOptions() {
     document.querySelectorAll('.delivery-option-date').forEach((dateElement) => {
         dateElement.addEventListener('click', () => {
-            const radioButton = dateElement.parentNode.querySelector('.delivery-option-input');
-            radioButton.checked = true;
+            const radioInput = dateElement.parentNode.querySelector('.delivery-option-input');
+            radioInput.checked = true;
         });
     });
 }

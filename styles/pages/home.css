@@ -30,7 +30,7 @@
     top: 40%;
     left: 50%;
     font-weight: 700;
-    font-size: 45px;
+    font-size: 40px;
     transform: translate(-50%, -50%);
 }
 .promo-section-tag {
@@ -59,7 +59,7 @@
     text-align: center;
     padding: 14px 25px;
     transform: translate(-50%, -50%);
-    transition: all 100ms ease 0s;
+    transition: all 0.2s ease 0s;
 }
 
 .shop-now-button:hover {
@@ -164,7 +164,7 @@
     color: white;
     border: 1px solid transparent;
     border-radius: 5px;
-    transition: all 100ms ease 0s;
+    transition: all 0.2s ease 0s;
 }
 
 .add-product-to-cart-container:hover {

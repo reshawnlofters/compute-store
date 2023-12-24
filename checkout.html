@@ -15,7 +15,7 @@
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
         />
         <link rel="stylesheet" href="styles/shared/general.css" />
-        <link rel="stylesheet" href="styles/shared/footer.css">
+        <link rel="stylesheet" href="styles/shared/footer.css" />
         <link rel="stylesheet" href="styles/pages/checkout/checkout-header.css" />
         <link rel="stylesheet" href="styles/pages/checkout/checkout.css" />
         <script type="module" src="data/home-page.js" defer></script>
@@ -23,6 +23,7 @@
         <script type="module" src="scripts/checkout-page/cart.js" defer></script>
         <script type="module" src="scripts/checkout-page/order-summary.js" defer></script>
         <script type="module" src="scripts/checkout-page/wish-list.js" defer></script>
+        <script src="scripts/shared/footer.js" defer></script>
     </head>
     <body>
         <header class="checkout-header-container">
@@ -39,13 +40,17 @@
 
         <main>
             <div class="cart-section-title">Your Cart</div>
-
             <div class="cart-order-summary-grid">
                 <section class="cart-items-container"></section>
 
                 <section class="order-summary-section-container">
                     <div class="promo-code-container">
-                        <input class="promo-code-input" type="text" id="uniquePromoCodeInput" placeholder="Add promo code" />
+                        <input
+                            class="promo-code-input"
+                            type="text"
+                            id="uniquePromoCodeInput"
+                            placeholder="Add promo code"
+                        />
                         <button class="add-promo-code-button button-primary">Add</button>
                     </div>
 
@@ -53,7 +58,7 @@
                         >Promotion code applied
                         <span class="remove-promo-code-button link-primary">Remove</span></span
                     >
-                    <span class="invalid-promo-code-message">Promotion code is invalid</span>
+                    <span class="invalid-promo-code-message"></span>
 
                     <div class="order-summary-top-rows-container">
                         <div class="order-summary-row">
@@ -86,32 +91,6 @@
             <section class="wish-list-container"></section>
         </main>
 
-        <footer>
-            <div class="footer-about-section-grid">
-                <div class="footer-about-section-container">
-                    <div class="footer-about-section-title">Compute</div>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
-                        molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
-                        aliquam voluptatem veniam, est atque cumque eum delectus sint
-                    </p>
-                </div>
-                <div class="vr"></div>
-                <div class="footer-newsletter-section-container">
-                    <div class="footer-newsletter-section-title">
-                        <div>Be the first to know</div>
-                    </div>
-                    <div class="footer-newsletter-section-info">Sign up to stay in the loop about the hottest deals, coolest new products, and exclusive sales events.</div>
-                    <div class="newsletter-input-container">
-                        <input type="text" placeholder="Email Address" />
-                        <button class="sign-up-button">Sign up</button>
-                    </div>
-                </div>
-            </div>
-            <div class="hr"></div>
-            <div class="footer-copyright-section-container">
-                <div>&copy; <span class="current-year"></span> Compute. Built by Reshawn Lofters. For demonstrational purposes only; not affiliated with the mentioned companies.</p></div>
-            </div>
-        </footer>
+        <div id="footerContainer"></div>
     </body>
 </html>

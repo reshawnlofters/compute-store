@@ -205,8 +205,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
-/**
- * Displays the current year in the footer copyright notice
- */
-document.querySelector('.current-year').innerHTML = new Date().getFullYear();

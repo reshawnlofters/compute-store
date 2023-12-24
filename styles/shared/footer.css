@@ -71,17 +71,35 @@ footer .vr {
 }
 
 .newsletter-input-container .sign-up-button {
-    background-color: white;
+    background-color: inherit;
+    color: white;
+    min-width: 91.5px;
     font-size: 14px;
     font-weight: 600;
-    border: none;
+    border: 1px solid white;
     border-radius: 5px;
-    padding: 14px 18px;
-    transition: all 100ms ease 0s;
+    padding: 15px 20px;
+    transition: all 0.2s ease 0s;
 }
 
 .newsletter-input-container .sign-up-button:hover {
-    opacity: 0.8;
+    background-color: white;
+    color: black;
+}
+
+.valid-email-address-message {
+    color: green;
+}
+
+.invalid-email-address-message {
+    color: #e74d39d4;
+}
+
+.valid-email-address-message,
+.invalid-email-address-message {
+    display: none;
+    font-size: 15px;
+    margin-top: 5px;
 }
 
 footer .hr {

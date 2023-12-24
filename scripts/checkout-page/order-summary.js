@@ -13,29 +13,34 @@ let orderTotal = 0;
 
 /**
  * Validates a promotional code and updates the UI accordingly.
- * @param {string} promoCode - The promotional code to validate.
  */
-function validatePromoCode(promoCode) {
-    if (promoCode.toLowerCase() === 'demo') {
-        document.querySelector('.valid-promo-code-message').style.display = 'block';
-        document.querySelector('.invalid-promo-code-message').style.display = 'none';
-        isPromoCodeValid = true;
-    } else {
-        document.querySelector('.valid-promo-code-message').style.display = 'none';
-        document.querySelector('.invalid-promo-code-message').style.display = 'block';
+function validatePromoCode() {
+    const promoCodeInput = document.querySelector('.promo-code-input');
+    const promoCode = promoCodeInput.value.trim();
+    const validMessage = document.querySelector('.valid-promo-code-message');
+    const invalidMessage = document.querySelector('.invalid-promo-code-message');
+
+    // Check if the promo code is valid
+    if (promoCode == '') {
+        invalidMessage.textContent = 'Promotion code is required';
+        invalidMessage.style.display = 'block';
+        validMessage.style.display = 'none';
+    } else if (promoCode.toLowerCase() !== 'demo') {
+        invalidMessage.textContent = 'Promotion code is invalid';
+        invalidMessage.style.display = 'block';
+        validMessage.style.display = 'none';
         isPromoCodeValid = false;
+    } else {
+        validMessage.style.display = 'block';
+        invalidMessage.style.display = 'none';
+        isPromoCodeValid = true;
     }
 
-    document.querySelector('.promo-code-input').value = ''; // Clear input field
+    promoCodeInput.value = '';
     updateOrderSummaryDisplay();
 }
 
-document.querySelector('.add-promo-code-button').addEventListener('click', () => {
-    const promoCode = document.querySelector('.promo-code-input').value;
-    if (promoCode.trim() !== '') {
-        validatePromoCode(promoCode);
-    }
-});
+document.querySelector('.add-promo-code-button').addEventListener('click', validatePromoCode);
 
 /**
  * Updates the order summary display with calculations for subtotal,

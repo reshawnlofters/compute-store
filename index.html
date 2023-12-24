@@ -16,9 +16,10 @@
         />
         <link rel="stylesheet" href="styles/shared/general.css" />
         <link rel="stylesheet" href="styles/shared/header.css" />
-        <link rel="stylesheet" href="styles/shared/footer.css">
+        <link rel="stylesheet" href="styles/shared/footer.css" />
         <link rel="stylesheet" href="styles/pages/home.css" />
         <script type="module" src="scripts/home.js" defer></script>
+        <script src="scripts/shared/footer.js" defer></script>
     </head>
     <body>
         <header>
@@ -41,7 +42,11 @@
 
                 <div class="header-right-section-container">
                     <a class="header-orders-link" href="orders.html">
-                        <img class="shopping-bag-icon" src="images/icons/shopping-bag.png" alt="shopping bag">
+                        <img
+                            class="shopping-bag-icon"
+                            src="images/icons/shopping-bag.png"
+                            alt="shopping bag"
+                        />
                         Orders
                     </a>
                     <a class="header-checkout-link" href="checkout.html">
@@ -53,12 +58,13 @@
                     </a>
                 </div>
             </div>
+        </header>
 
         <main>
             <section class="promo-section-container">
                 <img src="images/backgrounds/bg2.png" alt="promotion image" />
                 <div class="overlay"></div>
-                <div class="promo-section-title">Shop tech and more at up to 50% off.</div>
+                <div class="promo-section-title">Shop tech and more at up to 15% off.</div>
                 <div class="promo-section-tag">
                     Use code DEMO at checkout and watch that total drop.
                 </div>
@@ -67,39 +73,13 @@
 
             <span id="products-section-container"></span>
             <section class="products-section-container">
-                <div class="products-section-title">Latest Arrivals</div>
+                <div class="products-section-title">Featured Products</div>
                 <div class="products-grid-container">
                     <div class="products-grid"></div>
                 </div>
             </section>
         </main>
 
-        <footer>
-            <div class="footer-about-section-grid">
-                <div class="footer-about-section-container">
-                    <div class="footer-about-section-title">Compute</div>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
-                        molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
-                        aliquam voluptatem veniam, est atque cumque eum delectus sint
-                    </p>
-                </div>
-                <div class="vr"></div>
-                <div class="footer-newsletter-section-container">
-                    <div class="footer-newsletter-section-title">
-                        <div>Be the first to know</div>
-                    </div>
-                    <div class="footer-newsletter-section-info">Sign up to stay in the loop about the hottest deals, coolest new products, and exclusive sales events.</div>
-                    <div class="newsletter-input-container">
-                        <input type="text" placeholder="Email Address" />
-                        <button class="sign-up-button">Sign up</button>
-                    </div>
-                </div>
-            </div>
-            <div class="hr"></div>
-            <div class="footer-copyright-section-container">
-                <div>&copy; <span class="current-year"></span> Compute. Built by Reshawn Lofters. For demonstrational purposes only; not affiliated with the mentioned companies.</p></div>
-            </div>
-        </footer>
+        <div id="footerContainer"></div>
     </body>
 </html>

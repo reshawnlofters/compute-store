@@ -96,7 +96,7 @@ main {
 .modal-close-button,
 .modal-cancel-order-button {
     font-size: 15px;
-    padding: 15px 25px;
+    padding: 14px 25px;
     outline: none;
 }
 
@@ -203,7 +203,6 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 15px;
 }
 
 .buy-product-again-button .bi {
@@ -218,6 +217,7 @@ main {
 
 .buy-product-again-button,
 .cancel-order-button {
+    font-size: 15px;
     padding: 12px 20px;
 }
 
