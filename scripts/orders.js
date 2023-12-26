@@ -14,7 +14,7 @@ function generateOrdersHTML() {
         ordersHTML += `
             <div class="order-container-${order.id}">
                 <div class="order-header-container">
-                    <div class="order-header-left-section">
+                    <section class="order-header-left-section">
                         <div class="order-date">
                             <div class="order-header-label label-primary">
                                 Order Placed
@@ -25,12 +25,18 @@ function generateOrdersHTML() {
                             <div class="order-header-label label-primary">Total</div>
                             <div>${formatCurrency(order.price)}</div>
                         </div>
-                    </div>
-
-                    <div class="order-header-right-section">
-                        <div class="order-header-label label-primary">Order ID</div>
-                        <div>${order.id}</div>
-                    </div>
+                        <div class="order-id">
+                            <div class="order-header-label label-primary">Order ID</div>
+                            <div>${order.id}</div>
+                        </div>
+                    </section>
+                    <section class="order-header-right-section">
+                        <div
+                            class="cancel-order-button link-primary"
+                            data-order-id="${order.id}">
+                                Cancel order
+                        </div>
+                    </section>
                 </div>
                 ${generateOrderItemHTML(order)}
             </div>`;
@@ -44,95 +50,51 @@ function generateOrdersHTML() {
 /**
  * Generates HTML for displaying order items with conditional CSS styling based on positions.
  * Applies different styles to the first, last, and inner order items.
- * Also, includes a "Cancel Order" button using a flag.
  * @param order - The order object containing items to be displayed.
  * @returns The HTML representing the order items with applied styles.
  */
 function generateOrderItemHTML(order) {
     let orderItemHTML = '';
-    let isCancelOrderButtonGenerated = false;
     const numberOfOrderItems = order.items.length;
 
     order.items.forEach((orderItem, index) => {
         const matchingProduct = products.find((product) => product.id === orderItem.productId);
         let orderItemClass = 'inner-order-item-details-grid';
 
-        // Check for the first order item
+        // Check if current order item is the first
         if (index === 0) {
             orderItemClass = 'first-order-item-details-grid';
         }
 
-        // Check for the last order item
+        // Check if current order item is the last
         if (index === numberOfOrderItems - 1) {
             orderItemClass = 'last-order-item-details-grid';
         }
 
-        const buyProductAgainButtonId = `buy-product-again-button-${order.id}-${orderItem.productId}`;
+        orderItemHTML += `
+            <div class="order-details-grid ${orderItemClass}">
+                <div class="product-image-container">
+                    <img src="${matchingProduct.image}">
+                </div>
 
-        // Check if the "Cancel Order" button has not been generated yet
-        if (!isCancelOrderButtonGenerated) {
-            orderItemHTML += `
-                <div class="order-details-grid ${orderItemClass}">
-                    <div class="product-image-container">
-                        <img src="${matchingProduct.image}">
+                <div class="product-details">
+                    <div class="product-name">
+                        ${matchingProduct.name}
                     </div>
-
-                    <div class="product-details">
-                        <div class="product-name">
-                            ${matchingProduct.name}
-                        </div>
-                        <div class="product-delivery-date">
-                            Delivery Date: ${orderItem.deliveryDate}, ${new Date().getFullYear()}
-                        </div>
-                        <div class="product-quantity">
-                            Quantity: ${orderItem.quantity}
-                        </div>
-                        <button class="buy-product-again-button button-primary" id="${buyProductAgainButtonId}">
-                            <i class="bi bi-arrow-clockwise"></i>
-                            <span class="buy-again-message"
-                                >Buy it again
-                            </span>
-                        </button>
+                    <div class="product-delivery-date">
+                        Delivery Date: ${orderItem.deliveryDate}, ${new Date().getFullYear()}
                     </div>
-
-                    <div class="product-actions">
-                        <button
-                            class="cancel-order-button button-primary"
-                            data-order-id="${order.id}">
-                                Cancel order
-                        </button>
+                    <div class="product-quantity">
+                        Quantity: ${orderItem.quantity}
                     </div>
-                </div>`;
-
-            // Set the flag to indicate the button has been generated
-            isCancelOrderButtonGenerated = true;
-        } else {
-            // If the button has already been generated, exclude it for subsequent items
-            orderItemHTML += `
-                <div class="order-details-grid ${orderItemClass}">
-                    <div class="product-image-container">
-                        <img src="${matchingProduct.image}">
-                    </div>
-
-                    <div class="product-details">
-                        <div class="product-name">
-                            ${matchingProduct.name}
-                        </div>
-                        <div class="product-delivery-date">
-                            Delivery Date: ${orderItem.deliveryDate}, ${new Date().getFullYear()}
-                        </div>
-                        <div class="product-quantity">
-                            Quantity: ${orderItem.quantity}
-                        </div>
-                        <button class="buy-product-again-button button-primary" id="${buyProductAgainButtonId}">
-                            <i class="bi bi-arrow-clockwise"></i>
-                            <span class="buy-again-message"
-                                >Buy it again
-                            </span>
-                        </button>
-                    </div>
-                </div>`;
-        }
+                    <button class="buy-product-again-button button-primary">
+                        <i class="bi bi-arrow-clockwise"></i>
+                        <span class="buy-again-message"
+                            >Buy it again
+                        </span>
+                    </button>
+                </div>
+            </div>`;
     });
 
     return orderItemHTML;

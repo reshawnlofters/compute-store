@@ -199,10 +199,18 @@ main {
     margin-bottom: 30px;
 }
 
+.cancel-order-button {
+    background: none;
+    font-size: 15px;
+    border: none;
+}
+
 .buy-product-again-button {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 15px;
+    padding: 12px 20px;
 }
 
 .buy-product-again-button .bi {
@@ -211,28 +219,9 @@ main {
     margin-right: 5px;
 }
 
-.product-actions {
-    align-self: start;
-}
-
-.buy-product-again-button,
-.cancel-order-button {
-    font-size: 15px;
-    padding: 12px 20px;
-}
-
 @media (max-width: 800px) {
     .buy-product-again-button {
         margin-bottom: 10px;
-    }
-
-    .product-actions {
-        grid-column: 2;
-        margin-bottom: 30px;
-    }
-
-    .cancel-order-button {
-        width: 140px;
     }
 }
 
@@ -258,15 +247,5 @@ main {
     .buy-product-again-button {
         width: 100%;
         margin-bottom: 15px;
-    }
-
-    .product-actions {
-        grid-column: auto;
-        margin-bottom: 70px;
-    }
-
-    .cancel-order-button {
-        width: 100%;
-        padding: 12px;
     }
 }

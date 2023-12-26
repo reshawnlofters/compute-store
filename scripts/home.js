@@ -198,23 +198,31 @@ window.addEventListener('load', () => {
  */
 document.addEventListener('DOMContentLoaded', () => {
     const shopNowButton = document.querySelector('.shop-now-button');
-    const productsSectionContainer = document.getElementById('products-section-container');
 
-    if (shopNowButton && productsSectionContainer) {
+    if (shopNowButton) {
         shopNowButton.addEventListener('click', () => {
-            productsSectionContainer.scrollIntoView({ behavior: 'smooth' });
+            window.scrollTo({
+                top: 700,
+                behavior: 'smooth',
+            });
         });
     }
 });
 
 function openProductPopup(matchingProduct) {
     generateProductPopup(matchingProduct.id);
-    productPopupContainer.style.display = 'block';
+    productPopupContainer && (productPopupContainer.style.display = 'block');
 }
 
 function closeProductPopup() {
-    productPopupContainer.style.display = 'none';
+    productPopupContainer && (productPopupContainer.style.display = 'none');
 }
+
+document.addEventListener('scroll', () => {
+    if (window.scrollY < 700) {
+        closeProductPopup();
+    }
+});
 
 function generateProductPopup(productId) {
     const matchingProduct = products.find((product) => product.id === productId);
@@ -236,7 +244,9 @@ function generateProductPopup(productId) {
         productPopupContainer.innerHTML = productPopupHTML;
 
         // Event listener for the close button
-        const closeProductPopupButton = productPopupContainer.querySelector('.close-product-popup-button');
+        const closeProductPopupButton = productPopupContainer.querySelector(
+            '.close-product-popup-button'
+        );
         if (closeProductPopupButton) {
             closeProductPopupButton.addEventListener('click', closeProductPopup);
         }
@@ -259,4 +269,4 @@ function handleProductImageClick(event) {
     }
 }
 
-productsGrid.addEventListener('click', handleProductImageClick);
+productsGrid && productsGrid.addEventListener('click', handleProductImageClick);

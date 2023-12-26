@@ -55,7 +55,6 @@
     font-weight: 600;
     color: black;
     border: none;
-    border-radius: 5px;
     text-align: center;
     padding: 14px 25px;
     transform: translate(-50%, -50%);
@@ -65,10 +64,6 @@
 .shop-now-button:hover {
     background-color: #221f20;
     color: white;
-}
-
-#products-section-container {
-    visibility: hidden;
 }
 
 .products-section-container {
@@ -136,15 +131,12 @@
     align-items: center;
     height: 250px;
     background: #f6f6f6;
-    /* height: 260px;
-    width: 350px; */
     margin-bottom: 20px;
     cursor: pointer;
 }
 
 .product-image {
-    max-height: 90%;
-    max-width: 90%;
+    max-height: 80%;
 }
 
 .product-name {
@@ -164,7 +156,7 @@
     background-color: #221f20;
     color: white;
     border: 1px solid transparent;
-    border-radius: 5px;
+    border-radius: 50px;
     transition: all 0.2s ease 0s;
 }
 
@@ -207,7 +199,6 @@
 .product-quantity-count {
     font-size: 14px;
     font-weight: 600;
-    border-radius: 5px;
 }
 
 .product-quantity-count {
@@ -226,17 +217,17 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 500px;
-    width: 500px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    height: 500px !important;
+    width: 500px !important;
     padding: 50px;
 }
 
 .product-popup-image img {
+    max-height: 90%;
     max-width: 90%;
-    padding-top: 25px;
 }
 
 .close-product-popup-button {
