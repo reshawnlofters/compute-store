@@ -1,7 +1,11 @@
-import { products } from '../data/home-page.js';
-import { formatCurrency } from './utils/format-currency.js';
-import { orders, calculateOrderQuantity, updateOrdersInLocalStorage } from '../data/orders-page.js';
-import { addProductToCart } from '../data/checkout-page.js';
+import { products } from '../../../data/home-page.js';
+import { formatCurrency } from '../../shared/format-currency.js';
+import {
+    orders,
+    calculateOrderQuantity,
+    updateOrdersInLocalStorage,
+} from '../../../data/orders-page.js';
+import { addProductToCart } from '../../../data/checkout-page.js';
 
 const ordersGrid = document.querySelector('.orders-grid');
 

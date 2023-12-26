@@ -173,7 +173,7 @@ main {
     flex: 1;
     font-size: 14px;
     outline: none;
-    border-radius: 50px;
+    border-radius: 5px;
     padding-left: 20px;
     margin-right: 10px;
 }
@@ -189,6 +189,7 @@ main {
 .add-promo-code-button {
     color: white;
     border: none;
+    border-radius: 5px;
     padding: 10px 20px;
 }
 
@@ -218,6 +219,7 @@ main {
 .place-order-button {
     display: none;
     width: 100%;
+    border-radius: 5px;
     padding: 14px 0;
     margin-bottom: 20px;
 }

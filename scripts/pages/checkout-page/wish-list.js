@@ -1,11 +1,11 @@
-import { products } from '../../data/home-page.js';
-import { formatCurrency } from '../utils/format-currency.js';
+import { products } from '../../../data/home-page.js';
+import { formatCurrency } from '../../shared/format-currency.js';
 import {
     wishList,
     addProductToCart,
     calculateWishListQuantity,
     updateWishListInLocalStorage,
-} from '../../data/checkout-page.js';
+} from '../../../data/checkout-page.js';
 import {
     updateCartQuantityDisplay,
     updateCartVisibility,

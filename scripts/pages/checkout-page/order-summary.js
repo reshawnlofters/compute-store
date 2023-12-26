@@ -1,12 +1,12 @@
-import { formatCurrency } from '../utils/format-currency.js';
-import { orders, updateOrdersInLocalStorage } from '../../data/orders-page.js';
-import { generateOrderId } from '../orders.js';
+import { formatCurrency } from '../../shared/format-currency.js';
+import { orders, updateOrdersInLocalStorage } from '../../../data/orders-page.js';
+import { generateOrderId } from '../orders-page/orders-page.js';
 import {
     cart,
     calculateCartQuantity,
     calculateCartItemTotalCost,
     clearCart,
-} from '../../data/checkout-page.js';
+} from '../../../data/checkout-page.js';
 
 let isPromoCodeValid = false;
 let orderTotal = 0;

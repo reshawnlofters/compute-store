@@ -1,5 +1,5 @@
-import { products } from '../../data/home-page.js';
-import { formatCurrency } from '../utils/format-currency.js';
+import { products } from '../../../data/home-page.js';
+import { formatCurrency } from '../../shared/format-currency.js';
 import { updateWishListVisibility } from './wish-list.js';
 import { updateOrderSummaryDisplay, updatePlaceOrderButtonVisibility } from './order-summary.js';
 import {
@@ -10,7 +10,7 @@ import {
     updateCartItemPriceDisplay,
     removeCartItem,
     updateWishListInLocalStorage,
-} from '../../data/checkout-page.js';
+} from '../../../data/checkout-page.js';
 
 const cartItemContainer = document.querySelector('.cart-items-container');
 

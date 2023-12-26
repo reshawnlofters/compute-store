@@ -1,9 +1,10 @@
-import { products } from '../data/home-page.js';
-import { formatCurrency } from './utils/format-currency.js';
-import { addProductToCart, calculateCartQuantity } from '../data/checkout-page.js';
+import { products } from '../../../data/home-page.js';
+import { formatCurrency } from '../../shared/format-currency.js';
+import { addProductToCart, calculateCartQuantity } from '../../../data/checkout-page.js';
 
 const productsGrid = document.querySelector('.products-grid');
 const productPopupContainer = document.querySelector('.product-popup-container');
+const searchBar = document.querySelector('.search-bar');
 
 function generateProductsHTML() {
     let productsHTML = '';
@@ -138,8 +139,6 @@ function displayAddedProductToCartMessage(productId) {
 }
 
 function clearSearchBarOnPageLeave() {
-    const searchBar = document.querySelector('.search-bar');
-
     if (searchBar) {
         window.addEventListener('beforeunload', (event) => {
             if (searchBar.value.trim() !== '') {

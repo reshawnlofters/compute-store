@@ -101,7 +101,7 @@ main {
 }
 
 .modal-view-order-button {
-    background-color: #00aa66;
+    background-color: #00aa66 !important;
 }
 
 .modal-close-button {
@@ -109,7 +109,7 @@ main {
 }
 
 .modal-cancel-order-button {
-    background-color: #ed4040;
+    background-color: #ed4040 !important;
 }
 
 @media (max-width: 575px) {

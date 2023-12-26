@@ -1,5 +1,5 @@
 import { products } from './home-page.js';
-import { formatCurrency } from '../scripts/utils/format-currency.js';
+import { formatCurrency } from '../scripts/shared/format-currency.js';
 
 /**
  * Retrieve the 'cart' and 'wishList' arrays from local storage.
