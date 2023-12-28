@@ -15,14 +15,6 @@
     z-index: 1;
 }
 
-.checkout-header-logo {
-    color: black;
-    font-size: 22px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
 .checkout-header-middle-section {
     display: flex;
     justify-content: center;

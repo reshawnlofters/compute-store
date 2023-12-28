@@ -139,7 +139,6 @@ main {
 .delivery-option-date {
     font-size: 15px;
     margin-left: 8px;
-    color: #707070;
 }
 
 .promo-code-container {
@@ -148,17 +147,9 @@ main {
     margin-bottom: 20px;
 }
 
-.valid-promo-code-message {
-    color: #707070;
-}
-
 .valid-promo-code-message span {
     text-decoration: underline;
     cursor: pointer;
-}
-
-.invalid-promo-code-message {
-    color: #e74c39;
 }
 
 .valid-promo-code-message,
@@ -221,5 +212,4 @@ main {
     width: 100%;
     border-radius: 5px;
     padding: 14px 0;
-    margin-bottom: 20px;
 }

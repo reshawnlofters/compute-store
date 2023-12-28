@@ -30,7 +30,7 @@
     top: 40%;
     left: 50%;
     font-weight: 700;
-    font-size: 40px;
+    font-size: 45px;
     transform: translate(-50%, -50%);
 }
 .promo-section-tag {
@@ -39,9 +39,9 @@
     color: white;
     top: 55%;
     left: 50%;
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: 2px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
     transform: translate(-50%, -50%);
     margin-bottom: 25px;
 }
@@ -53,10 +53,9 @@
     background-color: white;
     font-size: 15px;
     font-weight: 600;
-    color: black;
     border: none;
     text-align: center;
-    padding: 14px 25px;
+    padding: 15px 25px;
     transform: translate(-50%, -50%);
     transition: all 0.2s ease 0s;
 }
@@ -153,7 +152,7 @@
     display: grid;
     grid-template-columns: auto 1fr;
     height: 50px;
-    background-color: #221f20;
+    background-color: #32302f;
     color: white;
     border: 1px solid transparent;
     border-radius: 50px;
@@ -162,8 +161,8 @@
 
 .add-product-to-cart-container:hover {
     background-color: white;
-    color: black;
-    border-color: black;
+    color: #32302f;
+    border-color: #32302f;
 }
 
 .input-product-quantity-container {

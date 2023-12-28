@@ -93,7 +93,7 @@ function generateOrderItemHTML(order) {
                     </div>
                     <button class="buy-product-again-button button-primary">
                         <i class="bi bi-arrow-clockwise"></i>
-                        <span class="buy-again-message"
+                        <span
                             >Buy it again
                         </span>
                     </button>

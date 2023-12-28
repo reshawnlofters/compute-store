@@ -49,7 +49,7 @@ document.querySelector('.add-promo-code-button').addEventListener('click', valid
 export function updateOrderSummaryDisplay() {
     const subtotal = calculateCartItemTotalCost();
     const shipping = subtotal > 0 && subtotal < 10000 ? 899 : 0;
-    const discount = isPromoCodeValid ? subtotal * 0.15 : 0;
+    const discount = isPromoCodeValid ? subtotal * 0.5 : 0;
 
     // Apply discount color
     const discountColor = discount > 0 ? '#c9002e' : 'black';

@@ -68,17 +68,17 @@ function generateCartHTML() {
                         <div class="delivery-option">
                             <input type="radio" checked class="delivery-option-input"
                                 name="delivery-option-${matchingProduct.id}">
-                            <div class="delivery-option-date"></div>
+                            <div class="delivery-option-date label-primary"></div>
                         </div>
                         <div class="delivery-option">
                             <input type="radio" class="delivery-option-input"
                                 name="delivery-option-${matchingProduct.id}">
-                            <div class="delivery-option-date"></div>
+                            <div class="delivery-option-date label-primary"></div>
                         </div>
                         <div class="delivery-option">
                             <input type="radio" class="delivery-option-input"
                                 name="delivery-option-${matchingProduct.id}">
-                            <div class="delivery-option-date"></div>
+                            <div class="delivery-option-date label-primary"></div>
                         </div>
                     </div>
                 </div>

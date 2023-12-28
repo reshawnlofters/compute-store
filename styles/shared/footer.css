@@ -3,7 +3,6 @@ footer {
     justify-content: center;
     flex-direction: column;
     background-color: #32302f;
-    /* background-color: #282828; */
     padding: 0 22%;
 }
 
@@ -84,14 +83,6 @@ footer .vr {
 .newsletter-input-container .sign-up-button:hover {
     background-color: white;
     color: black;
-}
-
-.valid-email-address-message {
-    color: green;
-}
-
-.invalid-email-address-message {
-    color: #e74d39d4;
 }
 
 .valid-email-address-message,
