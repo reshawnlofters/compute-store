@@ -5,7 +5,7 @@ import { updateOrderSummaryDisplay, updatePlaceOrderButtonVisibility } from './o
 import {
     cart,
     wishList,
-    calculateCartQuantity,
+    calculateQuantityOfCartItems,
     updateCartItemQuantity,
     updateCartItemPriceDisplay,
     removeCartItem,
@@ -21,7 +21,7 @@ function generateCartHTML() {
         const matchingProduct = products.find((product) => product.id === cartItem.productId);
 
         cartHTML += `
-            <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
+            <div class="cart-item-container cart-item-container-${matchingProduct.id}">
                 <div class="cart-item-details-grid">
                     <img class="product-image" src="${matchingProduct.image}">
 
@@ -39,7 +39,7 @@ function generateCartHTML() {
                                         cartItem.quantity
                                     }</span>
                                 </span>
-                                <span class="update-cart-item-quantity-button link-primary js-update-cart-item-quantity-button link-primary"
+                                <span class="update-cart-item-quantity-button update-cart-item-quantity-button link-primary"
                                 data-product-id="${matchingProduct.id}">
                                     Update
                                 </span>
@@ -68,17 +68,17 @@ function generateCartHTML() {
                         <div class="delivery-option">
                             <input type="radio" checked class="delivery-option-input"
                                 name="delivery-option-${matchingProduct.id}">
-                            <div class="delivery-option-date label-primary"></div>
+                            <div class="delivery-date-option label-primary"></div>
                         </div>
                         <div class="delivery-option">
                             <input type="radio" class="delivery-option-input"
                                 name="delivery-option-${matchingProduct.id}">
-                            <div class="delivery-option-date label-primary"></div>
+                            <div class="delivery-date-option label-primary"></div>
                         </div>
                         <div class="delivery-option">
                             <input type="radio" class="delivery-option-input"
                                 name="delivery-option-${matchingProduct.id}">
-                            <div class="delivery-option-date label-primary"></div>
+                            <div class="delivery-date-option label-primary"></div>
                         </div>
                     </div>
                 </div>
@@ -107,37 +107,35 @@ function generateEmptyCartHTML() {
 }
 
 /**
- * Updates the visibility of the cart based on the quantity of items in the cart.
+ * Updates the visibility of the cart based on the quantity of cart items.
  * If the cart is not empty, it generates the cart HTML; otherwise, it generates
  * HTML for an empty cart.
  */
 export function updateCartVisibility() {
-    const cartQuantity = calculateCartQuantity();
-    cartQuantity > 0 ? generateCartHTML() : generateEmptyCartHTML();
+    const cartItemsQuantity = calculateQuantityOfCartItems();
+    cartItemsQuantity > 0 ? generateCartHTML() : generateEmptyCartHTML();
 }
 
 updateCartVisibility();
 
 /**
- * Updates the cart quantity display in the checkout header.
- * Retrieves the cart quantity using calculateCartQuantity() and updates
- * the corresponding DOM element with the calculated value.
+ * Updates the quantity of cart items displayed in the checkout header.
  */
-export function updateCartQuantityDisplay() {
-    const cartQuantity = calculateCartQuantity();
-    document.querySelector('.checkout-header-cart-quantity-count').innerHTML = `${cartQuantity}`;
+export function updateCartItemsQuantityDisplay() {
+    const cartItemsQuantity = calculateQuantityOfCartItems();
+    document.querySelector('.cart-items-quantity').innerHTML = `${cartItemsQuantity}`;
 }
 
-updateCartQuantityDisplay();
+updateCartItemsQuantityDisplay();
 
 /**
- * Temporarily displays a quantity limit message for a cart item.
- * @param cartItemContainer - The container element of the cart item.
+ * Temporarily displays a cart item quantity limit message.
+ * @param {Element} cartItemContainer - The element that holds the cart item.
  */
 function displayCartItemQuantityLimitMessage(cartItemContainer) {
     const messageElement = cartItemContainer.querySelector('.cart-item-quantity-limit-message');
 
-    // Set the message to indicate the quantity limit
+    // Set the message
     messageElement.innerHTML = '<br>Quantity limit: 50';
 
     // Clear any existing timeout to prevent multiple messages
@@ -152,74 +150,73 @@ function displayCartItemQuantityLimitMessage(cartItemContainer) {
 }
 
 /**
- * Saves the quantity of a cart item inputted by the user and updates displays.
- * @param productId - The unique identifier of the cart item to be updated in quantity.
- * @param cartItemContainer - The element that contains the quantity label and input field.
+ * Saves the quantity of a cart item based on input and updates displays.
+ * @param {string} productId - The unique identifier of the cart item to be updated in quantity.
+ * @param {Element} cartItemContainer - The element that holds the quantity label and input field.
  */
 function saveNewCartItemQuantity(productId, cartItemContainer) {
     const updateCartItemQuantityElement = cartItemContainer.querySelector(
         '.update-cart-item-quantity-input'
     );
-    const newCartItemQuantity = parseInt(updateCartItemQuantityElement.value.trim(), 10);
+    const newQuantity = parseInt(updateCartItemQuantityElement.value.trim(), 10);
 
-    if (Number.isNaN(newCartItemQuantity) || newCartItemQuantity === '') {
+    if (Number.isNaN(newQuantity) || newQuantity === '') {
         return;
-    } else if (newCartItemQuantity === 0) {
+    } else if (newQuantity === 0) {
         handleZeroCartItemQuantity(productId);
-    } else if (newCartItemQuantity > 50) {
+    } else if (newQuantity > 50) {
         handleInvalidCartItemQuantity(cartItemContainer);
     } else {
-        handleValidCartItemQuantity(productId, cartItemContainer, newCartItemQuantity);
+        handleValidCartItemQuantity(productId, cartItemContainer, newQuantity);
     }
 
     updateCartItemQuantityElement.blur();
 }
 
 /**
- * Handles the scenario when the quantity of a cart item is zero.
- * @param productId - The unique identifier of the cart item to be removed.
+ * Handles when the quantity input of a cart item is zero.
+ * @param {string} productId - The unique identifier of the cart item to be removed.
  */
 function handleZeroCartItemQuantity(productId) {
     removeCartItem(productId);
     updateCartVisibility();
-    updateCartQuantityDisplay();
+    updateCartItemsQuantityDisplay();
     updateOrderSummaryDisplay();
 }
 
 /**
- * Handles the scenario when  when the quantity of a cart item exceeds the limit.
- * @param cartItemContainer - The element that contains the quantity label and input field.
+ * Handles when the quantity input of a cart item exceeds the limit.
+ * @param {Element} cartItemContainer - The element that contains the quantity label and input field.
  */
 function handleInvalidCartItemQuantity(cartItemContainer) {
     displayCartItemQuantityLimitMessage(cartItemContainer);
 }
 
 /**
- * Handles the scenario when the quantity of a cart item is valid.
- * @param productId - The unique identifier of the cart item to be updated in quantity.
- * @param cartItemContainer - The element that contains the quantity label and input field.
- * @param newCartItemQuantity - The new quantity inputted by the user.
+ * Handles when the quantity input of a cart item is valid.
+ * @param {string}productId - The unique identifier of the cart item to be updated in quantity.
+ * @param {Element}cartItemContainer - The element that contains the quantity label and input field.
+ * @param {number} newQuantity - The new quantity inputted by the user.
  */
-function handleValidCartItemQuantity(productId, cartItemContainer, newCartItemQuantity) {
+function handleValidCartItemQuantity(productId, cartItemContainer, newQuantity) {
     // Update the cart item quantity label
-    cartItemContainer.querySelector('.cart-item-quantity-count').innerHTML =
-        String(newCartItemQuantity);
+    cartItemContainer.querySelector('.cart-item-quantity-count').innerHTML = String(newQuantity);
 
-    // Remove the class added to the container fediting
+    // Remove the class added to the container for editing purposes
     cartItemContainer.classList.remove('editing-cart-item-quantity');
 
-    updateCartItemQuantity(productId, newCartItemQuantity);
-    updateCartItemPriceDisplay(productId, cartItemContainer, newCartItemQuantity);
-    updateCartQuantityDisplay();
+    updateCartItemQuantity(productId, newQuantity);
+    updateCartItemPriceDisplay(productId, cartItemContainer, newQuantity);
+    updateCartItemsQuantityDisplay();
     updateOrderSummaryDisplay();
 }
 
 /**
- * Removes a cart item from the page and updates related elements.
+ * Removes a cart item from displays.
  * @param productId - The unique identifier of the cart item to be removed.
  */
 function removeCartItemDisplay(productId) {
-    const cartItemContainer = document.querySelector(`.js-cart-item-container-${productId}`);
+    const cartItemContainer = document.querySelector(`.cart-item-container-${productId}`);
 
     if (!cartItemContainer) {
         return;
@@ -229,15 +226,15 @@ function removeCartItemDisplay(productId) {
     updateCartVisibility();
     updatePlaceOrderButtonVisibility();
     updateOrderSummaryDisplay();
-    updateCartQuantityDisplay();
+    updateCartItemsQuantityDisplay();
 }
 
 /**
- * Update delivery date options based on the current day.
+ * Updates cart item delivery date options displayed based on the current day.
  * Delivery dates are up to 3 days after the current day.
  */
-export function updateDeliveryDateOptions() {
-    document.querySelectorAll('.delivery-option-date').forEach((dateElement, index) => {
+export function updateCartItemDeliveryDateOptions() {
+    document.querySelectorAll('.delivery-date-option').forEach((dateElement, index) => {
         const currentDate = new Date();
         const daysToAdd = (index % 3) + 1;
         const formattedDeliveryDate = calculateFormattedDeliveryDate(currentDate, daysToAdd);
@@ -245,7 +242,7 @@ export function updateDeliveryDateOptions() {
     });
 }
 
-updateDeliveryDateOptions();
+updateCartItemDeliveryDateOptions();
 
 /**
  * Calculate the formatted delivery date.
@@ -268,7 +265,7 @@ function calculateFormattedDeliveryDate(currentDate, daysToAdd) {
  * When a delivery option date is clicked, the respective radio button is checked.
  */
 export function addEventListenersToDeliveryDateOptions() {
-    document.querySelectorAll('.delivery-option-date').forEach((dateElement) => {
+    document.querySelectorAll('.delivery-date-option').forEach((dateElement) => {
         dateElement.addEventListener('click', () => {
             const radioInput = dateElement.parentNode.querySelector('.delivery-option-input');
             radioInput.checked = true;
@@ -279,7 +276,7 @@ export function addEventListenersToDeliveryDateOptions() {
 addEventListenersToDeliveryDateOptions();
 
 /**
- * Handles clicks outside cart item containers.
+ * Handles when a click is outside a cart item container.
  * Removes 'editing-cart-item-quantity' class from all cart item containers.
  * @param {Event} event - The click event.
  */
@@ -295,16 +292,15 @@ function handleClickOutsideCartItemContainer(event) {
 document.addEventListener('click', handleClickOutsideCartItemContainer);
 
 /**
- * Attaches event listeners to the "Update Cart Item Quantity" buttons within the cart.
+ * Adds event listeners to the "Update Cart Item Quantity" buttons in the cart.
  * When a button is clicked, the corresponding cart item container is identified, and
- * specific classes are added to reveal an input field and button for updating the quantity.
- * Clicking the "Save" button or blurring the input field triggers the update of the cart item quantity.
+ * specific classes are added to reveal an input field and "Save" button for updating the quantity.
  */
 document.querySelector('.cart-items-container').addEventListener('click', (event) => {
-    const updateButton = event.target.closest('.js-update-cart-item-quantity-button');
-    if (updateButton) {
-        const productId = updateButton.dataset.productId;
-        const cartItemContainer = document.querySelector(`.js-cart-item-container-${productId}`);
+    const saveButton = event.target.closest('.update-cart-item-quantity-button');
+    if (saveButton) {
+        const productId = saveButton.dataset.productId;
+        const cartItemContainer = document.querySelector(`.cart-item-container-${productId}`);
 
         if (cartItemContainer) {
             cartItemContainer.classList.add('editing-cart-item-quantity');
@@ -312,24 +308,25 @@ document.querySelector('.cart-items-container').addEventListener('click', (event
             const saveButton = cartItemContainer.querySelector(
                 '.save-new-cart-item-quantity-button'
             );
-            const inputField = cartItemContainer.querySelector('.update-cart-item-quantity-input');
+            const inputElement = cartItemContainer.querySelector(
+                '.update-cart-item-quantity-input'
+            );
 
             const saveHandler = () => saveNewCartItemQuantity(productId, cartItemContainer);
 
             saveButton.addEventListener('click', saveHandler);
-            inputField.addEventListener('keydown', (event) => {
+            inputElement.addEventListener('keydown', (event) => {
                 if (event.key === 'Enter') {
                     saveHandler();
                 }
             });
-            inputField.addEventListener('blur', saveHandler);
+            inputElement.addEventListener('blur', saveHandler);
         }
     }
 });
 
 /**
- * Handles the click event on "Remove Cart Item" buttons within the cart.
- * If a button is clicked, retrieves the 'productId', removes the cart item, and updates displays.
+ * Handles when a "Remove Cart Item" button is clicked.
  * @param {Event} event - The click event.
  */
 function handleRemoveCartItemButtonClick(event) {
@@ -338,7 +335,7 @@ function handleRemoveCartItemButtonClick(event) {
         const productId = removeButton.dataset.productId;
         removeCartItem(productId);
         removeCartItemDisplay(productId);
-        updateDeliveryDateOptions();
+        updateCartItemDeliveryDateOptions();
         addEventListenersToDeliveryDateOptions();
     }
 }
@@ -348,8 +345,8 @@ document
     .addEventListener('click', handleRemoveCartItemButtonClick);
 
 /**
- * Adds a product to the wish list by adding it to the 'wishList' array.
- * If the product is already in the wish list, no duplicates are added.
+ * Adds a product to the 'wish list' array.
+ * Ensures no duplicates are created if a product is already in the wish list.
  * @param {string} productId - The unique identifier of the product to be added to the wish list.
  */
 function addCartItemToWishList(productId) {
@@ -364,8 +361,7 @@ function addCartItemToWishList(productId) {
 
 /**
  * Handles the click event for adding a product to the wish list.
- * If a button is clicked, the code retrieves the 'productId',
- * adds the product to the wish list, and updates displays.
+ * If the button is clicked, it adds the product to the wish list, and updates displays.
  * @param {Event} event - The click event object.
  */
 function handleAddToWishListButtonClick(event) {
@@ -373,11 +369,10 @@ function handleAddToWishListButtonClick(event) {
 
     if (addToWishListButton) {
         const productId = addToWishListButton.dataset.productId;
-
         addCartItemToWishList(productId);
         removeCartItem(productId);
         removeCartItemDisplay(productId);
-        updateDeliveryDateOptions();
+        updateCartItemDeliveryDateOptions();
         addEventListenersToDeliveryDateOptions();
     }
 }

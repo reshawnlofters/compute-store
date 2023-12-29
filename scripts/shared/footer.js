@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then((response) => response.text())
         .then((html) => {
             footerContainer.innerHTML = html;
-            setEventListeners(); // Content is loaded
+            addEventListeners(); // Content is loaded
         })
         .catch((error) => console.error('Error fetching footer:', error));
 });
@@ -18,7 +18,6 @@ function validateEmailAddress() {
     const validMessage = document.querySelector('.valid-email-address-message');
     const invalidMessage = document.querySelector('.invalid-email-address-message');
 
-    // Check if the email is valid
     if (email == '') {
         invalidMessage.textContent = 'Email address is required';
         invalidMessage.style.display = 'block';
@@ -35,7 +34,7 @@ function validateEmailAddress() {
     emailInput.value = '';
 }
 
-function setEventListeners() {
+function addEventListeners() {
     document.querySelector('.sign-up-button').addEventListener('click', validateEmailAddress);
     document.querySelector('.copy-right-notice-year').innerHTML = new Date().getFullYear();
 }

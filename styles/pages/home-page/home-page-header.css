@@ -169,17 +169,17 @@
     padding-right: 3px;
 }
 
-.header-cart-quantity-count-container {
+.header-cart-items-quantity-container {
     position: relative;
     text-align: center;
     margin-right: 10px;
 }
 
-.header-cart-quantity-count-container .bi {
+.header-cart-items-quantity-container .bi {
     font-size: 25px;
 }
 
-.cart-quantity-count {
+.cart-items-quantity {
     height: 20px;
     width: 20px;
     position: absolute;

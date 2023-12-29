@@ -1,6 +1,6 @@
 import { products } from '../../../data/home-page.js';
 import { formatCurrency } from '../../shared/format-currency.js';
-import { addProductToCart, calculateCartQuantity } from '../../../data/checkout-page.js';
+import { addProductToCart, calculateQuantityOfCartItems } from '../../../data/checkout-page.js';
 
 const productsGrid = document.querySelector('.products-grid');
 
@@ -50,19 +50,19 @@ function generateProductsHTML() {
 
     if (productsGrid) {
         productsGrid.innerHTML = productsHTML;
-        attachEventListeners();
+        addEventListeners();
     }
 }
 
 generateProductsHTML();
 
 /**
- * Attaches a click event listener to the 'productsGrid' element, which represents the
- * container for all products. Handles interactions with "Add to Cart," "Increase Quantity,"
+ * Adds a click event listener to 'productsGrid', the container of all products.
+ * Handles interactions with "Add to Cart," "Increase Quantity,"
  * and "Decrease Quantity" buttons. Updates product quantity and triggers relevant actions,
  * such as adding the product to the cart and displaying confirmation messages.
  */
-function attachEventListeners() {
+function addEventListeners() {
     productsGrid.addEventListener('click', (event) => {
         const targetButton = event.target.closest(
             '.add-product-to-cart-button, .increase-product-quantity-button, .decrease-product-quantity-button'
@@ -73,7 +73,6 @@ function attachEventListeners() {
             const productContainer = targetButton.closest('.product-container');
             const productQuantityElement =
                 productContainer.querySelector('.product-quantity-count');
-
             let productQuantity = parseInt(productQuantityElement.textContent, 10);
 
             if (targetButton.classList.contains('add-product-to-cart-button')) {
@@ -81,7 +80,7 @@ function attachEventListeners() {
                 setTimeout(() => {
                     if (productQuantity > 0) {
                         addProductToCart(productId, productQuantity);
-                        updateCartQuantityDisplay();
+                        updateCartItemsQuantityDisplay();
                         displayAddedProductToCartMessage(productId);
                     }
                     productQuantityElement.textContent = 0;
@@ -99,20 +98,15 @@ function attachEventListeners() {
     });
 }
 
-function updateCartQuantityDisplay() {
-    const cartQuantity = calculateCartQuantity();
-    document.querySelector('.cart-quantity-count').innerHTML = cartQuantity;
+function updateCartItemsQuantityDisplay() {
+    const cartQuantity = calculateQuantityOfCartItems();
+    document.querySelector('.cart-items-quantity').innerHTML = cartQuantity;
 }
 
-updateCartQuantityDisplay();
+updateCartItemsQuantityDisplay();
 
 const addedProductToCartMessageTimeouts = {};
 
-/**
- * Temporarily updates the innerHTML of the specified "Add to Cart" button to display
- * an "Added" message, and reverts it back after a timeout for a smooth transition.
- * @param {string} productId - The unique identifier of the product added to the cart.
- */
 function displayAddedProductToCartMessage(productId) {
     const button = document.querySelector(
         `.add-product-to-cart-button[data-product-id="${productId}"]`
@@ -124,44 +118,44 @@ function displayAddedProductToCartMessage(productId) {
         clearTimeout(previousTimeout);
     }
 
-    // Display "Added" message
+    // Display message
     button.innerHTML = 'Added';
 
-    // Set a timeout to revert the innerHTML back to 'Add to Cart'
+    // Set a timeout to revert the innerHTML
     const timeoutId = setTimeout(() => {
         button.innerHTML = 'Add to Cart';
     }, 1000);
 
-    // Store the timeoutId for later reference
+    // Store the timeout ID for later reference
     addedProductToCartMessageTimeouts[productId] = timeoutId;
 }
 
-/**
- * Attaches a scroll event listener to the page.
- * Disappears the promotion header when a user scrolls down.
- */
-window.addEventListener('load', () => {
+function adjustHeaderOnScroll() {
     const promoHeader = document.querySelector('.promo-header-container');
     const header = document.querySelector('.header-container');
 
-    // Function to adjust headers based on scroll position
-    function adjustHeaderOnScroll() {
-        if (window.scrollY > 0) {
-            if (promoHeader) {
-                promoHeader.style.top = '-45px';
-            }
-            if (header) {
-                header.style.top = '0';
-            }
-        } else {
-            if (promoHeader) {
-                promoHeader.style.top = '0';
-            }
-            if (header) {
-                header.style.top = '45px';
-            }
+    if (window.scrollY > 0) {
+        if (promoHeader) {
+            promoHeader.style.top = '-45px';
+        }
+        if (header) {
+            header.style.top = '0';
+        }
+    } else {
+        if (promoHeader) {
+            promoHeader.style.top = '0';
+        }
+        if (header) {
+            header.style.top = '45px';
         }
     }
+}
+
+/**
+ * Adds a scroll event listener to remove the promotion header on down scroll.
+ */
+window.addEventListener('load', () => {
+    adjustHeaderOnScroll();
 
     // Throttle scroll event using requestAnimationFrame
     let isScrolling = false;
@@ -178,7 +172,7 @@ window.addEventListener('load', () => {
 });
 
 /**
- * Smooth scroll to the products section when the "Shop Now" button is clicked.
+ * Scrolls to the featured products section when the "Shop Now" button is clicked.
  */
 document.addEventListener('DOMContentLoaded', () => {
     const shopNowButton = document.querySelector('.shop-now-button');
@@ -192,3 +186,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+

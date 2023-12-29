@@ -3,7 +3,7 @@ import { orders, updateOrdersInLocalStorage } from '../../../data/orders-page.js
 import { generateOrderId } from '../orders-page/orders-page.js';
 import {
     cart,
-    calculateCartQuantity,
+    calculateQuantityOfCartItems,
     calculateCartItemTotalCost,
     clearCart,
 } from '../../../data/checkout-page.js';
@@ -11,16 +11,12 @@ import {
 let isPromoCodeValid = false;
 let orderTotal = 0;
 
-/**
- * Validates a promotional code and updates the UI accordingly.
- */
 function validatePromoCode() {
     const promoCodeInput = document.querySelector('.promo-code-input');
     const promoCode = promoCodeInput.value.trim();
     const validMessage = document.querySelector('.valid-promo-code-message');
     const invalidMessage = document.querySelector('.invalid-promo-code-message');
 
-    // Check if the promo code is valid
     if (promoCode == '') {
         invalidMessage.textContent = 'Promotion code is required';
         invalidMessage.style.display = 'block';
@@ -44,21 +40,21 @@ document.querySelector('.add-promo-code-button').addEventListener('click', valid
 
 /**
  * Updates the order summary display with calculations for subtotal,
- * shipping, discounts, taxes, and the overall total after tax.
+ * discounts, shipping, taxes, and the total cost.
  */
 export function updateOrderSummaryDisplay() {
     const subtotal = calculateCartItemTotalCost();
     const shipping = subtotal > 0 && subtotal < 10000 ? 899 : 0;
-    const discount = isPromoCodeValid ? subtotal * 0.5 : 0;
+    const discount = isPromoCodeValid ? subtotal * 0.25 : 0;
 
     // Apply discount color
     const discountColor = discount > 0 ? '#c9002e' : 'black';
     document.querySelector('.order-summary-discount').style.color = discountColor;
 
-    // Update subtotal, shipping cost, discount, tax, and total cost
+    // Update subtotal, discount, shipping cost, tax, and total cost
     document.querySelector('.order-summary-subtotal').innerHTML = formatCurrency(subtotal);
 
-    // Display 'FREE' shipping if item cost exceeds $100
+    // Display 'FREE' shipping if subtotal exceeds $100
     document.querySelector('.order-summary-shipping').innerHTML =
         subtotal > 10000 ? 'FREE' : formatCurrency(shipping);
 
@@ -74,7 +70,7 @@ export function updateOrderSummaryDisplay() {
 updateOrderSummaryDisplay();
 
 /**
- * Removes the applied promotional code and updates the order summary display.
+ * Removes applied promotional codes and updates displays.
  */
 function removePromoCode() {
     document.querySelector('.valid-promo-code-message').style.display = 'none';
@@ -84,11 +80,8 @@ function removePromoCode() {
 
 document.querySelector('.remove-promo-code-button').addEventListener('click', removePromoCode);
 
-/**
- * Places an order, adds it to the orders array, and updates local storage.
- */
 function placeOrder() {
-    const selectedDeliveryDates = getSelectedDeliveryDates();
+    const selectedCartItemDeliveryDates = getSelectedCartItemDeliveryDates();
     const date = new Date();
     const monthNames = [
         'January',
@@ -110,7 +103,7 @@ function placeOrder() {
         id: generateOrderId(),
         items: cart.map((cartItem, index) => ({
             ...cartItem,
-            deliveryDate: selectedDeliveryDates[index],
+            deliveryDate: selectedCartItemDeliveryDates[index],
         })),
         price: orderTotal,
         date: `${monthNames[date.getMonth()]} ${date.getDate()}`,
@@ -125,15 +118,15 @@ function placeOrder() {
     localStorage.setItem('orderPlaced', 'true');
 }
 
-function getSelectedDeliveryDates() {
-    const selectedDeliveryDates = [];
+function getSelectedCartItemDeliveryDates() {
+    const selectedCartItemDeliveryDates = [];
     document.querySelectorAll('.delivery-option-input:checked').forEach((radioButton) => {
         const dateElement = radioButton
             .closest('.delivery-option')
-            .querySelector('.delivery-option-date');
-        selectedDeliveryDates.push(dateElement.textContent.trim());
+            .querySelector('.delivery-date-option');
+        selectedCartItemDeliveryDates.push(dateElement.textContent.trim());
     });
-    return selectedDeliveryDates;
+    return selectedCartItemDeliveryDates;
 }
 
 document.querySelector('.place-order-button').addEventListener('click', () => {
@@ -152,7 +145,7 @@ function navigateToOrdersPage() {
  */
 export function updatePlaceOrderButtonVisibility() {
     const placeOrderButton = document.querySelector('.place-order-button');
-    const isCartNotEmpty = calculateCartQuantity() > 0;
+    const isCartNotEmpty = calculateQuantityOfCartItems() > 0;
 
     placeOrderButton.style.display = isCartNotEmpty ? 'block' : 'none';
 }

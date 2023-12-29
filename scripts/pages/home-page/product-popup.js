@@ -37,13 +37,12 @@ function generateProductPopup(productId) {
 
         productPopupContainer.innerHTML = productPopupHTML;
 
-        // Event listener for the close button
+        // Add event listener to the close button
         const closeProductPopupButton = productPopupContainer.querySelector(
             '.close-product-popup-button'
         );
-        if (closeProductPopupButton) {
+        closeProductPopupButton &&
             closeProductPopupButton.addEventListener('click', closeProductPopup);
-        }
     }
 }
 
