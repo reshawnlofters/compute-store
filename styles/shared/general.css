@@ -144,10 +144,22 @@ input {
 .empty-orders-container {
     background-color: white;
     border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.04) 0px 0px 8px 0px, rgba(0, 0, 0, 0.02) 0px 0px 4px 0px,
-        rgba(0, 0, 0, 0.04) 0px 0px 1px 1px;
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 8px 0px, rgba(0, 0, 0, 0.04) 0px 2px 8px 0px;
     padding: 25px;
     margin-bottom: 20px;
+    /* box-shadow: rgba(0, 0, 0, 0.04) 0px 0px 8px 0px, rgba(0, 0, 0, 0.02) 0px 0px 4px 0px,
+        rgba(0, 0, 0, 0.04) 0px 0px 1px 1px; */
+}
+
+.cart-item-container:hover,
+.wish-list-product-container:hover,
+.order-header-container:hover,
+.order-details-grid:hover,
+.empty-cart-container:hover,
+.empty-wish-list-container:hover,
+.empty-wish-list-container:hover,
+.empty-orders-container:hover {
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 6px 16px 0px, rgba(0, 0, 0, 0.04) 0px 0px 6px 0px;
 }
 
 .cart-section-title,

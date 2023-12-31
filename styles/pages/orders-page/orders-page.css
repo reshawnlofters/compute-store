@@ -1,5 +1,5 @@
 html {
-    background-color: #faf9f8;
+    background-color: #f9f8f7;
 }
 
 main {
@@ -18,12 +18,14 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: rgb(241, 241, 241);
-    box-shadow: rgba(0, 0, 0, 0.04) 0px 0px 8px 0px, rgba(0, 0, 0, 0.02) 0px 0px 4px 0px,
-        rgba(0, 0, 0, 0.1) 0px 0px 1px 1px;
+    background-color: white;
+    border-bottom: 1px solid rgba(217, 217, 217, 0.384);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     padding: 20px 35px;
+    /* background-color: rgb(241, 241, 241); */
+    /* box-shadow: rgba(0, 0, 0, 0.04) 0px 0px 8px 0px, rgba(0, 0, 0, 0.02) 0px 0px 4px 0px,
+        rgba(0, 0, 0, 0.1) 0px 0px 1px 1px; */
 }
 
 .order-header-left-section {
@@ -96,8 +98,9 @@ main {
 .modal-close-button,
 .modal-cancel-order-button {
     font-size: 15px;
-    padding: 15px 25px;
+    border-radius: 5px;
     outline: none;
+    padding: 15px 25px;
 }
 
 .modal-view-order-button {
@@ -105,7 +108,7 @@ main {
 }
 
 .modal-close-button {
-    margin-right: 15px;
+    margin-right: 10px;
 }
 
 .modal-cancel-order-button {
@@ -151,9 +154,14 @@ main {
     border-top: none;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.04) 0px 0px 8px 0px, rgba(0, 0, 0, 0.02) 0px 0px 4px 0px,
-        rgba(0, 0, 0, 0.04) 0px 0px 1px 1px;
     padding: 40px 25px;
+    /* box-shadow: rgba(0, 0, 0, 0.04) 0px 0px 8px 0px, rgba(0, 0, 0, 0.02) 0px 0px 4px 0px,
+        rgba(0, 0, 0, 0.04) 0px 0px 1px 1px; */
+}
+
+.order-header-container,
+.order-details-grid {
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 8px 0px, rgba(0, 0, 0, 0.04) 0px 2px 8px 0px;
 }
 
 .first-order-item-details-grid,
