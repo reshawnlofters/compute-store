@@ -1,4 +1,5 @@
 import { products } from '../../../data/home-page.js';
+import { findProductByName } from '../../shared/utils.js';
 
 const searchBar = document.querySelector('.search-bar');
 const searchDropdown = document.querySelector('.search-dropdown');
@@ -50,7 +51,7 @@ function generateSearchBarDropdown(matchingProducts) {
 
 function handleSearchButton() {
     const query = searchBar.value.toLowerCase();
-    const matchingProduct = products.find((product) => product.name.toLowerCase() === query);
+    const matchingProduct = findProductByName(query)
 
     // If a matching product is found, scroll to it with a pixel adjustment
     if (matchingProduct) {
@@ -69,7 +70,7 @@ function handleSearchButton() {
         }
     }
 
-    archDropdown.style.display = 'none';
+    searchDropdown.style.display = 'none';
     clearSearchBar();
 }
 

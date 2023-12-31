@@ -1,5 +1,5 @@
 import { products } from './home-page.js';
-import { formatCurrency } from '../scripts/shared/format-currency.js';
+import { findProductById, formatCurrency } from '../scripts/shared/utils.js';
 
 /**
  * Retrieves the 'cart' and 'wishList' arrays from local storage.
@@ -23,7 +23,7 @@ export function updateWishListInLocalStorage() {
  * @param {number} productQuantity - The quantity of the product the user wants to add to the cart.
  */
 export function addProductToCart(productId, productQuantity) {
-    const product = products.find((product) => product.id === productId);
+    const product = findProductById(productId);
 
     if (!product) {
         return;
@@ -93,7 +93,7 @@ export function updateCartItemQuantity(productId, newQuantity) {
  */
 export function updateCartItemPriceDisplay(productId, cartItemContainer, newQuantity) {
     const cartItemPriceElement = cartItemContainer.querySelector('.product-price');
-    const matchingProduct = products.find((product) => product.id === productId);
+    matchingProduct = findProductById(productId);
 
     if (matchingProduct) {
         cartItemPriceElement.innerHTML = formatCurrency(matchingProduct.priceInCents * newQuantity);

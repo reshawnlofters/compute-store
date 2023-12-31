@@ -1,5 +1,5 @@
 import { products } from '../../../data/home-page.js';
-import { formatCurrency } from '../../shared/format-currency.js';
+import { formatCurrency } from '../../shared/utils.js';
 import { addProductToCart, calculateQuantityOfCartItems } from '../../../data/checkout-page.js';
 
 const productsGrid = document.querySelector('.products-grid');

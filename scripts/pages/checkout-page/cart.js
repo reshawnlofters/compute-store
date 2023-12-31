@@ -1,5 +1,5 @@
 import { products } from '../../../data/home-page.js';
-import { formatCurrency } from '../../shared/format-currency.js';
+import { findProductById, formatCurrency } from '../../shared/utils.js';
 import { updateWishListVisibility } from './wish-list.js';
 import { updateOrderSummaryDisplay, updatePlaceOrderButtonVisibility } from './order-summary.js';
 import {
@@ -18,7 +18,7 @@ function generateCartHTML() {
     let cartHTML = '';
 
     cart.forEach((cartItem) => {
-        const matchingProduct = products.find((product) => product.id === cartItem.productId);
+        const matchingProduct = findProductById(cartItem.productId);
 
         cartHTML += `
             <div class="cart-item-container cart-item-container-${matchingProduct.id}">

@@ -1,5 +1,4 @@
-import { products } from '../../../data/home-page.js';
-import { formatCurrency } from '../../shared/format-currency.js';
+import { formatCurrency, findProductById } from '../../shared/utils.js';
 import {
     wishList,
     addProductToCart,
@@ -15,15 +14,6 @@ import {
 import { updateOrderSummaryDisplay, updatePlaceOrderButtonVisibility } from './order-summary.js';
 
 const wishListContainer = document.querySelector('.wish-list-container');
-
-/**
- * Finds a product in the products array based on its ID.
- * @param {string} productId - The ID of the product to find.
- * @returns {Object | undefined} - The matching product or undefined if not found.
- */
-function findProductById(productId) {
-    return products.find((product) => product.id === productId);
-}
 
 function generateWishListHTML() {
     let wishListHTML = '';

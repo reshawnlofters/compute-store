@@ -1,5 +1,5 @@
 import { products } from '../../../data/home-page.js';
-import { formatCurrency } from '../../shared/format-currency.js';
+import { findProductById, findProductByName, formatCurrency } from '../../shared/utils.js';
 import {
     orders,
     calculateQuantityOfOrders,
@@ -16,12 +16,12 @@ function generateOrdersHTML() {
         const order = orders[i];
 
         ordersHTML += `
-            <div class="order-container-${order.id}">
+            <div class="order-container order-container-${order.id}">
                 <div class="order-header-container">
                     <section class="order-header-left-section">
                         <div class="order-date">
                             <div class="order-header-label label-primary">
-                                Order Placed
+                                Order Date
                             </div>
                             <div>${order.date}, ${new Date().getFullYear()}</div>
                         </div>
@@ -62,7 +62,8 @@ function generateOrderItemHTML(order) {
     const numberOfOrderItems = order.items.length;
 
     order.items.forEach((orderItem, index) => {
-        const matchingProduct = products.find((product) => product.id === orderItem.productId);
+        const matchingProduct = findProductById(orderItem.productId);
+
         let orderItemClass = 'inner-order-item-details-grid';
 
         // Check if current order item is the first
@@ -86,7 +87,9 @@ function generateOrderItemHTML(order) {
                         ${matchingProduct.name}
                     </div>
                     <div class="product-delivery-date">
-                        Delivery Date: ${orderItem.deliveryDate}, ${new Date().getFullYear()}
+                        Estimated delivery: ${formatDeliveryDate(
+                            orderItem.deliveryDate
+                        )}, ${new Date().getFullYear()}
                     </div>
                     <div class="product-quantity">
                         Quantity: ${orderItem.quantity}
@@ -134,6 +137,12 @@ function updateOrdersVisibility() {
 }
 
 updateOrdersVisibility();
+
+function formatDeliveryDate(fullDate) {
+    const dateObject = new Date(fullDate);
+    const options = { month: 'long', day: 'numeric' };
+    return dateObject.toLocaleDateString('en-US', options);
+}
 
 export function generateOrderId() {
     let orderId = '';
@@ -186,7 +195,7 @@ if (ordersGrid) {
 
             modal.showModal();
 
-            // If the order cancellation is confirmed, cancel the order
+            // If the inner cancel order button is clicked, cancel the order
             document.querySelector('.modal-cancel-order-button').addEventListener('click', () => {
                 modal.close();
                 const orderId = cancelOrderButton.dataset.orderId;
@@ -195,6 +204,11 @@ if (ordersGrid) {
                     cancelOrder(orderId);
                     updateOrdersVisibility();
                 }, 500);
+            });
+
+            // If the inner close button is clicked, close the modal
+            document.querySelector('.modal-close-button').addEventListener('click', () => {
+                modal.close();
             });
         }
     });
@@ -241,7 +255,7 @@ function handleBuyProductAgainButtonClick(event) {
         const productDetailsContainer = buyAgainButton.closest('.product-details');
         const productNameElement = productDetailsContainer.querySelector('.product-name');
         const productName = productNameElement ? productNameElement.textContent.trim() : '';
-        const matchingProduct = products.find((product) => product.name === productName);
+        const matchingProduct = findProductByName(productName);
 
         if (matchingProduct) {
             addProductToCart(matchingProduct.id, 1);

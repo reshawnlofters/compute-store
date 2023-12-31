@@ -1,4 +1,5 @@
 import { products } from '../../../data/home-page.js';
+import { findProductById, findProductByName } from '../../shared/utils.js';
 
 const productsGrid = document.querySelector('.products-grid');
 const productPopupContainer = document.querySelector('.product-popup-container');
@@ -19,7 +20,7 @@ document.addEventListener('scroll', () => {
 });
 
 function generateProductPopup(productId) {
-    const matchingProduct = products.find((product) => product.id === productId);
+    const matchingProduct = findProductById(productId);
 
     if (!matchingProduct) {
         console.error(`Product with ID ${productId} not found.`);
@@ -54,7 +55,7 @@ function handleProductImageClick(event) {
             .closest('.product-container')
             .querySelector('.product-name')
             .textContent.trim();
-        const matchingProduct = products.find((product) => product.name === productName);
+        const matchingProduct = findProductByName(productName);
 
         if (matchingProduct) {
             openProductPopup(matchingProduct);
