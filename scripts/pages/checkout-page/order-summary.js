@@ -62,9 +62,7 @@ updateOrderSummaryDisplay();
 function updateOrderSummaryElement(selector, value) {
     const element = document.querySelector(selector);
 
-    if (element) {
-        element.innerHTML = value;
-    }
+    if (element) element.innerHTML = value;
 }
 
 function updateOrderSummaryDiscountElement(selector, discount) {
@@ -86,9 +84,7 @@ function formatTaxCost(tax) {
     return tax > 0 ? `+ ${formatCurrency(tax)}` : `${formatCurrency(tax)}`;
 }
 
-/**
- * Removes applied promotional codes and updates displays.
- */
+// Removes applied promotional codes and updates displays.
 function removePromoCode() {
     document.querySelector('.valid-promo-code-message').style.display = 'none';
     isPromoCodeValid = false;
@@ -138,21 +134,24 @@ function placeOrder() {
 
 function getSelectedCartItemDeliveryDates() {
     const selectedCartItemDeliveryDates = [];
+
     document.querySelectorAll('.delivery-option-input:checked').forEach((radioButton) => {
         const dateElement = radioButton
             .closest('.delivery-option')
             .querySelector('.delivery-date-option');
         selectedCartItemDeliveryDates.push(dateElement.textContent.trim());
     });
+
     return selectedCartItemDeliveryDates;
 }
 
 const placeOrderButton = document.querySelector('.place-order-button');
-placeOrderButton &&
+if (placeOrderButton) {
     placeOrderButton.addEventListener('click', () => {
         placeOrder();
         navigateToOrdersPage();
     });
+}
 
 function navigateToOrdersPage() {
     setTimeout(() => {
@@ -160,16 +159,12 @@ function navigateToOrdersPage() {
     }, 500);
 }
 
-/**
- * Updates the visibility of the place order button based on the cart quantity.
- */
+// Updates the visibility of the place order button based on the cart quantity.
 export function updatePlaceOrderButtonVisibility() {
     const placeOrderButton = document.querySelector('.place-order-button');
     const isCartNotEmpty = calculateQuantityOfCartItems() > 0;
 
-    if (placeOrderButton) {
-        placeOrderButton.style.display = isCartNotEmpty ? 'block' : 'none';
-    }
+    if (placeOrderButton) placeOrderButton.style.display = isCartNotEmpty ? 'block' : 'none';
 }
 
 updatePlaceOrderButtonVisibility();

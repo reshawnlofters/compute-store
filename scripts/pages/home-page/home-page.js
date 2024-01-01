@@ -120,9 +120,7 @@ function displayAddedProductToCartMessage(productId) {
 
     // Clear any previous timeouts
     const previousTimeout = addedProductToCartMessageTimeouts[productId];
-    if (previousTimeout) {
-        clearTimeout(previousTimeout);
-    }
+    if (previousTimeout) clearTimeout(previousTimeout);
 
     // Display message
     button.innerHTML = 'Added';
@@ -137,29 +135,19 @@ function displayAddedProductToCartMessage(productId) {
 }
 
 function adjustHeaderOnScroll() {
-    const promoHeader = document.querySelector('.promo-header-container');
-    const header = document.querySelector('.header-container');
+    const promoHeaderContainer = document.querySelector('.promo-header-container');
+    const headerContainer = document.querySelector('.header-container');
 
     if (window.scrollY > 0) {
-        if (promoHeader) {
-            promoHeader.style.top = '-45px';
-        }
-        if (header) {
-            header.style.top = '0';
-        }
+        if (promoHeaderContainer) promoHeaderContainer.style.top = '-45px';
+        if (headerContainer) headerContainer.style.top = '0';
     } else {
-        if (promoHeader) {
-            promoHeader.style.top = '0';
-        }
-        if (header) {
-            header.style.top = '45px';
-        }
+        if (promoHeaderContainer) promoHeaderContainer.style.top = '0';
+        if (headerContainer) headerContainer.style.top = '45px';
     }
 }
 
-/**
- * Adds a scroll event listener to remove the promotion header on down scroll.
- */
+// Adds a scroll event listener to remove the promotion header on down scroll.
 window.addEventListener('load', () => {
     adjustHeaderOnScroll();
 
@@ -177,12 +165,9 @@ window.addEventListener('load', () => {
     });
 });
 
-/**
- * Scrolls to the featured products section when the "Shop Now" button is clicked.
- */
+// Scrolls to the featured products section when the "Shop Now" button is clicked.
 document.addEventListener('DOMContentLoaded', () => {
     const shopNowButton = document.querySelector('.shop-now-button');
-
     if (shopNowButton) {
         shopNowButton.addEventListener('click', () => {
             window.scrollTo({

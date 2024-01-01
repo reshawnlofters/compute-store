@@ -53,7 +53,7 @@ function handleSearchButton() {
     const query = searchBar.value.toLowerCase();
     const matchingProduct = findProductByName(query);
 
-    // If a matching product is found, scroll to it with a pixel adjustment
+    // If a matching product is found, scroll to it
     if (matchingProduct) {
         const productContainer = document.querySelector(
             `[data-product-id="${matchingProduct.id}"]`
@@ -93,7 +93,5 @@ document.querySelector('.header-checkout-link').addEventListener('click', clearS
 
 // Search for a product using the "Enter" key
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' && searchBar.value !== '') {
-        handleSearchButton();
-    }
+    if (event.key === 'Enter' && searchBar.value !== '') handleSearchButton();
 });

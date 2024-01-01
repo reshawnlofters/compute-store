@@ -1,4 +1,3 @@
-import { products } from '../../../data/home-page.js';
 import { findProductById, formatCurrency } from '../../shared/utils.js';
 import { updateWishListVisibility } from './wish-list.js';
 import { updateOrderSummaryDisplay, updatePlaceOrderButtonVisibility } from './order-summary.js';
@@ -120,9 +119,7 @@ export function updateCartVisibility() {
 
 updateCartVisibility();
 
-/**
- * Updates the quantity of cart items displayed in the checkout header.
- */
+// Updates the quantity of cart items displayed in the checkout header.
 export function updateCartItemsQuantityDisplay() {
     const cartItemsQuantity = calculateQuantityOfCartItems();
     document.querySelector('.cart-items-quantity').innerHTML = `${cartItemsQuantity}`;
@@ -215,14 +212,12 @@ function handleValidCartItemQuantity(productId, cartItemContainer, newQuantity) 
 
 /**
  * Removes a cart item from displays.
- * @param productId - The unique identifier of the cart item to be removed.
+ * @param {string} productId - The unique identifier of the cart item to be removed.
  */
 function removeCartItemDisplay(productId) {
     const cartItemContainer = document.querySelector(`.cart-item-container-${productId}`);
 
-    if (!cartItemContainer) {
-        return;
-    }
+    if (!cartItemContainer) return;
 
     cartItemContainer.remove();
     updateCartVisibility();
@@ -344,7 +339,7 @@ function handleRemoveCartItemButtonClick(event) {
     }
 }
 
-cartItemContainer && cartItemContainer.addEventListener('click', handleRemoveCartItemButtonClick);
+if (cartItemContainer) cartItemContainer.addEventListener('click', handleRemoveCartItemButtonClick);
 
 // Returns true if the product is already in the wish list, false otherwise
 export function isProductAlreadyInWishList(productId) {

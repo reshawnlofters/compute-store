@@ -1,4 +1,4 @@
-import { products } from "../../data/home-page.js";
+import { products } from '../../data/home-page.js';
 
 /**
  * Formats prices to two decimal places with commas.
@@ -30,4 +30,3 @@ export function findProductById(productId) {
 export function findProductByName(productName) {
     return products.find((product) => product.name.toLowerCase() === productName);
 }
-

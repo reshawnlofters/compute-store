@@ -6,13 +6,14 @@ const productPopupContainer = document.querySelector('.product-popup-container')
 
 function openProductPopup(matchingProduct) {
     generateProductPopup(matchingProduct.id);
-    productPopupContainer && (productPopupContainer.style.display = 'block');
+    if (productPopupContainer) productPopupContainer.style.display = 'block';
 }
 
 function closeProductPopup() {
-    productPopupContainer && (productPopupContainer.style.display = 'none');
+    if (productPopupContainer) productPopupContainer.style.display = 'none';
 }
 
+// Add an event listener to close the product popup at a scroll position
 document.addEventListener('scroll', () => {
     if (window.scrollY < 700) {
         closeProductPopup();
@@ -22,10 +23,7 @@ document.addEventListener('scroll', () => {
 function generateProductPopup(productId) {
     const matchingProduct = findProductById(productId);
 
-    if (!matchingProduct) {
-        console.error(`Product with ID ${productId} not found.`);
-        return;
-    }
+    if (!matchingProduct) return;
 
     if (productPopupContainer) {
         let productPopupHTML = `
@@ -42,7 +40,7 @@ function generateProductPopup(productId) {
         const closeProductPopupButton = productPopupContainer.querySelector(
             '.close-product-popup-button'
         );
-        closeProductPopupButton &&
+        if (closeProductPopupButton)
             closeProductPopupButton.addEventListener('click', closeProductPopup);
     }
 }
@@ -58,10 +56,8 @@ function handleProductImageClick(event) {
             .trim();
         const matchingProduct = findProductByName(productName);
 
-        if (matchingProduct) {
-            openProductPopup(matchingProduct);
-        }
+        if (matchingProduct) openProductPopup(matchingProduct);
     }
 }
 
-productsGrid && productsGrid.addEventListener('click', handleProductImageClick);
+if (productsGrid) productsGrid.addEventListener('click', handleProductImageClick);

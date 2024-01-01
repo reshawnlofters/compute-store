@@ -1,4 +1,3 @@
-import { products } from '../../../data/home-page.js';
 import { findProductById, findProductByName, formatCurrency } from '../../shared/utils.js';
 import {
     orders,
@@ -46,9 +45,7 @@ function generateOrdersHTML() {
             </div>`;
     }
 
-    if (ordersGrid) {
-        ordersGrid.innerHTML = ordersHTML;
-    }
+    if (ordersGrid) ordersGrid.innerHTML = ordersHTML;
 }
 
 /**
@@ -63,7 +60,6 @@ function generateOrderItemHTML(order) {
 
     order.items.forEach((orderItem, index) => {
         const matchingProduct = findProductById(orderItem.productId);
-
         let orderItemClass = 'inner-order-item-details-grid';
 
         // Check if current order item is the first
@@ -158,9 +154,7 @@ export function generateOrderId() {
             const randomIndex = Math.floor(Math.random() * characters.length);
             orderId += characters.charAt(randomIndex);
         }
-        if (i < 3) {
-            orderId += '-';
-        }
+        if (i < 3) orderId += '-';
     }
 
     return orderId;
@@ -216,11 +210,10 @@ if (ordersGrid) {
 
 /**
  * Displays a modal to indicate a successfully placed order.
- * Checks a flag in local storage to determine if the user has redirected to
- * the orders page after successfully placing an order.
+ * Checks a flag in local storage to determine if the user has been
+ * redirected to the orders page after successfully placing an order.
  */
 function displayPlacedOrderModal() {
-    // Retrieve the flag from local storage
     const isOrderPlaced = localStorage.getItem('isOrderPlaced');
 
     if (isOrderPlaced === 'true') {
@@ -268,7 +261,7 @@ function handleBuyProductAgainButtonClick(event) {
     }
 }
 
-ordersGrid && ordersGrid.addEventListener('click', handleBuyProductAgainButtonClick);
+if (ordersGrid) ordersGrid.addEventListener('click', handleBuyProductAgainButtonClick);
 
 function navigateToCartPage() {
     window.location.href = 'checkout.html';
