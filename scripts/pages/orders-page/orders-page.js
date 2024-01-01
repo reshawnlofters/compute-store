@@ -254,7 +254,9 @@ function handleBuyProductAgainButtonClick(event) {
     if (buyAgainButton) {
         const productDetailsContainer = buyAgainButton.closest('.product-details');
         const productNameElement = productDetailsContainer.querySelector('.product-name');
-        const productName = productNameElement ? productNameElement.textContent.trim() : '';
+        const productName = productNameElement
+            ? productNameElement.textContent.toLowerCase().trim()
+            : '';
         const matchingProduct = findProductByName(productName);
 
         if (matchingProduct) {

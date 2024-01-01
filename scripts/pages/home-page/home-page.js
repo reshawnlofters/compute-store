@@ -1,6 +1,8 @@
 import { products } from '../../../data/home-page.js';
-import { formatCurrency } from '../../shared/utils.js';
+import { findProductByName, formatCurrency } from '../../shared/utils.js';
 import { addProductToCart, calculateQuantityOfCartItems } from '../../../data/checkout-page.js';
+import { addProductToWishList, isProductAlreadyInWishList } from '../checkout-page/cart.js';
+import { removeWishListItem } from '../checkout-page/wish-list.js';
 
 const productsGrid = document.querySelector('.products-grid');
 
@@ -13,13 +15,17 @@ function generateProductsHTML() {
                 <div class="product-image-container">
                     <img class="product-image" src="${product.image}">
                 </div>
-
-                <div class="product-name limit-text-to-2-lines">
-                    ${product.name}
-                </div>
-
-                <div class="product-price">
-                    ${formatCurrency(product.priceInCents)}
+                
+                <div class="product-info-grid">
+                    <div>
+                        <div class="product-name limit-text-to-2-lines">
+                            ${product.name}
+                        </div>
+                        <div class="product-price">
+                            ${formatCurrency(product.priceInCents)}
+                        </div>
+                    </div>
+                    <img class="wish-list-icon" src="images/icons/unsaved.png">
                 </div>
 
                 <div class="add-product-to-cart-container">
@@ -187,3 +193,69 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+/**
+ * Handles the "Save to Wish List" button functionality.
+ * - Listens for the DOMContentLoaded event before setting up the wish list icon interactions.
+ * - Defines functions to update the wish list icon appearance on mouseover and mouseout events.
+ * - Handles the click event on the "Add to Wish List" button, toggling the product's presence in the wish list.
+ * - Toggles the wish list icon between "saved" and "unsaved" states based on the product's wish list status.
+ * - Initializes event listeners for mouseover, mouseout, and click events on each wish list icon.
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    const wishListIcons = document.querySelectorAll('.wish-list-icon');
+
+    function updateSaveToWishListIconOnMouseover(icon) {
+        icon.src = 'images/icons/saved.png';
+    }
+
+    function updateSaveToWishListIconOnMouseout(icon) {
+        updateAddtoWishListIcon(icon);
+    }
+
+    function handleSaveToWishListButton(icon) {
+        const productContainer = icon.closest('.product-container');
+        const productName = productContainer
+            .querySelector('.product-name')
+            .textContent.toLowerCase()
+            .trim();
+        const matchingProduct = findProductByName(productName);
+
+        if (matchingProduct) {
+            toggleWishListItem(icon, matchingProduct);
+        } else {
+            console.error('Product not found');
+        }
+    }
+    function toggleWishListItem(icon, matchingProduct) {
+        if (isProductAlreadyInWishList(matchingProduct.id)) {
+            removeWishListItem(matchingProduct.id);
+        } else {
+            addProductToWishList(matchingProduct.id);
+        }
+
+        updateAddtoWishListIcon(icon);
+    }
+
+    function updateAddtoWishListIcon(icon) {
+        const productContainer = icon.closest('.product-container');
+        const productName = productContainer
+            .querySelector('.product-name')
+            .textContent.toLowerCase()
+            .trim();
+        const matchingProduct = findProductByName(productName);
+
+        if (matchingProduct && isProductAlreadyInWishList(matchingProduct.id)) {
+            icon.src = 'images/icons/saved.png';
+        } else {
+            icon.src = 'images/icons/unsaved.png';
+        }
+    }
+
+    wishListIcons.forEach((icon) => {
+        icon.addEventListener('mouseover', () => updateSaveToWishListIconOnMouseover(icon));
+        icon.addEventListener('mouseout', () => updateSaveToWishListIconOnMouseout(icon));
+        icon.addEventListener('click', () => handleSaveToWishListButton(icon));
+
+        updateAddtoWishListIcon(icon);
+    });
+});

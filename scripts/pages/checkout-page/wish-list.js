@@ -54,21 +54,23 @@ function generateWishListHTML() {
         }
     });
 
-    wishListContainer.innerHTML = wishListHTML;
+    if (wishListContainer) wishListContainer.innerHTML = wishListHTML;
 }
 
 function generateEmptyWishListHTML() {
-    wishListContainer.innerHTML = `
-        <div class="empty-wish-list-container">
-            <div class="empty-wish-list-message-container">
-                <div>
-                    <span>Looks like it's empty!</span><br><br>
-                    Why not add something?
+    if (wishListContainer) {
+        wishListContainer.innerHTML = `
+            <div class="empty-wish-list-container">
+                <div class="empty-wish-list-message-container">
+                    <div>
+                        <span>Looks like it's empty!</span><br><br>
+                        Why not add something?
+                    </div>
                 </div>
+                <img class="empty-wish-list-container-img" src="images/icons/save.png">
             </div>
-            <img class="empty-wish-list-container-img" src="images/icons/save.png">
-        </div>
-    `;
+        `;
+    }
 }
 
 /**
@@ -87,28 +89,30 @@ updateWishListVisibility();
  * Adds a click event listener to the "Add Wish List Item To Cart" buttons container.
  * If the button is clicked, it adds the product to the cart and removes it from the wish list.
  */
-document.querySelector('.wish-list-container').addEventListener('click', (event) => {
-    const addButton = event.target.closest('.add-wish-list-product-to-cart-button');
+if (wishListContainer) {
+    wishListContainer.addEventListener('click', (event) => {
+        const addButton = event.target.closest('.add-wish-list-product-to-cart-button');
 
-    if (addButton) {
-        const productId = addButton.dataset.productId;
-        addProductToCart(productId, 1);
-        removeWishListItem(productId);
-        updateCartVisibility();
-        updateCartItemDeliveryDateOptions();
-        addEventListenersToDeliveryDateOptions();
-        updateWishListVisibility();
-        updateCartItemsQuantityDisplay();
-        updateOrderSummaryDisplay();
-        updatePlaceOrderButtonVisibility();
-    }
-});
+        if (addButton) {
+            const productId = addButton.dataset.productId;
+            addProductToCart(productId, 1);
+            removeWishListItem(productId);
+            updateCartVisibility();
+            updateCartItemDeliveryDateOptions();
+            addEventListenersToDeliveryDateOptions();
+            updateWishListVisibility();
+            updateCartItemsQuantityDisplay();
+            updateOrderSummaryDisplay();
+            updatePlaceOrderButtonVisibility();
+        }
+    });
+}
 
 /**
  * Removes a product from the 'wish list' array.
  * @param {string} productId - The unique identifier of the product to be removed.
  */
-function removeWishListItem(productId) {
+export function removeWishListItem(productId) {
     const itemIndex = wishList.findIndex((product) => product.productId === productId);
     const productContainer = document.querySelector(`.wish-list-product-container-${productId}`);
 
@@ -126,12 +130,14 @@ function removeWishListItem(productId) {
  * Adds a click event listener to the "Remove Wish List Item" buttons container.
  * If the button is clicked, it removes the item fro mthe wish list and updates displays.
  */
-document.querySelector('.wish-list-container').addEventListener('click', (event) => {
-    const removeButton = event.target.closest('.remove-wish-list-product-button');
+if (wishListContainer) {
+    wishListContainer.addEventListener('click', (event) => {
+        const removeButton = event.target.closest('.remove-wish-list-product-button');
 
-    if (removeButton) {
-        const productId = removeButton.dataset.productId;
-        removeWishListItem(productId);
-        updateWishListVisibility();
-    }
-});
+        if (removeButton) {
+            const productId = removeButton.dataset.productId;
+            removeWishListItem(productId);
+            updateWishListVisibility();
+        }
+    });
+}

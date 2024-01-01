@@ -54,7 +54,8 @@ function handleProductImageClick(event) {
         const productName = productImageContainer
             .closest('.product-container')
             .querySelector('.product-name')
-            .textContent.trim();
+            .textContent.toLowerCase()
+            .trim();
         const matchingProduct = findProductByName(productName);
 
         if (matchingProduct) {

@@ -93,7 +93,7 @@ export function updateCartItemQuantity(productId, newQuantity) {
  */
 export function updateCartItemPriceDisplay(productId, cartItemContainer, newQuantity) {
     const cartItemPriceElement = cartItemContainer.querySelector('.product-price');
-    matchingProduct = findProductById(productId);
+    const matchingProduct = findProductById(productId);
 
     if (matchingProduct) {
         cartItemPriceElement.innerHTML = formatCurrency(matchingProduct.priceInCents * newQuantity);

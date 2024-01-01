@@ -266,3 +266,13 @@
         margin-bottom: 500px;
     }
 }
+
+.wish-list-icon {
+    height: 28px;
+    cursor: pointer;
+}
+
+.product-container .product-info-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+}

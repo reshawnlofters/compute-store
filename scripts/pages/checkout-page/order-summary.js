@@ -36,7 +36,8 @@ function validatePromoCode() {
     updateOrderSummaryDisplay();
 }
 
-document.querySelector('.add-promo-code-button').addEventListener('click', validatePromoCode);
+const addPromoCodeButton = document.querySelector('.add-promo-code-button');
+addPromoCodeButton && addPromoCodeButton.addEventListener('click', validatePromoCode);
 
 /**
  * Updates the order summary display with calculations for subtotal,
@@ -59,16 +60,22 @@ export function updateOrderSummaryDisplay() {
 updateOrderSummaryDisplay();
 
 function updateOrderSummaryElement(selector, value) {
-    document.querySelector(selector).innerHTML = value;
+    const element = document.querySelector(selector);
+
+    if (element) {
+        element.innerHTML = value;
+    }
 }
 
 function updateOrderSummaryDiscountElement(selector, discount) {
     const discountElement = document.querySelector(selector);
     const discountElementColor = discount > 0 ? '#c9002e' : 'black';
 
-    discountElement.style.color = discountElementColor;
-    discountElement.innerHTML =
-        discount > 0 ? `(25%) - ${formatCurrency(discount)}` : formatCurrency(discount);
+    if (discountElement) {
+        discountElement.style.color = discountElementColor;
+        discountElement.innerHTML =
+            discount > 0 ? `(25%) - ${formatCurrency(discount)}` : formatCurrency(discount);
+    }
 }
 
 function formatShippingCost(subtotal, shipping) {
@@ -88,7 +95,8 @@ function removePromoCode() {
     updateOrderSummaryDisplay();
 }
 
-document.querySelector('.remove-promo-code-button').addEventListener('click', removePromoCode);
+const removePromoCodeButton = document.querySelector('.remove-promo-code-button');
+removePromoCodeButton && removePromoCodeButton.addEventListener('click', removePromoCode);
 
 function placeOrder() {
     const selectedCartItemDeliveryDates = getSelectedCartItemDeliveryDates();
@@ -139,10 +147,12 @@ function getSelectedCartItemDeliveryDates() {
     return selectedCartItemDeliveryDates;
 }
 
-document.querySelector('.place-order-button').addEventListener('click', () => {
-    placeOrder();
-    navigateToOrdersPage();
-});
+const placeOrderButton = document.querySelector('.place-order-button');
+placeOrderButton &&
+    placeOrderButton.addEventListener('click', () => {
+        placeOrder();
+        navigateToOrdersPage();
+    });
 
 function navigateToOrdersPage() {
     setTimeout(() => {
@@ -157,7 +167,9 @@ export function updatePlaceOrderButtonVisibility() {
     const placeOrderButton = document.querySelector('.place-order-button');
     const isCartNotEmpty = calculateQuantityOfCartItems() > 0;
 
-    placeOrderButton.style.display = isCartNotEmpty ? 'block' : 'none';
+    if (placeOrderButton) {
+        placeOrderButton.style.display = isCartNotEmpty ? 'block' : 'none';
+    }
 }
 
 updatePlaceOrderButtonVisibility();

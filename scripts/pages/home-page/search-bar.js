@@ -51,7 +51,7 @@ function generateSearchBarDropdown(matchingProducts) {
 
 function handleSearchButton() {
     const query = searchBar.value.toLowerCase();
-    const matchingProduct = findProductByName(query)
+    const matchingProduct = findProductByName(query);
 
     // If a matching product is found, scroll to it with a pixel adjustment
     if (matchingProduct) {
@@ -90,3 +90,10 @@ document.addEventListener('click', (event) => {
 // Close the search bar when leaving the page
 document.querySelector('.header-orders-link').addEventListener('click', clearSearchBar);
 document.querySelector('.header-checkout-link').addEventListener('click', clearSearchBar);
+
+// Search for a product using the "Enter" key
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && searchBar.value !== '') {
+        handleSearchButton();
+    }
+});
