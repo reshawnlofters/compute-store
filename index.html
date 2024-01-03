@@ -21,6 +21,7 @@
         <script type="module" src="scripts/pages/home-page/home-page.js" defer></script>
         <script type="module" src="scripts/pages/home-page/search-bar.js" defer></script>
         <script type="module" src="scripts/pages/home-page/product-popup.js" defer></script>
+        <script type="module" src="scripts/pages/home-page/hamburger-menu.js" defer></script>
         <script src="scripts/shared/footer.js" defer></script>
     </head>
     <body>
@@ -42,24 +43,21 @@
                         <div class="search-dropdown"></div>
                     </div>
                 </div>
-
-                <div class="header-right-section-container">
+                <div class="header-right-section-container nav-menu">
+                    <i class="bi bi-x-lg" id="closeNavMenuIcon"></i>
                     <a class="header-orders-link" href="orders.html">
-                        <img
-                            class="shopping-bag-icon"
-                            src="images/icons/shopping-bag.png"
-                            alt="shopping bag"
-                        />
+                        <i class="bi bi-bag" id="ordersPageIcon"></i>
                         Orders
                     </a>
                     <a class="header-checkout-link" href="checkout.html">
                         <div class="header-cart-items-quantity-container">
-                            <i class="bi bi-cart"></i>
+                            <i class="bi bi-cart" id="checkoutPageIcon"></i>
                             <span class="cart-items-quantity"></span>
                         </div>
                         Cart
                     </a>
                 </div>
+                <img id="openNavMenuIcon" src="images/icons/hamburger-bar.png" />
             </div>
         </header>
 
