@@ -124,7 +124,10 @@
 #ordersPageIcon,
 #checkoutPageIcon {
     font-size: 25px;
-    margin-right: 5px;
+}
+
+#ordersPageIcon {
+    margin-right: 8px;
 }
 
 .header-cart-items-quantity-container {
@@ -204,10 +207,10 @@
         transition: 0.6s;
     }
 
-    #ordersPageIcon,
-    #checkoutPageIcon,
-    .header-orders-link,
-    .header-checkout-link {
+    .header-container #ordersPageIcon,
+    .header-container #checkoutPageIcon,
+    .header-container .header-orders-link,
+    .header-container .header-checkout-link {
         color: white;
         font-weight: 400;
     }
