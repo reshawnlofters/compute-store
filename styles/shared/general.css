@@ -88,9 +88,9 @@ input {
 
 .cart-item-container,
 .wish-list-product-container {
+    display: flex;
     height: 243px;
     width: 705px;
-    display: flex;
 }
 
 .wish-list-product-details-container {
