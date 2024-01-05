@@ -3,7 +3,7 @@
 Compute is an e-commerce store that provides users with a seamless and enjoyable shopping experience for tech products. The project showcases various functionalities, including product quantity selection, cart management, wish list creation, and order placement and viewing. Users can enjoy savings by applying code "DEMO" at checkout.
 
 ## Key Features
-- **Cart Management:** Easily add, remove, and adjust product quantities in the cart for a personalized shopping experience.
+- **Cart Management:** Easily add, remove, and adjust product quantities in the cart for personalized shopping.
 - **Wish list Functionality:** Save items for later directly from the homepage or during checkout.
 - **Quantity Selection:** Specify a desired product quantity before adding it to the cart.
 - **Order Summary:** View essential order information and apply discounts.
