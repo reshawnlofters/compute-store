@@ -32,8 +32,11 @@ main {
     font-size: 15px;
     margin-right: 12px;
     border-radius: 5px;
-    outline: none;
     padding: 8px;
+}
+
+.update-cart-item-quantity-input:focus {
+    border: 2px solid #32302f;
 }
 
 .cart-item-quantity-count,
@@ -112,23 +115,17 @@ main {
     margin-bottom: 20px;
 }
 
-.valid-promo-code-message span {
-    text-decoration: underline;
-    cursor: pointer;
-}
-
 .valid-promo-code-message,
 .invalid-promo-code-message {
     display: none;
     font-size: 15px;
-    margin-top: -15px;
+    margin-top: -5px;
     margin-bottom: 20px;
 }
 
 .promo-code-input {
     flex: 1;
     font-size: 14px;
-    outline: none;
     border-radius: 5px;
     padding-left: 20px;
     margin-right: 10px;
@@ -140,6 +137,10 @@ main {
 
 .promo-code-input:focus::placeholder {
     color: darkgray;
+}
+
+.promo-code-input:focus {
+    outline-color: #32302f;
 }
 
 .add-promo-code-button {

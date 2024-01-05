@@ -101,7 +101,7 @@ function generateEmptyCartHTML() {
                         <a class="link-primary" href="index.html">homepage</a>.
                     </div>
                 </div>
-                <img class="empty-cart-container-img" src="images/icons/empty-cart.png">
+                <i class="bi bi-cart-x" id="emptyCartContainerImg"></i>
             </div>
         `;
     }
@@ -122,7 +122,10 @@ updateCartVisibility();
 // Updates the quantity of cart items displayed in the checkout header.
 export function updateCartItemsQuantityDisplay() {
     const cartItemsQuantity = calculateQuantityOfCartItems();
-    document.querySelector('.cart-items-quantity').innerHTML = `${cartItemsQuantity}`;
+    const cartItemsQuantityElement = document.querySelector('.cart-items-quantity');
+
+    cartItemsQuantityElement.textContent =
+        cartItemsQuantity === 1 ? `${cartItemsQuantity} Item` : `${cartItemsQuantity} Items`;
 }
 
 updateCartItemsQuantityDisplay();

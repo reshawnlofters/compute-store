@@ -67,7 +67,7 @@ function generateEmptyWishListHTML() {
                         Why not add something?
                     </div>
                 </div>
-                <img class="empty-wish-list-container-img" src="images/icons/save.png">
+                <i class="bi bi-bookmark-x" id="emptyWishListContainerImg"></i>
             </div>
         `;
     }

@@ -54,7 +54,7 @@
     left: 50%;
     background-color: white;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 500;
     border: none;
     text-align: center;
     padding: 15px 25px;
@@ -108,6 +108,7 @@
     height: 45px;
     font-weight: 600;
     margin-bottom: 5px;
+    min-height: 50px;
 }
 
 .product-price {
@@ -163,7 +164,7 @@
 .add-product-to-cart-button,
 .product-quantity-count {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .product-quantity-count {
@@ -206,6 +207,7 @@
 
 .wish-list-icon {
     height: 28px;
+    margin-left: 5px;
     cursor: pointer;
 }
 
@@ -309,5 +311,11 @@
 @media (max-width: 450px) {
     .promo-section-title {
         font-size: 30px;
+    }
+}
+
+@media (max-width: 400px) {
+    .products-section-title {
+        text-align: center;
     }
 }

@@ -117,7 +117,7 @@ function generateEmptyOrdersHTML() {
                         <a class="link-primary" href="index.html">homepage</a>.
                     </div>
                 </div>
-                <i class="bi bi-cart" id="empty-orders-container-img"></i>
+                <i class="bi bi-bag-x" id="emptyOrdersContainerImg"></i>
             </div>`;
     }
 }

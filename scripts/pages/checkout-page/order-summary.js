@@ -53,7 +53,7 @@ export function updateOrderSummaryDisplay() {
     updateOrderSummaryElement('.order-summary-subtotal', formatCurrency(subtotal));
     updateOrderSummaryElement('.order-summary-shipping', formatShippingCost(subtotal, shipping));
     updateOrderSummaryDiscountElement('.order-summary-discount', discount);
-    updateOrderSummaryElement('.order-summary-tax', formatTaxCost(tax));
+    updateOrderSummaryElement('.order-summary-tax', formatCurrency(tax));
     updateOrderSummaryElement('.order-summary-total', formatCurrency(orderTotal));
 }
 
@@ -72,16 +72,12 @@ function updateOrderSummaryDiscountElement(selector, discount) {
     if (discountElement) {
         discountElement.style.color = discountElementColor;
         discountElement.innerHTML =
-            discount > 0 ? `(25%) - ${formatCurrency(discount)}` : formatCurrency(discount);
+            discount > 0 ? `- ${formatCurrency(discount)} (25%)` : formatCurrency(discount);
     }
 }
 
 function formatShippingCost(subtotal, shipping) {
     return subtotal > 10000 ? 'FREE' : formatCurrency(shipping);
-}
-
-function formatTaxCost(tax) {
-    return tax > 0 ? `+ ${formatCurrency(tax)}` : `${formatCurrency(tax)}`;
 }
 
 // Removes applied promotional codes and updates displays.

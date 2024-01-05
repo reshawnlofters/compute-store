@@ -49,17 +49,17 @@
 .search-bar {
     flex: 1;
     background: #e3e3e3;
+    border: none;
     height: 40px;
     font-size: 14px;
     color: black;
-    outline: none;
     border-radius: 50px;
     padding-left: 20px;
 }
 
 .search-bar:focus {
     background-color: white !important;
-    border: 1px solid #ccc !important;
+    outline-color: #32302f !important;
 }
 
 .search-bar::placeholder {
@@ -107,7 +107,7 @@
 .header-checkout-link {
     color: #32302f;
     font-size: 17px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .header-orders-link {
