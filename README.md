@@ -1,16 +1,22 @@
-# Computer Hardware E-commerce Website
-
-Welcome to my Computer Hardware E-commerce Website, a platform designed to cater to computer enthusiasts and offer a seamless shopping experience for those seeking top-tier components and peripherals to build their workstations.
-
-## Technologies Used
-HTML5, CSS3, JavaScript (ES6), Git, GitHub
+# Compute (E-commerce Store)
+## Overview
+Compute is an e-commerce store that provides users with a seamless and enjoyable shopping experience for tech products. The project showcases various functionalities, including product quantity selection, cart management, wish list creation, and order placement and viewing. Users can enjoy savings by applying code "DEMO" at checkout.
 
 ## Key Features
-- **Product Catalog:** Browse a comprehensive computer hardware and accessories catalogue.
-- **User Accounts:** Create and manage your account for personalized shopping.
-- **Shopping Cart:** Add items to your cart and seamlessly proceed to checkout.
-- **Search Functionality:** Find products quickly with a powerful search feature.
-- **Responsive Design:** Enjoy a responsive and mobile-friendly browsing experience.
+- **Cart Management:** Easily add, remove, and adjust product quantities in the cart for a personalized shopping experience.
+- **Wish list Functionality:** Save items for later directly from the homepage or during checkout.
+- **Quantity Selection:** Specify a desired product quantity before adding it to the cart.
+- **Order Summary:** View essential order information and apply discounts.
+- **Free Shipping Threshold:** Enjoy free shipping if your purchase exceeds a threshold.
+- **Orders Page:** View placed orders, featuring order details and the ability to cancel orders.
+- **Responsive Design:** Use the website on various devices; it is responsive for different screen sizes.
 
-## Contact
-For collaborations, inquiries, or professional discussions, connect with me on [LinkedIn](https://www.linkedin.com/in/reshawnlofters).
+## Technologies Used
+HTML5, CSS3, JavaScript (ES6), Git
+
+## Getting Started
+Explore the [Compute Store](https://www.computestore.ca) and browse the wide range of tech products and available features.
+
+## Developer
+**Reshawn Lofters**
+- LinkedIn: [in/reshawnlofters](https://www.linkedin.com/in/reshawnlofters/)
