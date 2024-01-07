@@ -33,19 +33,21 @@ function generateCartHTML() {
                                 ${formatCurrency(cartItem.priceInCents * cartItem.quantity)}
                             </div>
                             <div class="cart-item-quantity-container">
-                                <span>
+                                <div class="cart-item-quantity-display">
                                     Quantity: <span class="cart-item-quantity-count">${
                                         cartItem.quantity
                                     }</span>
-                                </span>
-                                <span class="update-cart-item-quantity-button update-cart-item-quantity-button link-primary"
-                                data-product-id="${matchingProduct.id}">
-                                    Update
-                                </span>
-                                <input class="update-cart-item-quantity-input" type="number"  autocomplete="new-quantity">
-                                <span class="save-new-cart-item-quantity-button link-primary">Save</span>
                                 </div>
-                                <p class="cart-item-quantity-limit-message"></p>
+                                <div class="update-cart-item-quantity-container">
+                                    <span class="update-cart-item-quantity-button update-cart-item-quantity-button link-primary"
+                                    data-product-id="${matchingProduct.id}">
+                                        Update
+                                    </span>
+                                    <input class="update-cart-item-quantity-input" type="number"  autocomplete="new-quantity">
+                                    <span class="save-new-cart-item-quantity-button link-primary">Save</span>
+                                </div>
+                            </div>
+                            <p class="cart-item-quantity-limit-message"></p>
                         </div>
                         <div>
                             <span class="add-product-to-wish-list-button link-primary" data-product-id="${
@@ -138,7 +140,7 @@ function displayCartItemQuantityLimitMessage(cartItemContainer) {
     const messageElement = cartItemContainer.querySelector('.cart-item-quantity-limit-message');
 
     // Set the message
-    messageElement.innerHTML = '<br>Quantity limit: 50';
+    messageElement.innerHTML = 'Quantity limit: 50';
 
     // Clear any existing timeout to prevent multiple messages
     if (cartItemContainer.timeoutId) {

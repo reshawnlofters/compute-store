@@ -55,8 +55,9 @@ footer .vr {
     font-size: 14px;
     background-color: inherit;
     color: white;
-    outline: none;
+    outline: none !important;
     border: none;
+    border-radius: 0 !important;
     border-bottom: 1px solid white;
     margin-right: 10px;
 }

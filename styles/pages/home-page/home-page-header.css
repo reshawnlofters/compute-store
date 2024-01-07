@@ -70,6 +70,7 @@
     position: absolute;
     background: transparent;
     border: none;
+    margin-top: 4px;
     right: 20px;
 }
 
