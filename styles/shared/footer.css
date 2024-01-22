@@ -101,7 +101,7 @@ footer .hr {
 
 .footer-copyright-section-container {
     color: gray;
-    font-size: 13px;
+    font-size: 13px !important;
     margin-bottom: 20px;
 }
 

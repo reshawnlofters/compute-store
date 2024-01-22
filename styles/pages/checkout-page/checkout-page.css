@@ -251,6 +251,18 @@ main {
 @media (max-width: 550px) {
     main {
         min-width: 300px !important;
-        padding: 0;
+        padding: 0 !important;
+    }
+}
+
+@media (max-width: 450px) {
+    .cart-item-container,
+    .empty-cart-item-container,
+    .order-summary-section-container {
+        max-width: 300px !important;
+    }
+
+    .promo-code-input {
+        width: 20px !important;
     }
 }

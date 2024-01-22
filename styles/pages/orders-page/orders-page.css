@@ -256,21 +256,17 @@ main {
         min-width: 350px !important;
     }
 
-    .cancel-order-button {
-        text-align: center;
-    }
-}
-
-@media (max-width: 400px) {
-    main {
-        min-width: 300px !important;
-    }
-
     .order-header-container {
         display: grid;
     }
 
     .order-header-right-section {
         margin-top: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    main {
+        min-width: 300px !important;
     }
 }
