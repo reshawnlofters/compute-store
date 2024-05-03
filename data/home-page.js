@@ -1,3 +1,7 @@
+/**
+ * Array of products.
+ * Each product object contains the product ID, image URL, name, and price.
+ */
 export const products = [
     {
         id: '6b07d4e7-f540-454e-8a1e-363f25dbae7d',
