@@ -19,76 +19,78 @@ function generateCartHTML() {
     cart.forEach((cartItem) => {
         const matchingProduct = findProductById(cartItem.productId);
 
-        cartHTML += `
-            <div class="cart-item-container cart-item-container-${matchingProduct.id}">
-                <div class="cart-item-details-grid">
-                    <img class="product-image" src="${matchingProduct.image}" alt="product image">
-                    <div class="cart-item-details-container">
-                        <div>
-                            <div class="product-name">
-                                ${matchingProduct.name}
-                            </div>
-                            <div class="product-price">
-                                ${formatCurrency(cartItem.priceInCents * cartItem.quantity)}
-                            </div>
-                            <div class="cart-item-quantity-container">
-                                <div class="cart-item-quantity-display">
-                                    Quantity: <span class="cart-item-quantity-count">${
-                                        cartItem.quantity
-                                    }</span>
+        if (matchingProduct) {
+            cartHTML += `
+                <div class="cart-item-container cart-item-container-${matchingProduct.id}">
+                    <div class="cart-item-details-grid">
+                        <img class="product-image" src="${matchingProduct.image}" alt="product image">
+                        <div class="cart-item-details-container">
+                            <div>
+                                <div class="product-name">
+                                    ${matchingProduct.name}
                                 </div>
-                                <div class="update-cart-item-quantity-container">
-                                    <span class="update-cart-item-quantity-button update-cart-item-quantity-button link-primary"
-                                    data-product-id="${matchingProduct.id}">
-                                        Update
-                                    </span>
-                                    <input class="update-cart-item-quantity-input" type="number"  autocomplete="new-quantity">
-                                    <span class="save-new-cart-item-quantity-button link-primary">Save</span>
+                                <div class="product-price">
+                                    ${formatCurrency(cartItem.priceInCents * cartItem.quantity)}
                                 </div>
+                                <div class="cart-item-quantity-container">
+                                    <div class="cart-item-quantity-display">
+                                        Quantity: <span class="cart-item-quantity-count">${
+                cartItem.quantity
+            }</span>
+                                    </div>
+                                    <div class="update-cart-item-quantity-container">
+                                        <span class="update-cart-item-quantity-button update-cart-item-quantity-button link-primary"
+                                        data-product-id="${matchingProduct.id}">
+                                            Update
+                                        </span>
+                                        <input class="update-cart-item-quantity-input" type="number"  autocomplete="new-quantity">
+                                        <span class="save-new-cart-item-quantity-button link-primary">Save</span>
+                                    </div>
+                                </div>
+                                <p class="cart-item-quantity-limit-message"></p>
                             </div>
-                            <p class="cart-item-quantity-limit-message"></p>
+                            <div>
+                                <span class="add-product-to-wish-list-button link-primary" data-product-id="${
+                matchingProduct.id
+            }">
+                                    Add to Wish List
+                                </span>
+                                <span class="remove-cart-item-button
+                                    link-primary" data-product-id="${matchingProduct.id}">
+                                        Remove
+                                </span>
+                            </div>
                         </div>
-                        <div>
-                            <span class="add-product-to-wish-list-button link-primary" data-product-id="${
-                                matchingProduct.id
-                            }">
-                                Add to Wish List
-                            </span>
-                            <span class="remove-cart-item-button
-                                link-primary" data-product-id="${matchingProduct.id}">
-                                    Remove
-                            </span>
+    
+                        <div class="delivery-options">
+                            <div class="delivery-options-title">
+                                Delivery option:
+                            </div>
+                            <div class="delivery-option">
+                                <input type="radio" checked class="delivery-option-input"
+                                    name="delivery-option-${matchingProduct.id}">
+                                <div class="delivery-date-option label-primary"></div>
+                            </div>
+                            <div class="delivery-option">
+                                <input type="radio" class="delivery-option-input"
+                                    name="delivery-option-${matchingProduct.id}">
+                                <div class="delivery-date-option label-primary"></div>
+                            </div>
+                            <div class="delivery-option">
+                                <input type="radio" class="delivery-option-input"
+                                    name="delivery-option-${matchingProduct.id}">
+                                <div class="delivery-date-option label-primary"></div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="delivery-options">
-                        <div class="delivery-options-title">
-                            Delivery option:
-                        </div>
-                        <div class="delivery-option">
-                            <input type="radio" checked class="delivery-option-input"
-                                name="delivery-option-${matchingProduct.id}">
-                            <div class="delivery-date-option label-primary"></div>
-                        </div>
-                        <div class="delivery-option">
-                            <input type="radio" class="delivery-option-input"
-                                name="delivery-option-${matchingProduct.id}">
-                            <div class="delivery-date-option label-primary"></div>
-                        </div>
-                        <div class="delivery-option">
-                            <input type="radio" class="delivery-option-input"
-                                name="delivery-option-${matchingProduct.id}">
-                            <div class="delivery-date-option label-primary"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>`;
+                </div>`;
+        } else {
+            console.error('Matching product not found.');
+        }
     });
 
     if (cartItemContainer) {
         cartItemContainer.innerHTML = cartHTML;
-    } else {
-        console.error('Cart item container not found.')
     }
 }
 
@@ -119,7 +121,6 @@ function generateEmptyCartHTML() {
  */
 export function updateCartVisibility() {
     const cartItemsQuantity = calculateQuantityOfCartItems();
-
     cartItemsQuantity > 0 ? generateCartHTML() : generateEmptyCartHTML();
 }
 
@@ -329,7 +330,7 @@ document.addEventListener('click', handleClickOutsideCartItemContainer);
 
 /**
  * Handles the click event for updating the quantity of a cart item.
- * When a button is clicked, the corresponding cart item container is identified.
+ * If the button is clicked, the corresponding cart item container is identified.
  * Then, classes are added to display an input field and "save" button for updating the cart item quantity.
  */
 function handleUpdateQuantityButtonClick() {

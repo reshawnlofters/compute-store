@@ -51,10 +51,14 @@ function generateWishListHTML() {
                         </div>
                     </div>
                 </div>`;
+        }  else {
+            console.error('Matching product not found.');
         }
     });
 
-    if (wishListContainer) wishListContainer.innerHTML = wishListHTML;
+    if (wishListContainer) {
+        wishListContainer.innerHTML = wishListHTML;
+    }
 }
 
 function generateEmptyWishListHTML() {
@@ -75,8 +79,8 @@ function generateEmptyWishListHTML() {
 
 /**
  * Updates the visibility of the wish list based on the quantity of wish list items.
- * If the wish list is not empty, it generates the wish list HTML; otherwise, it generates
- * HTML for an empty wish list.
+ * If the wish list is not empty, HTML for the wish list items is generated.
+ * If the wish list is empty, HTML for an empty wish list is generated.
  */
 export function updateWishListVisibility() {
     const wishListQuantity = calculateQuantityOfWishListItems();
@@ -85,32 +89,35 @@ export function updateWishListVisibility() {
 
 updateWishListVisibility();
 
-/**
- * Adds a click event listener to the "Add Wish List Item To Cart" buttons container.
- * If the button is clicked, it adds the product to the cart and removes it from the wish list.
- */
-if (wishListContainer) {
-    wishListContainer.addEventListener('click', (event) => {
-        const addButton = event.target.closest('.add-wish-list-product-to-cart-button');
 
-        if (addButton) {
-            const productId = addButton.dataset.productId;
-            addProductToCart(productId, 1);
-            removeWishListItem(productId);
-            updateCartVisibility();
-            updateCartItemDeliveryDateOptions();
-            addEventListenersToDeliveryDateOptions();
-            updateWishListVisibility();
-            updateCartItemsQuantityDisplay();
-            updateOrderSummaryDisplay();
-            updatePlaceOrderButtonVisibility();
-        }
-    });
+/**
+ * Handles the click event for adding a wish list item to the cart.
+ * If the button is clicked, the product is added to the cart and is removed from the wish list.
+ */
+function handleAddWishListItemToCartButtonClick (event) {
+    const addWishListItemToCartButton = event.target.closest('.add-wish-list-product-to-cart-button');
+
+    if (addWishListItemToCartButton) {
+        const productId = addWishListItemToCartButton.dataset.productId;
+        addProductToCart(productId, 1);
+        removeWishListItem(productId);
+        updateCartVisibility();
+        updateCartItemDeliveryDateOptions();
+        addEventListenersToDeliveryDateOptions();
+        updateWishListVisibility();
+        updateCartItemsQuantityDisplay();
+        updateOrderSummaryDisplay();
+        updatePlaceOrderButtonVisibility();
+    }
+}
+
+if (wishListContainer) {
+    wishListContainer.addEventListener('click', handleAddWishListItemToCartButtonClick);
 }
 
 /**
- * Removes a product from the 'wish list' array.
- * @param {string} productId - The unique identifier of the product to be removed.
+ * Removes a product from the wish list.
+ * @param {string} productId - The unique identifier of the wish list item.
  */
 export function removeWishListItem(productId) {
     const itemIndex = wishList.findIndex((product) => product.productId === productId);
@@ -127,17 +134,19 @@ export function removeWishListItem(productId) {
 }
 
 /**
- * Adds a click event listener to the "Remove Wish List Item" buttons container.
- * If the button is clicked, it removes the item fro mthe wish list and updates displays.
+ * Handles the click event for removing a wish list item.
+ * If the button is clicked, the product is removed from the wish list and UI displays are updated.
  */
-if (wishListContainer) {
-    wishListContainer.addEventListener('click', (event) => {
-        const removeButton = event.target.closest('.remove-wish-list-product-button');
+function handleRemoveWishListItemButtonClick(event) {
+    const removeButton = event.target.closest('.remove-wish-list-product-button');
 
-        if (removeButton) {
-            const productId = removeButton.dataset.productId;
-            removeWishListItem(productId);
-            updateWishListVisibility();
-        }
-    });
+    if (removeButton) {
+        const productId = removeButton.dataset.productId;
+        removeWishListItem(productId);
+        updateWishListVisibility();
+    }
+}
+
+if (wishListContainer) {
+    wishListContainer.addEventListener('click', handleRemoveWishListItemButtonClick);
 }
