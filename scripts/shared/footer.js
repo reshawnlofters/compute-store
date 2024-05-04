@@ -1,40 +1,51 @@
-document.addEventListener('DOMContentLoaded', () => {
+function fetchFooterHTML() {
     const footerContainer = document.getElementById('footerContainer');
-    const footerHtmlPath = 'footer.html';
+    const footerHTMLPath = 'footer.html';
 
-    fetch(footerHtmlPath)
+    fetch(footerHTMLPath)
         .then((response) => response.text())
         .then((html) => {
             footerContainer.innerHTML = html;
-            addEventListeners(); // Content is loaded
+            manageFooter();
         })
         .catch((error) => console.error('Error fetching footer:', error));
-});
+}
 
-function validateEmailAddress() {
+document.addEventListener('DOMContentLoaded', fetchFooterHTML);
+
+/**
+ * Handles the "sign-up" button click event.
+ * - If the button is clicked, the email address inputted is verified and UI displays are updated.
+ */
+function handleSignUpButtonClick() {
     const emailInput = document.querySelector('.email-input');
     const email = emailInput.value;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const validMessage = document.querySelector('.valid-email-address-message');
-    const invalidMessage = document.querySelector('.invalid-email-address-message');
+    const validEmailMessage = document.querySelector('.valid-email-address-message');
+    const invalidEmailMessage = document.querySelector('.invalid-email-address-message');
 
-    if (email == '') {
-        invalidMessage.textContent = 'Email address is required';
-        invalidMessage.style.display = 'block';
-        validMessage.style.display = 'none';
+    if (email === '') {
+        invalidEmailMessage.textContent = 'Email address is required';
+        invalidEmailMessage.style.display = 'block';
+        validEmailMessage.style.display = 'none';
     } else if (!emailRegex.test(email)) {
-        invalidMessage.textContent = 'Email address is invalid';
-        invalidMessage.style.display = 'block';
-        validMessage.style.display = 'none';
+        invalidEmailMessage.textContent = 'Email address is invalid';
+        invalidEmailMessage.style.display = 'block';
+        validEmailMessage.style.display = 'none';
     } else {
-        validMessage.style.display = 'block';
-        invalidMessage.style.display = 'none';
+        validEmailMessage.style.display = 'block';
+        invalidEmailMessage.style.display = 'none';
     }
 
-    emailInput.value = '';
+    emailInput.value = ''; // Clear the input field
 }
 
-function addEventListeners() {
-    document.querySelector('.sign-up-button').addEventListener('click', validateEmailAddress);
-    document.querySelector('.copy-right-notice-year').innerHTML = new Date().getFullYear();
+/**
+ * Manages the footer functionality.
+ * - Adds a click event listener to the sign-up button to handle the sign-up click event.
+ * - Updates the copyright notice year to the current year.
+ */
+function manageFooter() {
+    document.querySelector('.sign-up-button').addEventListener('click', handleSignUpButtonClick);
+    document.querySelector('.copy-right-notice-year').innerHTML = `${new Date().getFullYear()}`;
 }
