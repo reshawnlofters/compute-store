@@ -1,19 +1,32 @@
-import { products } from '../../../data/home-page.js';
-import { findProductById, findProductByName } from '../../shared/utils.js';
+import {findProductById, findProductByName} from '../../shared/utils.js';
 
 const productsGrid = document.querySelector('.products-grid');
 const productPopupContainer = document.querySelector('.product-popup-container');
 
+/**
+ * Displays a popup for a product.
+ * @param {Object} matchingProduct - The product object to display in the popup.
+ */
 function openProductPopup(matchingProduct) {
     generateProductPopup(matchingProduct.id);
-    if (productPopupContainer) productPopupContainer.style.display = 'block';
+
+    if (productPopupContainer) {
+        productPopupContainer.style.display = 'block';
+    }
 }
 
+/**
+ * Closes a popup for a product.
+ */
 function closeProductPopup() {
-    if (productPopupContainer) productPopupContainer.style.display = 'none';
+    if (productPopupContainer) {
+        productPopupContainer.style.display = 'none';
+    }
 }
 
-// Add an event listener to close the product popup at a scroll position
+/**
+ * Adds an event listener to close a popup for a product based on the scroll position.
+ */
 document.addEventListener('scroll', () => {
     if (window.scrollY < 700) {
         closeProductPopup();
@@ -23,10 +36,13 @@ document.addEventListener('scroll', () => {
 function generateProductPopup(productId) {
     const matchingProduct = findProductById(productId);
 
-    if (!matchingProduct) return;
+    if (!matchingProduct) {
+        console.error('Product not found.');
+        return;
+    }
 
     if (productPopupContainer) {
-        let productPopupHTML = `
+        productPopupContainer.innerHTML = `
             <div class="product-popup-image">
                 <img src="${matchingProduct.image}" alt="${matchingProduct.name}">
             </div>
@@ -34,17 +50,20 @@ function generateProductPopup(productId) {
                 <i class="bi bi-x-lg"></i>
             </button>`;
 
-        productPopupContainer.innerHTML = productPopupHTML;
-
-        // Add event listener to the close button
         const closeProductPopupButton = productPopupContainer.querySelector(
             '.close-product-popup-button'
         );
+
+        // Add an event listener to the "close product popup" button
         if (closeProductPopupButton)
             closeProductPopupButton.addEventListener('click', closeProductPopup);
     }
 }
 
+/**
+ * Handles the click event for opening a popup for a product.
+ * @param event - The click event object.
+ */
 function handleProductImageClick(event) {
     const productImageContainer = event.target.closest('.product-image-container');
 
@@ -56,8 +75,14 @@ function handleProductImageClick(event) {
             .trim();
         const matchingProduct = findProductByName(productName);
 
-        if (matchingProduct) openProductPopup(matchingProduct);
+        if (matchingProduct) {
+            openProductPopup(matchingProduct);
+        } else {
+            console.error('Product not found.');
+        }
     }
 }
 
-if (productsGrid) productsGrid.addEventListener('click', handleProductImageClick);
+if (productsGrid) {
+    productsGrid.addEventListener('click', handleProductImageClick);
+}
