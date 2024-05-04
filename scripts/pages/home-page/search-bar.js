@@ -6,10 +6,10 @@ const searchDropdownMenu = document.querySelector('.search-dropdown');
 const searchButton = document.querySelector('.search-button');
 
 /**
- * Handles the click event for the search bar.
- * Displays matching products by filtering the 'products' array with the query.
- * Generates and displays the search bar dropdown menu with the matching products.
- * Updates the search bar styles based on the state of the search bar.
+ * Handles the search bar functionality.
+ * - Displays matching products by filtering the 'products' array with the query.
+ * - Generates and displays the search bar dropdown menu with the matching products.
+ * - Updates the search bar styles based on the state of the search bar.
  */
 function handleSearchBarClick() {
     const query = searchBar.value.toLowerCase();
@@ -17,7 +17,7 @@ function handleSearchBarClick() {
         product.name.toLowerCase().includes(query)
     );
 
-    generateSearchBarDropdown(matchingProducts);
+    generateSearchBarDropdownMenu(matchingProducts);
 
     if (query.trim() === '') {
         searchBar.style.background = '#e3e3e3';
@@ -34,17 +34,17 @@ if (searchBar) {
 
 /**
  * Generates a dropdown list of matching products based on the provided array.
- * @param {Array} matchingProducts - The array of products to be displayed in the dropdown.
+ * @param {Array} matchingProducts - The array of products to be displayed in the dropdown menu.
  */
-function generateSearchBarDropdown(matchingProducts) {
+function generateSearchBarDropdownMenu(matchingProducts) {
     if (matchingProducts.length > 0) {
-        const numItemsToDisplay = matchingProducts.slice(0, 10);
-        searchDropdownMenu.innerHTML = numItemsToDisplay
+        const numberOfItemsToDisplay = matchingProducts.slice(0, 10);
+        searchDropdownMenu.innerHTML = numberOfItemsToDisplay
             .map((product) => `<div class="search-dropdown-item">${product.name}</div>`)
             .join('');
         searchDropdownMenu.style.display = 'block';
 
-        // Add click event listeners to the search dropdown items
+        // Add click event listeners to the search dropdown menu items
         const searchDropdownMenuItems = document.querySelectorAll('.search-dropdown-item');
         searchDropdownMenuItems.forEach((item) => {
             item.addEventListener('click', () => {
@@ -59,8 +59,8 @@ function generateSearchBarDropdown(matchingProducts) {
 }
 
 /**
- * Handles the click event for the "search" button in the search bar.
- * If a matching product is found, the page scrolls to it.
+ * Handles the "search" button click event in the search bar.
+ * - If a matching product is found, the page scrolls to it.
  * Checks if smooth scrolling is supported by the browser.
  */
 function handleSearchButtonClick() {

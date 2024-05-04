@@ -61,8 +61,8 @@ function generateProductPopup(productId) {
 }
 
 /**
- * Handles the click event for opening a popup for a product.
- * @param event - The click event object.
+ * Handles the "open product popup" click event.
+ * @param {Event} event - The click event object.
  */
 function handleProductImageClick(event) {
     const productImageContainer = event.target.closest('.product-image-container');

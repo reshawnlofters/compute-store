@@ -44,7 +44,7 @@ function validatePromoCode() {
         isValidPromoCode = true;
     }
 
-    promoCodeInput.value = ''; // Clear input field
+    promoCodeInput.value = ''; // Clear the input field
     updateOrderSummaryDisplay();
 }
 
@@ -105,7 +105,7 @@ function updateOrderSummaryDiscountElement(selector, discountSavings) {
 
 /**
  * Formats the shipping cost in the order summary based on the order subtotal.
- * If the subtotal is greater than $100, shipping is free.
+ * - If the subtotal is greater than $100, shipping is free.
  * @param {number} subtotal - The order subtotal.
  * @param {number} shipping - The order shipping cost.
  * @returns {string|number} - The formatted shipping cost. If shipping is free, returns 'FREE'.

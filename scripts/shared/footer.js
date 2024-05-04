@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', fetchFooterHTML);
 
 /**
  * Handles the "sign-up" button click event.
- * - If the button is clicked, the email address inputted is verified and UI displays are updated.
+ * - If the button is clicked, the email inputted by the user is verified and UI displays are updated.
  */
 function handleSignUpButtonClick() {
     const emailInput = document.querySelector('.email-input');

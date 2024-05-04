@@ -116,8 +116,8 @@ function generateEmptyCartHTML() {
 
 /**
  * Updates the visibility of the cart based on the quantity of cart items.
- * If the cart is not empty, HTML for the cart items is generated.
- * If the cart is empty, HTML for an empty cart is generated.
+ * - If the cart is not empty, HTML for the cart items is generated.
+ * - If the cart is empty, HTML for an empty cart is generated.
  */
 export function updateCartVisibility() {
     const cartItemsQuantity = calculateQuantityOfCartItems();
@@ -169,7 +169,7 @@ function displayCartItemQuantityLimitMessage(cartItemContainer) {
 }
 
 /**
- * Saves the quantity of a cart item based on user input and updates displays.
+ * Saves the quantity of a cart item based on user input and updates UI displays.
  * @param {string} productId - The unique identifier of the cart item.
  * @param {Element} cartItemContainer - The container element of the cart item.
  */
@@ -197,7 +197,6 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
  * @param {string} productId - The unique identifier of the cart item.
  */
 function handleZeroCartItemQuantityInput(productId) {
-    // Update the UI displays
     removeCartItem(productId);
     updateCartVisibility();
     updateCartItemsQuantityDisplay();
@@ -216,7 +215,7 @@ function handleInvalidCartItemQuantityInput(cartItemContainer) {
  * Handles a valid cart item quantity input.
  * @param {string} productId - The unique identifier of the cart item.
  * @param {Element} cartItemContainer - The container element of the cart item.
- * @param {number} newQuantity - The new quantity inputted by the user.
+ * @param {number} newQuantity - The new cart item quantity inputted by the user.
  */
 function handleValidCartItemQuantityInput(productId, cartItemContainer, newQuantity) {
     // Update the cart item quantity label
@@ -230,7 +229,6 @@ function handleValidCartItemQuantityInput(productId, cartItemContainer, newQuant
     // Remove the 'editing-cart-item-quantity' class from the container
     cartItemContainer.classList.remove('editing-cart-item-quantity');
 
-    // Update the UI displays
     updateCartItemQuantity(productId, newQuantity);
     updateCartItemPriceDisplay(productId, cartItemContainer, newQuantity);
     updateCartItemsQuantityDisplay();
@@ -313,8 +311,8 @@ addEventListenersToDeliveryDateOptions();
 
 /**
  * Handles click events outside of cart item containers.
- * Removes the 'editing-cart-item-quantity' class from all cart item containers for continuity.
- * @param {Event} event - The click event.
+ * - Removes the 'editing-cart-item-quantity' class from all cart item containers for continuity.
+ * @param {Event} event - The click event object.
  */
 function handleClickOutsideCartItemContainer(event) {
     if (!event.target.closest('.cart-item-container')) {
@@ -329,9 +327,9 @@ function handleClickOutsideCartItemContainer(event) {
 document.addEventListener('click', handleClickOutsideCartItemContainer);
 
 /**
- * Handles the click event for updating the quantity of a cart item.
- * If the button is clicked, the corresponding cart item container is identified.
- * Then, classes are added to display an input field and "save" button for updating the cart item quantity.
+ * Handles the "update cart quantity" click event.
+ * - If the button is clicked, the corresponding cart item container is identified.
+ * - Then, classes are added to display an input field and "save" button for updating the cart item quantity.
  */
 function handleUpdateQuantityButtonClick() {
     cartItemContainer.addEventListener('click', (event) => {
@@ -375,9 +373,9 @@ if (cartItemContainer) {
 }
 
 /**
- * Handles the click event for removing a cart item.
- * If the button is clicked, the cart item is removed from the cart and UI displays are updated.
- * @param {Event} event - The click event.
+ * Handles the "remove cart item" click event.
+ * - If the button is clicked, the cart item is removed from the cart and UI displays are updated.
+ * @param {Event} event - The click event object.
  */
 function handleRemoveCartItemButtonClick(event) {
     const removeButton = event.target.closest('.remove-cart-item-button');
@@ -406,7 +404,7 @@ export function isProductAlreadyInWishList(productId) {
 
 /**
  * Adds a product to the wish list.
- * If a product is already in the wish list, it is not added to the wish list.
+ * - If a product is already in the wish list, it is not added to the wish list.
  * @param {string} productId - The unique identifier of the product.
  */
 export function addProductToWishList(productId) {
@@ -418,9 +416,9 @@ export function addProductToWishList(productId) {
 }
 
 /**
- * Handles the click event for adding a product to the wish list.
- * If the button is clicked, the product is added to the wish list and UI displays are updated.
- * @param {Event} event - The click event.
+ * Handles the "add product to wish list" click event.
+ * - If the button is clicked, the product is added to the wish list and UI displays are updated.
+ * @param {Event} event - The click event object.
  */
 function handleAddToWishListButtonClick(event) {
     const addToWishListButton = event.target.closest('.add-product-to-wish-list-button');

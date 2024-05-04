@@ -44,7 +44,7 @@ main {
 }
 
 .add-product-to-wish-list-button,
-.add-wish-list-product-to-cart-button {
+.add-wish-list-item-to-cart-button {
     margin-right: 8px;
 }
 
@@ -194,7 +194,7 @@ main {
     }
 
     .cart-item-container,
-    .wish-list-product-container,
+    .wish-list-item-container,
     .empty-wish-list-container {
         width: 100% !important;
     }

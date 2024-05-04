@@ -156,7 +156,7 @@ main {
 
 .order-header-container,
 .order-details-grid {
-    box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 8px 0px, rgba(0, 0, 0, 0.04) 0px 2px 8px 0px;
+    box-shadow: rgba(0, 0, 0, 0.06) 0 2px 8px 0, rgba(0, 0, 0, 0.04) 0 2px 8px 0;
 }
 
 .first-order-item-details-grid,

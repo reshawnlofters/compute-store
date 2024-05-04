@@ -24,7 +24,7 @@ export function findProductById(productId) {
 
 /**
  * Finds a product in the 'products' array based on its name.
- * @param {string} productName - The name of the product.
+ * @param {string} productName - The name of the product to find.
  * @returns {Object | undefined} - The matching product. If not found, undefined.
  */
 export function findProductByName(productName) {

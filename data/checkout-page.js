@@ -2,7 +2,7 @@ import { findProductById, formatCurrency } from '../scripts/shared/utils.js';
 
 /**
  * Retrieves the 'cart' and 'wishList' data from local storage.
- * If no data is found, empty arrays are assigned to both variables.
+ * - If no data is found, empty arrays are assigned to both variables.
  */
 export let cart = JSON.parse(localStorage.getItem('cart')) || [];
 export let wishList = JSON.parse(localStorage.getItem('wishList')) || [];
@@ -23,8 +23,8 @@ export function updateWishListInLocalStorage() {
 
 /**
  * Adds a product to the cart or updates the quantity of a product already in the cart.
- * If the product is already in the cart, the quantity is updated, ensuring it is below the limit (50).
- * If the product is not in the cart, it is added to the cart with the specified quantity.
+ * - If the product is already in the cart, the quantity is updated, ensuring it is below the limit (50).
+ * - If the product is not in the cart, it is added to the cart with the specified quantity.
  * @param {string} productId - The unique identifier of the product.
  * @param {number} productQuantity - The quantity of the product.
  */
@@ -90,7 +90,7 @@ export function calculateQuantityOfWishListItems() {
 /**
  * Updates the quantity of a cart item based on user input.
  * @param {string} productId - The unique identifier of the cart item.
- * @param {number} newQuantity - The new quantity inputted by the user.
+ * @param {number} newQuantity - The new cart item quantity inputted by the user.
  */
 export function updateCartItemQuantity(productId, newQuantity) {
     const cartItem = cart.find((item) => item.productId === productId);
@@ -106,7 +106,7 @@ export function updateCartItemQuantity(productId, newQuantity) {
  * Updates the total price of a cart item displayed in the cart based on the cart item quantity.
  * @param {string} productId - The unique identifier of the cart item.
  * @param {Element} cartItemContainer - The container element of the cart item.
- * @param {number} newQuantity - The new quantity inputted by the user.
+ * @param {number} newQuantity - The new cart item quantity inputted by the user.
  */
 export function updateCartItemPriceDisplay(productId, cartItemContainer, newQuantity) {
     const cartItemPriceElement = cartItemContainer.querySelector('.product-price');

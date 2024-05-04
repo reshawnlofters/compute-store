@@ -1,6 +1,6 @@
 /**
  * Retrieves the 'orders' data from local storage.
- * If no data is found, an empty array is assigned to the variable.
+ * - If no data is found, an empty array is assigned to the variable.
  */
 export let orders = JSON.parse(localStorage.getItem('orders')) || [];
 

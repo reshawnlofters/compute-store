@@ -66,9 +66,9 @@ generateProductsHTML();
 
 /**
  * Adds event listeners to handle adding a product to the cart, increasing and decreasing product quantity.
- * If the "add to cart" button is clicked, the product is added to the cart.
- * If the "increase product quantity" button is clicked, the product quantity is increased.
- * If the "decrease product quantity" button is clicked, the product quantity is decreased.
+ * - If the "add to cart" button is clicked, the product is added to the cart.
+ * - If the "increase product quantity" button is clicked, the product quantity is increased.
+ * - If the "decrease product quantity" button is clicked, the product quantity is decreased.
  */
 function addEventListenersToProductsGrid() {
     productsGrid.addEventListener('click', (event) => {
@@ -100,8 +100,6 @@ function addEventListenersToProductsGrid() {
             }
 
             productQuantityElement.textContent = productQuantity;
-        } else {
-            console.error('Button not found.')
         }
     });
 }
@@ -166,8 +164,8 @@ window.addEventListener('load', () => {
 });
 
 /**
- * Handles the click event for the "shop now" button.
- * If the button is clicked, the page scrolls to the "featured products" section.
+ * Handles the "shop now" button click event.
+ * - If the button is clicked, the page scrolls to the "featured products" section.
  */
 function handleShopNowButtonClick() {
     window.scrollTo({
@@ -216,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * Toggles a product's presence in the wish list.
-     * If the product is already in the wish list, it removes it; otherwise, it adds it.
+     * - If the product is already in the wish list, it removes it; otherwise, it adds it.
      * @param {Element} icon - The icon element representing the wish list action.
      * @param {Object} matchingProduct - The product object being toggled in the wish list.
      */
