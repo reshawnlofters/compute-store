@@ -8,9 +8,9 @@ import {
     clearCart,
 } from '../../../data/checkout-page.js';
 
-const addPromoCodeButton = document.querySelector('.add-promo-code-button');
 const validPromoCodeMessageElement = document.querySelector('.valid-promo-code-message');
 const invalidPromoCodeMessageElement = document.querySelector('.invalid-promo-code-message');
+const addPromoCodeButton = document.querySelector('.add-promo-code-button');
 const removePromoCodeButton = document.querySelector('.remove-promo-code-button');
 const placeOrderButton = document.querySelector('.place-order-button');
 
@@ -50,8 +50,6 @@ function validatePromoCode() {
 
 if (addPromoCodeButton) {
     addPromoCodeButton.addEventListener('click', validatePromoCode);
-} else {
-    console.error('Add promo code button not found.')
 }
 
 /**
@@ -86,10 +84,7 @@ function updateOrderSummaryElement(selector, value) {
 
     if (element) {
         element.innerHTML = value;
-    } else {
-        console.error('Element not found.');
     }
-
 }
 
 /**
@@ -105,8 +100,6 @@ function updateOrderSummaryDiscountElement(selector, discountSavings) {
         discountElement.style.color = discountElementColor;
         discountElement.innerHTML =
             discountSavings > 0 ? `- ${formatCurrency(discountSavings)} (25%)` : formatCurrency(discountSavings);
-    } else {
-        console.error('Discount element not found.')
     }
 }
 
@@ -137,8 +130,6 @@ function removePromoCode() {
 
 if (removePromoCodeButton) {
     removePromoCodeButton.addEventListener('click', removePromoCode);
-} else {
-    console.error('Remove promo code button not found.')
 }
 
 /**
@@ -190,8 +181,6 @@ if (placeOrderButton) {
         placeOrder();
         navigateToOrdersPage(); // Send the user to the orders page
     });
-} else {
-    console.error('Place order button not found.')
 }
 
 /**
@@ -228,8 +217,6 @@ export function updatePlaceOrderButtonVisibility() {
 
     if (placeOrderButton) {
         placeOrderButton.style.display = isCartEmpty ? 'none' : 'block';
-    } else {
-        console.error('Place order button not found.');
     }
 }
 

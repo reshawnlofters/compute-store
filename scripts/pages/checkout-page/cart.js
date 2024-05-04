@@ -22,7 +22,7 @@ function generateCartHTML() {
         cartHTML += `
             <div class="cart-item-container cart-item-container-${matchingProduct.id}">
                 <div class="cart-item-details-grid">
-                    <img class="product-image" src="${matchingProduct.image}">
+                    <img class="product-image" src="${matchingProduct.image}" alt="product image">
                     <div class="cart-item-details-container">
                         <div>
                             <div class="product-name">
@@ -87,6 +87,8 @@ function generateCartHTML() {
 
     if (cartItemContainer) {
         cartItemContainer.innerHTML = cartHTML;
+    } else {
+        console.error('Cart item container not found.')
     }
 }
 
@@ -117,6 +119,7 @@ function generateEmptyCartHTML() {
  */
 export function updateCartVisibility() {
     const cartItemsQuantity = calculateQuantityOfCartItems();
+
     cartItemsQuantity > 0 ? generateCartHTML() : generateEmptyCartHTML();
 }
 
@@ -129,8 +132,12 @@ export function updateCartItemsQuantityDisplay() {
     const cartItemsQuantity = calculateQuantityOfCartItems();
     const cartItemsQuantityElement = document.querySelector('.cart-items-quantity');
 
-    cartItemsQuantityElement.textContent =
-        cartItemsQuantity === 1 ? `${cartItemsQuantity} Item` : `${cartItemsQuantity} Items`;
+    if (cartItemsQuantityElement) {
+        cartItemsQuantityElement.textContent =
+            cartItemsQuantity === 1 ? `${cartItemsQuantity} Item` : `${cartItemsQuantity} Items`;
+    } else {
+        console.error('Cart items quantity element not found.')
+    }
 }
 
 updateCartItemsQuantityDisplay();
@@ -189,7 +196,7 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
  * @param {string} productId - The unique identifier of the cart item.
  */
 function handleZeroCartItemQuantityInput(productId) {
-    // Update the UI
+    // Update the UI displays
     removeCartItem(productId);
     updateCartVisibility();
     updateCartItemsQuantityDisplay();
@@ -212,12 +219,17 @@ function handleInvalidCartItemQuantityInput(cartItemContainer) {
  */
 function handleValidCartItemQuantityInput(productId, cartItemContainer, newQuantity) {
     // Update the cart item quantity label
-    cartItemContainer.querySelector('.cart-item-quantity-count').innerHTML = String(newQuantity);
+    if (cartItemContainer) {
+        cartItemContainer.querySelector('.cart-item-quantity-count').innerHTML = String(newQuantity);
+    } else {
+        console.log('Cart item container not found.');
+        return;
+    }
 
     // Remove the 'editing-cart-item-quantity' class from the container
     cartItemContainer.classList.remove('editing-cart-item-quantity');
 
-    // Update the UI
+    // Update the UI displays
     updateCartItemQuantity(productId, newQuantity);
     updateCartItemPriceDisplay(productId, cartItemContainer, newQuantity);
     updateCartItemsQuantityDisplay();
@@ -231,17 +243,17 @@ function handleValidCartItemQuantityInput(productId, cartItemContainer, newQuant
 function removeCartItemDisplay(productId) {
     const cartItemContainer = document.querySelector(`.cart-item-container-${productId}`);
 
-    if (!cartItemContainer) {
-        console.error('Cart item container not found.');
-        return;
-    }
+    if (cartItemContainer) {
+        // Remove the cart item container from the cart
+        cartItemContainer.remove();
 
-    // Update the UI
-    cartItemContainer.remove();
-    updateCartVisibility();
-    updatePlaceOrderButtonVisibility();
-    updateOrderSummaryDisplay();
-    updateCartItemsQuantityDisplay();
+        updateCartVisibility();
+        updatePlaceOrderButtonVisibility();
+        updateOrderSummaryDisplay();
+        updateCartItemsQuantityDisplay();
+    } else {
+        console.error('Cart item container not found.');
+    }
 }
 
 /**
@@ -252,6 +264,7 @@ export function updateCartItemDeliveryDateOptions() {
     document.querySelectorAll('.delivery-date-option').forEach((dateElement, index) => {
         const currentDate = new Date();
         const daysToAdd = (index % 3) + 1;
+
         dateElement.textContent = formatDeliveryDate(currentDate, daysToAdd);
     });
 }
@@ -266,7 +279,13 @@ updateCartItemDeliveryDateOptions();
  */
 function formatDeliveryDate(currentDate, daysToAdd) {
     const deliveryDate = new Date(currentDate);
-    deliveryDate.setDate(currentDate.getDate() + daysToAdd);
+
+    if (deliveryDate) {
+        deliveryDate.setDate(currentDate.getDate() + daysToAdd);
+    } else {
+        console.error('Delivery date not found.');
+        return '';
+    }
 
     return deliveryDate.toLocaleDateString('en-US', {
         weekday: 'long',
@@ -283,6 +302,7 @@ export function addEventListenersToDeliveryDateOptions() {
     document.querySelectorAll('.delivery-date-option').forEach((dateElement) => {
         dateElement.addEventListener('click', () => {
             const radioInput = dateElement.parentNode.querySelector('.delivery-option-input');
+
             radioInput.checked = true;
         });
     });
@@ -312,10 +332,6 @@ document.addEventListener('click', handleClickOutsideCartItemContainer);
  * When a button is clicked, the corresponding cart item container is identified.
  * Then, classes are added to display an input field and "save" button for updating the cart item quantity.
  */
-if (cartItemContainer) {
-    cartItemContainer.addEventListener('click', handleUpdateQuantityButtonClick);
-}
-
 function handleUpdateQuantityButtonClick() {
     cartItemContainer.addEventListener('click', (event) => {
         const saveButton = event.target.closest('.update-cart-item-quantity-button');
@@ -353,8 +369,13 @@ function handleUpdateQuantityButtonClick() {
     });
 }
 
+if (cartItemContainer) {
+    cartItemContainer.addEventListener('click', handleUpdateQuantityButtonClick);
+}
+
 /**
  * Handles the click event for removing a cart item.
+ * If the button is clicked, the cart item is removed from the cart and UI displays are updated.
  * @param {Event} event - The click event.
  */
 function handleRemoveCartItemButtonClick(event) {
@@ -369,9 +390,15 @@ function handleRemoveCartItemButtonClick(event) {
     }
 }
 
-if (cartItemContainer) cartItemContainer.addEventListener('click', handleRemoveCartItemButtonClick);
+if (cartItemContainer) {
+    cartItemContainer.addEventListener('click', handleRemoveCartItemButtonClick);
+}
 
-// Returns true if the product is already in the wish list, false otherwise
+/**
+ * Returns true if a product is already in the wish list and false otherwise
+ * @param {string} productId - The unique identifier of the product.
+ * @returns {boolean}
+ */
 export function isProductAlreadyInWishList(productId) {
     return wishList.some((product) => product.productId === productId);
 }
