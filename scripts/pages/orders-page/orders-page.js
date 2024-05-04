@@ -11,6 +11,7 @@ const ordersGrid = document.querySelector('.orders-grid');
 function generateOrdersHTML() {
     let ordersHTML = '';
 
+    // Iterate through the orders in reverse order
     for (let i = orders.length - 1; i >= 0; i--) {
         const order = orders[i];
 
@@ -45,29 +46,32 @@ function generateOrdersHTML() {
             </div>`;
     }
 
-    if (ordersGrid) ordersGrid.innerHTML = ordersHTML;
+    if (ordersGrid) {
+        ordersGrid.innerHTML = ordersHTML;
+    }
 }
 
 /**
- * Generates order item HTML with conditional CSS styling based on item positions.
- * Applies different styles to the first, inner, and last order items.
- * @param {object} order - The order object containing items to be displayed.
+ * Generates HTML for order items with conditional styling based on item positioning.
+ * - Applies different styles to the first, inner, and last order items.
+ * @param {Object} order - The order object containing the order items.
  * @returns {HTML} The HTML representing the order items with applied styles.
  */
 function generateOrderItemHTML(order) {
     let orderItemHTML = '';
     const numberOfOrderItems = order.items.length;
 
+    // Iterate through the order items
     order.items.forEach((orderItem, index) => {
         const matchingProduct = findProductById(orderItem.productId);
         let orderItemClass = 'inner-order-item-details-grid';
 
-        // Check if current order item is the first
+        // If the current order item is the first order item, set the corresponding styling
         if (index === 0) {
             orderItemClass = 'first-order-item-details-grid';
         }
 
-        // Check if current order item is the last
+        // If the current order item is the last order item, set the corresponding styling
         if (index === numberOfOrderItems - 1) {
             orderItemClass = 'last-order-item-details-grid';
         }
@@ -75,7 +79,7 @@ function generateOrderItemHTML(order) {
         orderItemHTML += `
             <div class="order-details-grid ${orderItemClass}">
                 <div class="product-image-container">
-                    <img src="${matchingProduct.image}">
+                    <img src="${matchingProduct.image}" alt="product image">
                 </div>
 
                 <div class="product-details">
@@ -83,7 +87,7 @@ function generateOrderItemHTML(order) {
                         ${matchingProduct.name}
                     </div>
                     <div class="product-delivery-date">
-                        Estimated delivery: ${formatDeliveryDate(
+                        Estimated delivery: ${formatOrderDeliveryDate(
                             orderItem.deliveryDate
                         )}, ${new Date().getFullYear()}
                     </div>
@@ -124,8 +128,8 @@ function generateEmptyOrdersHTML() {
 
 /**
  * Updates the visibility of orders based on the quantity of orders.
- * If there are orders, it generates the orders HTML; otherwise, it generates
- * HTML for when there are no orders.
+ * - If there are orders, HTML for the orders is generated.
+ * - If there are no orders, HTML for an empty orders list is generated.
  */
 function updateOrdersVisibility() {
     const orderQuantity = calculateQuantityOfOrders();
@@ -134,21 +138,29 @@ function updateOrdersVisibility() {
 
 updateOrdersVisibility();
 
-function formatDeliveryDate(fullDate) {
-    const dateObject = new Date(fullDate);
+function formatOrderDeliveryDate(fullDate) {
+    const date = new Date(fullDate);
     const options = { month: 'long', day: 'numeric' };
-    return dateObject.toLocaleDateString('en-US', options);
+
+    return date.toLocaleDateString('en-US', options);
 }
 
+/**
+ * Generates a random order ID consisting of alphanumeric characters.
+ * @returns {string} The randomly generated order ID.
+ */
 export function generateOrderId() {
     let orderId = '';
     const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
+    // Generate the first segment of the order ID
     for (let i = 0; i < 8; i++) {
         const randomIndex = Math.floor(Math.random() * characters.length);
         orderId += characters.charAt(randomIndex);
     }
     orderId += '-';
+
+    // Generate the second segment of the order ID
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             const randomIndex = Math.floor(Math.random() * characters.length);
@@ -161,8 +173,8 @@ export function generateOrderId() {
 }
 
 /**
- * Removed an order from the 'orders' array and updates displays.
- * @param {string} orderId - The unique identifier of the order to be cancelled.
+ * Cancels an order and updates UI displays.
+ * @param {string} orderId - The unique identifier of the order.
  */
 function cancelOrder(orderId) {
     const orderIndex = orders.findIndex((order) => order.id === orderId);
@@ -177,41 +189,43 @@ function cancelOrder(orderId) {
 }
 
 /**
- * Adds a click event listener to "Cancel Order" buttons container.
- * If the button is clicked, a modal appears for the user to confirm the order cancellation.
+ * Handles the "cancel order" button click event.
+ * - If the button is clicked, a modal appears for cancellation confirmation.
  */
-if (ordersGrid) {
-    ordersGrid.addEventListener('click', (event) => {
-        const cancelOrderButton = event.target.closest('.cancel-order-button');
+function handleCancelOrderButtonClick(event) {
+    const cancelOrderButton = event.target.closest('.cancel-order-button');
 
-        if (cancelOrderButton) {
-            const modal = document.querySelector('.cancel-order-modal');
+    if (!cancelOrderButton) {
+        return;
+    }
 
-            modal.showModal();
+    const modal = document.querySelector('.cancel-order-modal');
+    modal.showModal(); // Display the modal
 
-            // If the inner cancel order button is clicked, cancel the order
-            document.querySelector('.modal-cancel-order-button').addEventListener('click', () => {
-                modal.close();
-                const orderId = cancelOrderButton.dataset.orderId;
+    // If the "cancel order" button in the modal is clicked, cancel the order
+    document.querySelector('.modal-cancel-order-button').addEventListener('click', () => {
+        modal.close();
+        const orderId = cancelOrderButton.dataset.orderId;
 
-                setTimeout(() => {
-                    cancelOrder(orderId);
-                    updateOrdersVisibility();
-                }, 500);
-            });
+        setTimeout(() => {
+            cancelOrder(orderId);
+            updateOrdersVisibility();
+        }, 500);
+    });
 
-            // If the inner close button is clicked, close the modal
-            document.querySelector('.modal-close-button').addEventListener('click', () => {
-                modal.close();
-            });
-        }
+    // If the "close" button in the modal is clicked, close the modal
+    document.querySelector('.modal-close-button').addEventListener('click', () => {
+        modal.close();
     });
 }
 
+if (ordersGrid) {
+    ordersGrid.addEventListener('click', handleCancelOrderButtonClick);
+}
+
 /**
- * Displays a modal to indicate a successfully placed order.
- * Checks a flag in local storage to determine if the user has been
- * redirected to the orders page after successfully placing an order.
+ * Displays a modal to indicate an order has been placed successfully.
+ * - Checks a flag in local storage to determine if the user was sent from the checkout page.
  */
 function displayPlacedOrderModal() {
     const isOrderPlaced = localStorage.getItem('isOrderPlaced');
@@ -219,16 +233,19 @@ function displayPlacedOrderModal() {
     if (isOrderPlaced === 'true') {
         const modal = document.querySelector('.placed-order-modal');
 
-        if (modal) {
-            modal.showModal();
-
-            // Add an event listener to the "View Order" button
-            document.querySelector('.modal-view-order-button').addEventListener('click', () => {
-                modal.close();
-            });
+        if (!modal) {
+            console.error('Placed order modal not found.');
+            return;
         }
 
-        // Clear the flag in local storage
+        modal.showModal();
+
+        // Add a click event listener to the "view order" button to close the modal
+        document.querySelector('.modal-view-order-button').addEventListener('click', () => {
+            modal.close();
+        });
+
+        // Remove the flag in local storage
         localStorage.removeItem('isOrderPlaced');
     }
 }
@@ -236,33 +253,37 @@ function displayPlacedOrderModal() {
 displayPlacedOrderModal();
 
 /**
- * Handles the "Buy Again" button click event.
- * If the button is clicked, the corresponding product is added to the cart,
- * and the user is redirected to the checkout page.
- * @param {Event} event - The click event.
+ * Handles the "buy product again" button click event.
+ * - If the button is clicked, the product is added to the cart and the user is sent to the checkout page.
+ * @param {Event} event - The click event object.
  */
 function handleBuyProductAgainButtonClick(event) {
     const buyAgainButton = event.target.closest('.buy-product-again-button');
 
-    if (buyAgainButton) {
-        const productDetailsContainer = buyAgainButton.closest('.product-details');
-        const productNameElement = productDetailsContainer.querySelector('.product-name');
-        const productName = productNameElement
-            ? productNameElement.textContent.toLowerCase().trim()
-            : '';
-        const matchingProduct = findProductByName(productName);
-
-        if (matchingProduct) {
-            addProductToCart(matchingProduct.id, 1);
-            navigateToCartPage();
-        } else {
-            console.error('Matching product not found.');
-        }
+    if (!buyAgainButton) {
+        return;
     }
+
+    const productDetailsContainer = buyAgainButton.closest('.product-details');
+    const productNameElement = productDetailsContainer.querySelector('.product-name');
+    const productName = productNameElement
+        ? productNameElement.textContent.toLowerCase().trim()
+        : '';
+    const matchingProduct = findProductByName(productName);
+
+    if (!matchingProduct) {
+        console.error('Matching product not found.');
+        return;
+    }
+
+    addProductToCart(matchingProduct.id, 1);
+    navigateToCheckoutPage();
 }
 
-if (ordersGrid) ordersGrid.addEventListener('click', handleBuyProductAgainButtonClick);
+if (ordersGrid) {
+    ordersGrid.addEventListener('click', handleBuyProductAgainButtonClick);
+}
 
-function navigateToCartPage() {
+function navigateToCheckoutPage() {
     window.location.href = 'checkout.html';
 }
