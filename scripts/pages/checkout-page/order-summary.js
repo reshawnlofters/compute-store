@@ -8,88 +8,144 @@ import {
     clearCart,
 } from '../../../data/checkout-page.js';
 
-let isPromoCodeValid = false;
+const addPromoCodeButton = document.querySelector('.add-promo-code-button');
+const validPromoCodeMessageElement = document.querySelector('.valid-promo-code-message');
+const invalidPromoCodeMessageElement = document.querySelector('.invalid-promo-code-message');
+const removePromoCodeButton = document.querySelector('.remove-promo-code-button');
+const placeOrderButton = document.querySelector('.place-order-button');
+
+let isValidPromoCode = false;
 let orderTotal = 0;
 
+/**
+ * Validates a promo code inputted by the user and updates UI displays.
+ */
 function validatePromoCode() {
     const promoCodeInput = document.querySelector('.promo-code-input');
     const promoCode = promoCodeInput.value.trim();
-    const validMessage = document.querySelector('.valid-promo-code-message');
-    const invalidMessage = document.querySelector('.invalid-promo-code-message');
 
-    if (promoCode == '') {
-        invalidMessage.textContent = 'Promotion code is required';
-        invalidMessage.style.display = 'block';
-        validMessage.style.display = 'none';
-    } else if (promoCode.toLowerCase() !== 'demo') {
-        invalidMessage.textContent = 'Promotion code is invalid';
-        invalidMessage.style.display = 'block';
-        validMessage.style.display = 'none';
-        isPromoCodeValid = false;
-    } else {
-        validMessage.style.display = 'block';
-        invalidMessage.style.display = 'none';
-        isPromoCodeValid = true;
+    if (!promoCodeInput || !validPromoCodeMessageElement || !invalidPromoCodeMessageElement) {
+        console.error('Promo code elements not found.');
+        return;
     }
 
-    promoCodeInput.value = '';
+    if (promoCode === '') {
+        invalidPromoCodeMessageElement.textContent = 'Promotion code is required';
+        invalidPromoCodeMessageElement.style.display = 'block';
+        validPromoCodeMessageElement.style.display = 'none';
+    } else if (promoCode.toLowerCase() !== 'demo') {
+        invalidPromoCodeMessageElement.textContent = 'Promotion code is invalid';
+        invalidPromoCodeMessageElement.style.display = 'block';
+        validPromoCodeMessageElement.style.display = 'none';
+        isValidPromoCode = false;
+    } else {
+        validPromoCodeMessageElement.style.display = 'block';
+        invalidPromoCodeMessageElement.style.display = 'none';
+        isValidPromoCode = true;
+    }
+
+    promoCodeInput.value = ''; // Clear input field
     updateOrderSummaryDisplay();
 }
 
-const addPromoCodeButton = document.querySelector('.add-promo-code-button');
-addPromoCodeButton && addPromoCodeButton.addEventListener('click', validatePromoCode);
+if (addPromoCodeButton) {
+    addPromoCodeButton.addEventListener('click', validatePromoCode);
+} else {
+    console.error('Add promo code button not found.')
+}
 
 /**
- * Updates the order summary display with calculations for subtotal,
- * discounts, shipping, taxes, and the total cost.
+ * Updates the order summary display with calculated values.
+ * Calculates an order subtotal, shipping cost, discounts, taxes, and total cost.
  */
 export function updateOrderSummaryDisplay() {
     const subtotal = calculateCartItemTotalCost();
-    const shipping = subtotal > 0 && subtotal < 10000 ? 899 : 0;
-    const discount = isPromoCodeValid ? subtotal * 0.25 : 0;
-    const tax = (subtotal - discount + shipping) * 0.13;
-    orderTotal = subtotal - discount + shipping + tax;
+    const shippingCost = subtotal > 0 && subtotal < 10000 ? 899 : 0;
+    const discountSavings = isValidPromoCode ? subtotal * 0.25 : 0; // Discount is 25%
+    const taxes = (subtotal - discountSavings + shippingCost) * 0.13;
+
+    // Calculate the order total
+    orderTotal = subtotal - discountSavings + shippingCost + taxes;
 
     updateOrderSummaryElement('.order-summary-subtotal', formatCurrency(subtotal));
-    updateOrderSummaryElement('.order-summary-shipping', formatShippingCost(subtotal, shipping));
-    updateOrderSummaryDiscountElement('.order-summary-discount', discount);
-    updateOrderSummaryElement('.order-summary-tax', formatCurrency(tax));
+    updateOrderSummaryElement('.order-summary-shipping', formatShippingCost(subtotal, shippingCost));
+    updateOrderSummaryDiscountElement('.order-summary-discount', discountSavings);
+    updateOrderSummaryElement('.order-summary-tax', formatCurrency(taxes));
     updateOrderSummaryElement('.order-summary-total', formatCurrency(orderTotal));
 }
 
 updateOrderSummaryDisplay();
 
+/**
+ * Updates an order summary element with a calculated value.
+ * @param {string} selector - The selector of the element.
+ * @param {string} value - The calculated value to be displayed in the element.
+ */
 function updateOrderSummaryElement(selector, value) {
     const element = document.querySelector(selector);
 
-    if (element) element.innerHTML = value;
+    if (element) {
+        element.innerHTML = value;
+    } else {
+        console.error('Element not found.');
+    }
+
 }
 
-function updateOrderSummaryDiscountElement(selector, discount) {
+/**
+ * Updates the order summary 'discount' element with a calculated value.
+ * @param {string} selector - The selector of the element.
+ * @param {number} discountSavings - The amount of discount savings.
+ */
+function updateOrderSummaryDiscountElement(selector, discountSavings) {
     const discountElement = document.querySelector(selector);
-    const discountElementColor = discount > 0 ? '#c9002e' : 'black';
+    const discountElementColor = discountSavings > 0 ? '#c9002e' : 'black';
 
     if (discountElement) {
         discountElement.style.color = discountElementColor;
         discountElement.innerHTML =
-            discount > 0 ? `- ${formatCurrency(discount)} (25%)` : formatCurrency(discount);
+            discountSavings > 0 ? `- ${formatCurrency(discountSavings)} (25%)` : formatCurrency(discountSavings);
+    } else {
+        console.error('Discount element not found.')
     }
 }
 
+/**
+ * Formats the shipping cost in the order summary based on the order subtotal.
+ * If the subtotal is greater than $100, shipping is free.
+ * @param {number} subtotal - The order subtotal.
+ * @param {number} shipping - The order shipping cost.
+ * @returns {string|number} - The formatted shipping cost. If shipping is free, returns 'FREE'.
+ */
 function formatShippingCost(subtotal, shipping) {
     return subtotal > 10000 ? 'FREE' : formatCurrency(shipping);
 }
 
-// Removes applied promotional codes and updates displays.
+/**
+ * Removes applied promo codes and updates order summary display.
+ */
 function removePromoCode() {
-    document.querySelector('.valid-promo-code-message').style.display = 'none';
-    isPromoCodeValid = false;
-    updateOrderSummaryDisplay();
+    if (validPromoCodeMessageElement) {
+        validPromoCodeMessageElement.style.display = 'none';
+        isValidPromoCode = false;
+
+        updateOrderSummaryDisplay();
+    } else {
+        console.error('Valid promo code message element not found.');
+    }
 }
 
-const removePromoCodeButton = document.querySelector('.remove-promo-code-button');
-removePromoCodeButton && removePromoCodeButton.addEventListener('click', removePromoCode);
+if (removePromoCodeButton) {
+    removePromoCodeButton.addEventListener('click', removePromoCode);
+} else {
+    console.error('Remove promo code button not found.')
+}
 
+/**
+ * Handles the process of placing an order.
+ * Creates an order object with items from the cart.
+ * Clears the cart after the order is placed and updates the 'orders' data in local storage.
+ */
 function placeOrder() {
     const selectedCartItemDeliveryDates = getSelectedCartItemDeliveryDates();
     const date = new Date();
@@ -108,7 +164,7 @@ function placeOrder() {
         'December',
     ];
 
-    // Add order to orders array
+    // Create order object
     const order = {
         id: generateOrderId(),
         items: cart.map((cartItem, index) => ({
@@ -119,6 +175,7 @@ function placeOrder() {
         date: `${monthNames[date.getMonth()]} ${date.getDate()}`,
     };
 
+    // Add order to 'orders' array
     orders.push(order);
 
     clearCart();
@@ -128,6 +185,20 @@ function placeOrder() {
     localStorage.setItem('isOrderPlaced', 'true');
 }
 
+if (placeOrderButton) {
+    placeOrderButton.addEventListener('click', () => {
+        placeOrder();
+        navigateToOrdersPage(); // Send the user to the orders page
+    });
+} else {
+    console.error('Place order button not found.')
+}
+
+/**
+ * Retrieves the selected delivery dates for cart items.
+ * Finds all checked delivery option inputs and extracts the corresponding delivery dates.
+ * @returns {string[]} - An array containing the selected delivery dates for cart items.
+ */
 function getSelectedCartItemDeliveryDates() {
     const selectedCartItemDeliveryDates = [];
 
@@ -135,18 +206,12 @@ function getSelectedCartItemDeliveryDates() {
         const dateElement = radioButton
             .closest('.delivery-option')
             .querySelector('.delivery-date-option');
+
+        // Add the selected cart item delivery date to the array
         selectedCartItemDeliveryDates.push(dateElement.textContent.trim());
     });
 
     return selectedCartItemDeliveryDates;
-}
-
-const placeOrderButton = document.querySelector('.place-order-button');
-if (placeOrderButton) {
-    placeOrderButton.addEventListener('click', () => {
-        placeOrder();
-        navigateToOrdersPage();
-    });
 }
 
 function navigateToOrdersPage() {
@@ -155,12 +220,17 @@ function navigateToOrdersPage() {
     }, 500);
 }
 
-// Updates the visibility of the place order button based on the cart quantity.
+/**
+ * Updates the visibility of the "place order" button based on the quantity of cart items.
+ */
 export function updatePlaceOrderButtonVisibility() {
-    const placeOrderButton = document.querySelector('.place-order-button');
-    const isCartNotEmpty = calculateQuantityOfCartItems() > 0;
+    const isCartEmpty = calculateQuantityOfCartItems() < 0;
 
-    if (placeOrderButton) placeOrderButton.style.display = isCartNotEmpty ? 'block' : 'none';
+    if (placeOrderButton) {
+        placeOrderButton.style.display = isCartEmpty ? 'none' : 'block';
+    } else {
+        console.error('Place order button not found.');
+    }
 }
 
 updatePlaceOrderButtonVisibility();
