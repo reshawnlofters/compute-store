@@ -1,10 +1,12 @@
-import { products } from '../../../data/home-page.js';
-import { findProductByName, formatCurrency } from '../../shared/utils.js';
-import { addProductToCart, calculateQuantityOfCartItems } from '../../../data/checkout-page.js';
-import { addProductToWishList, isProductAlreadyInWishList } from '../checkout-page/cart.js';
-import { removeWishListItem } from '../checkout-page/wish-list.js';
+import {products} from '../../../data/home-page.js';
+import {findProductByName, formatCurrency} from '../../shared/utils.js';
+import {addProductToCart, calculateQuantityOfCartItems} from '../../../data/checkout-page.js';
+import {addProductToWishList, isProductAlreadyInWishList} from '../checkout-page/cart.js';
+import {removeWishListItem} from '../checkout-page/wish-list.js';
 
 const productsGrid = document.querySelector('.products-grid');
+const addedProductToCartMessageTimeouts = {};
+const shopNowButton = document.querySelector('.shop-now-button');
 
 function generateProductsHTML() {
     let productsHTML = '';
@@ -13,7 +15,7 @@ function generateProductsHTML() {
         productsHTML += `
             <div class="product-container product-container-${product.id}">
                 <div class="product-image-container">
-                    <img class="product-image" src="${product.image}">
+                    <img class="product-image" src="${product.image}" alt="product image">
                 </div>
                 
                 <div class="product-info-grid">
@@ -25,7 +27,7 @@ function generateProductsHTML() {
                             ${formatCurrency(product.priceInCents)}
                         </div>
                     </div>
-                    <img class="wish-list-icon" src="images/icons/unsaved.png">
+                    <img class="wish-list-icon" src="images/icons/unsaved.png" alt="wish list icon">
                 </div>
 
                 <div class="add-product-to-cart-container">
@@ -56,33 +58,33 @@ function generateProductsHTML() {
 
     if (productsGrid) {
         productsGrid.innerHTML = productsHTML;
-        addEventListeners();
+        addEventListenersToProductsGrid();
     }
 }
 
 generateProductsHTML();
 
 /**
- * Adds a click event listener to 'productsGrid', the container of all products.
- * Handles interactions with "Add to Cart," "Increase Quantity,"
- * and "Decrease Quantity" buttons. Updates product quantity and triggers relevant actions,
- * such as adding the product to the cart and displaying confirmation messages.
+ * Adds event listeners to handle adding a product to the cart, increasing and decreasing product quantity.
+ * If the "add to cart" button is clicked, the product is added to the cart.
+ * If the "increase product quantity" button is clicked, the product quantity is increased.
+ * If the "decrease product quantity" button is clicked, the product quantity is decreased.
  */
-function addEventListeners() {
+function addEventListenersToProductsGrid() {
     productsGrid.addEventListener('click', (event) => {
-        const targetButton = event.target.closest(
+        const button = event.target.closest(
             '.add-product-to-cart-button, .increase-product-quantity-button, .decrease-product-quantity-button'
         );
 
-        if (targetButton) {
-            const productId = targetButton.dataset.productId;
-            const productContainer = targetButton.closest('.product-container');
+        if (button) {
+            const productId = button.dataset.productId;
+            const productContainer = button.closest('.product-container');
             const productQuantityElement =
                 productContainer.querySelector('.product-quantity-count');
             let productQuantity = parseInt(productQuantityElement.textContent, 10);
 
-            if (targetButton.classList.contains('add-product-to-cart-button')) {
-                // Add to Cart button clicked
+            if (button.classList.contains('add-product-to-cart-button')) {
+                // Add the product to the cart
                 setTimeout(() => {
                     if (productQuantity > 0) {
                         addProductToCart(productId, productQuantity);
@@ -91,27 +93,24 @@ function addEventListeners() {
                     }
                     productQuantityElement.textContent = 0;
                 }, 500);
-            } else if (targetButton.classList.contains('increase-product-quantity-button')) {
-                // Increase Quantity button clicked
-                productQuantity++;
-            } else if (targetButton.classList.contains('decrease-product-quantity-button')) {
-                // Decrease Quantity button clicked
-                productQuantity = Math.max(0, productQuantity - 1);
+            } else if (button.classList.contains('increase-product-quantity-button')) {
+                productQuantity++; // Increase the product quantity
+            } else if (button.classList.contains('decrease-product-quantity-button')) {
+                productQuantity = Math.max(0, productQuantity - 1);  // Decrease the product quantity
             }
 
             productQuantityElement.textContent = productQuantity;
+        } else {
+            console.error('Button not found.')
         }
     });
 }
 
 function updateCartItemsQuantityDisplay() {
-    const cartQuantity = calculateQuantityOfCartItems();
-    document.querySelector('.cart-items-quantity').innerHTML = cartQuantity;
+    document.querySelector('.cart-items-quantity').innerHTML = `${calculateQuantityOfCartItems()}`;
 }
 
 updateCartItemsQuantityDisplay();
-
-const addedProductToCartMessageTimeouts = {};
 
 function displayAddedProductToCartMessage(productId) {
     const button = document.querySelector(
@@ -120,21 +119,19 @@ function displayAddedProductToCartMessage(productId) {
 
     // Clear any previous timeouts
     const previousTimeout = addedProductToCartMessageTimeouts[productId];
-    if (previousTimeout) clearTimeout(previousTimeout);
+    if (previousTimeout) {
+        clearTimeout(previousTimeout);
+    }
 
-    // Display message
-    button.innerHTML = 'Added';
+    button.innerHTML = 'Added'; // Display the message
 
-    // Set a timeout to revert the innerHTML
-    const timeoutId = setTimeout(() => {
+    // Set a timeout to revert the inner HTML and store it for later reference
+    addedProductToCartMessageTimeouts[productId] = setTimeout(() => {
         button.innerHTML = 'Add to Cart';
     }, 1000);
-
-    // Store the timeout ID for later reference
-    addedProductToCartMessageTimeouts[productId] = timeoutId;
 }
 
-function adjustHeaderOnScroll() {
+function adjustHomePageHeaderOnScroll() {
     const promoHeaderContainer = document.querySelector('.promo-header-container');
     const headerContainer = document.querySelector('.header-container');
 
@@ -147,17 +144,20 @@ function adjustHeaderOnScroll() {
     }
 }
 
-// Adds a scroll event listener to remove the promotion header on down scroll.
+/**
+ * Adjusts the appearance of the home page header based on the scroll position.
+ * Removes the promotion header when the user scrolls down.
+ */
 window.addEventListener('load', () => {
-    adjustHeaderOnScroll();
+    adjustHomePageHeaderOnScroll();
 
-    // Throttle scroll event using requestAnimationFrame
+    // Throttle the scroll event using 'requestAnimationFrame'
     let isScrolling = false;
 
     window.addEventListener('scroll', () => {
         if (!isScrolling) {
             window.requestAnimationFrame(() => {
-                adjustHeaderOnScroll();
+                adjustHomePageHeaderOnScroll();
                 isScrolling = false;
             });
             isScrolling = true;
@@ -165,39 +165,41 @@ window.addEventListener('load', () => {
     });
 });
 
-// Scrolls to the featured products section when the "Shop Now" button is clicked.
-document.addEventListener('DOMContentLoaded', () => {
-    const shopNowButton = document.querySelector('.shop-now-button');
-    if (shopNowButton) {
-        shopNowButton.addEventListener('click', () => {
-            window.scrollTo({
-                top: 700,
-                behavior: 'smooth',
-            });
-        });
-    }
-});
+/**
+ * Handles the click event for the "shop now" button.
+ * If the button is clicked, the page scrolls to the "featured products" section.
+ */
+function handleShopNowButtonClick() {
+    window.scrollTo({
+        top: 700,
+        behavior: 'smooth',
+    });
+}
+
+if (shopNowButton) {
+    shopNowButton.addEventListener('click', handleShopNowButtonClick);
+}
 
 /**
- * Handles the "Save to Wish List" button functionality.
- * - Listens for the DOMContentLoaded event before setting up the wish list icon interactions.
+ * Handles the "save product to wish list" functionality.
+ * - Listens for the DOMContentLoaded event before setting wish list icon interactions.
  * - Defines functions to update the wish list icon appearance on mouseover and mouseout events.
- * - Handles the click event on the "Add to Wish List" button, toggling the product's presence in the wish list.
- * - Toggles the wish list icon between "saved" and "unsaved" states based on the product's wish list status.
- * - Initializes event listeners for mouseover, mouseout, and click events on each wish list icon.
+ * - Handles the click event for adding a product to the wish list.
+ * - Toggles the wish list icon between "saved" and "unsaved" states.
+ * - Initializes event listeners for mouseover, mouseout, and click events for each wish list icon.
  */
 document.addEventListener('DOMContentLoaded', () => {
     const wishListIcons = document.querySelectorAll('.wish-list-icon');
 
     function updateSaveToWishListIconOnMouseover(icon) {
-        icon.src = 'images/icons/saved.png';
+        icon.src = 'images/icons/saved.png'; // Display the 'saved' icon
     }
 
     function updateSaveToWishListIconOnMouseout(icon) {
-        updateAddtoWishListIcon(icon);
+        updateAddToWishListIcon(icon);
     }
 
-    function handleSaveToWishListButton(icon) {
+    function handleSaveToWishListButtonClick(icon) {
         const productContainer = icon.closest('.product-container');
         const productName = productContainer
             .querySelector('.product-name')
@@ -208,9 +210,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (matchingProduct) {
             toggleWishListItem(icon, matchingProduct);
         } else {
-            console.error('Product not found');
+            console.error('Product not found.');
         }
     }
+
+    /**
+     * Toggles a product's presence in the wish list.
+     * If the product is already in the wish list, it removes it; otherwise, it adds it.
+     * @param {Element} icon - The icon element representing the wish list action.
+     * @param {Object} matchingProduct - The product object being toggled in the wish list.
+     */
     function toggleWishListItem(icon, matchingProduct) {
         if (isProductAlreadyInWishList(matchingProduct.id)) {
             removeWishListItem(matchingProduct.id);
@@ -218,10 +227,10 @@ document.addEventListener('DOMContentLoaded', () => {
             addProductToWishList(matchingProduct.id);
         }
 
-        updateAddtoWishListIcon(icon);
+        updateAddToWishListIcon(icon);
     }
 
-    function updateAddtoWishListIcon(icon) {
+    function updateAddToWishListIcon(icon) {
         const productContainer = icon.closest('.product-container');
         const productName = productContainer
             .querySelector('.product-name')
@@ -230,17 +239,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const matchingProduct = findProductByName(productName);
 
         if (matchingProduct && isProductAlreadyInWishList(matchingProduct.id)) {
-            icon.src = 'images/icons/saved.png';
+            icon.src = 'images/icons/saved.png'; // Display "saved" icon
         } else {
-            icon.src = 'images/icons/unsaved.png';
+            icon.src = 'images/icons/unsaved.png'; // Display "unsaved" icon
         }
     }
 
     wishListIcons.forEach((icon) => {
         icon.addEventListener('mouseover', () => updateSaveToWishListIconOnMouseover(icon));
         icon.addEventListener('mouseout', () => updateSaveToWishListIconOnMouseout(icon));
-        icon.addEventListener('click', () => handleSaveToWishListButton(icon));
+        icon.addEventListener('click', () => handleSaveToWishListButtonClick(icon));
 
-        updateAddtoWishListIcon(icon);
+        updateAddToWishListIcon(icon);
     });
 });
