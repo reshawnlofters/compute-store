@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: space-between;
     height: 80px;
-    background-color: white;
+    background-color: var(--white);
     font-size: 22px;
     font-weight: 500;
     position: fixed;

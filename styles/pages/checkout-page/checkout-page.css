@@ -1,5 +1,5 @@
 html {
-    background-color: #f9f8f7;
+    background-color: var(--custom-light-grey);
 }
 
 main {
@@ -36,7 +36,7 @@ main {
 }
 
 .update-cart-item-quantity-input:focus {
-    border: 2px solid #32302f;
+    border: 2px solid var(--custom-dark-grey);
 }
 
 .cart-item-quantity-display {
@@ -139,19 +139,19 @@ main {
 }
 
 .promo-code-input::placeholder {
-    color: lightgray;
+    color: var(--light-grey);
 }
 
 .promo-code-input:focus::placeholder {
-    color: darkgray;
+    color: var(--dark-grey);
 }
 
 .promo-code-input:focus {
-    outline-color: #32302f;
+    outline-color: var(--custom-dark-grey);
 }
 
 .add-promo-code-button {
-    color: white;
+    color: var(--white);
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
@@ -170,7 +170,7 @@ main {
 
 .order-summary-top-rows-container {
     border-top: 1px solid rgb(222, 222, 222);
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--black);
     padding: 15px 0;
 }
 

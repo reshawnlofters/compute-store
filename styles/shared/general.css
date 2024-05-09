@@ -1,15 +1,33 @@
+/* Variables */
+:root {
+    --white: #ffffff;
+    --black: #000000;
+    --grey: #808080;
+    --light-grey: #cccccc;
+    --custom-light-grey: #f9f8f7;
+    --dark-grey: #333333;
+    --custom-dark-grey: #32302f;
+    --label-primary-colour: #615e5c;
+    --label-secondary-colour: #e74c39;
+    --link-primary-colour: #0066cc;
+    --search-bar-placeholder-colour: #5e5f62;
+    --search-dropdown-menu-hover-colour: #f0f0f0;
+    --cart-items-quantity-background-colour: #f33c3c;
+    --modal-view-order-button-background-colour: #00aa66;
+    --modal-cancel-order-button-background-colour: #ed4040;
+}
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    /* font-family: 'Open Sans', sans-serif; */
     font-family: 'poppins', sans-serif;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
 body {
-    margin: 0;
+    color: var(--custom-dark-grey);
     padding: 0;
-    color: #32302f;
+    margin: 0;
 }
 
 button,
@@ -23,12 +41,12 @@ ul {
 }
 
 a {
-    color: white;
+    color: var(--white);
     text-decoration: none;
 }
 
 .bi {
-    color: black;
+    color: var(--black);
 }
 
 input {
@@ -36,7 +54,7 @@ input {
 }
 
 .header-logo {
-    color: #32302f;
+    color: var(--custom-dark-grey);
     font-size: 22px;
     font-weight: 600;
     text-transform: uppercase;
@@ -44,8 +62,8 @@ input {
 }
 
 .button-primary {
-    background-color: #32302f;
-    color: white;
+    background-color: var(--custom-dark-grey);
+    color: var(--white);
     font-size: 14px;
     font-weight: 500;
     border: none;
@@ -65,7 +83,7 @@ input {
 }
 
 .link-primary {
-    color: #0066cc;
+    color: var(--link-primary-colour);
     cursor: pointer;
 }
 
@@ -74,11 +92,11 @@ input {
 }
 
 .label-primary {
-    color: #615e5c;
+    color: var(--label-primary-colour);
 }
 
 .label-secondary {
-    color: #e74c39;
+    color: var(--label-secondary-colour);
 }
 
 .wish-list-item-container-grid {
@@ -144,7 +162,7 @@ input {
 .empty-wish-list-container,
 .empty-wish-list-container,
 .empty-orders-container {
-    background-color: white;
+    background-color: var(--white);
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.06) 0 2px 8px 0, rgba(0, 0, 0, 0.04) 0 2px 8px 0;
     padding: 25px;

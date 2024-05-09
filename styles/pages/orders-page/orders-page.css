@@ -1,5 +1,5 @@
 html {
-    background-color: #f9f8f7;
+    background-color: var(--custom-light-grey);
 }
 
 main {
@@ -18,7 +18,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: white;
+    background-color: var(--white);
     border-bottom: 1px solid rgba(217, 217, 217, 0.384);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -81,7 +81,7 @@ main {
 
 .placed-order-modal p,
 .cancel-order-modal p {
-    color: gray;
+    color: var(--grey);
     margin-bottom: 50px;
 }
 
@@ -101,7 +101,7 @@ main {
 }
 
 .modal-view-order-button {
-    background-color: #00aa66 !important;
+    background-color: var(--modal-view-order-button-background-colour) !important;
 }
 
 .modal-close-button {
@@ -109,7 +109,7 @@ main {
 }
 
 .modal-cancel-order-button {
-    background-color: #ed4040 !important;
+    background-color: var(--modal-cancel-order-button-background-colour) !important;
 }
 
 @media (max-width: 575px) {
@@ -146,7 +146,7 @@ main {
     grid-template-columns: 110px 1fr auto;
     column-gap: 40px;
     row-gap: 60px;
-    background-color: white;
+    background-color: var(--white);
     align-items: center;
     border-top: none;
     border-bottom-left-radius: 10px;
@@ -218,7 +218,7 @@ main {
 
 .buy-product-again-button .bi {
     font-size: 15px;
-    color: white;
+    color: var(--white);
     margin-right: 5px;
 }
 

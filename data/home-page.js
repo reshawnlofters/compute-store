@@ -179,8 +179,8 @@ export const products = [
     // },
     // {
     //     id: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
-    //     image: 'images/products/keyboards/mx-keys-s-pale-gray.png',
-    //     name: 'Logitech MX Keys S Keyboard - Pale Gray',
+    //     image: 'images/products/keyboards/mx-keys-s-pale-grey.png',
+    //     name: 'Logitech MX Keys S Keyboard - Pale grey',
     //     priceInCents: 14999,
     // },
     // {

@@ -2,14 +2,14 @@ footer {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    background-color: #32302f;
+    background-color: var(--custom-dark-grey);
     padding: 0 22%;
 }
 
 .footer-about-section-grid {
     display: grid;
     grid-template-columns: auto auto 1fr;
-    color: white;
+    color: var(--white);
     padding: 50px 0 30px 0;
 }
 
@@ -54,7 +54,7 @@ footer .vr {
     flex: 1;
     font-size: 14px;
     background-color: inherit;
-    color: white;
+    color: var(--white);
     outline: none !important;
     border: none;
     border-radius: 0 !important;
@@ -63,16 +63,16 @@ footer .vr {
 }
 
 .newsletter-input-container input::placeholder {
-    color: lightgray;
+    color: var(--light-grey);
 }
 
 .newsletter-input-container input:focus::placeholder {
-    color: darkgray;
+    color: var(--dark-grey);
 }
 
 .newsletter-input-container .sign-up-button {
     background-color: inherit;
-    color: white;
+    color: var(--white);
     min-width: 100px;
     font-size: 14px;
     font-weight: 600;
@@ -82,8 +82,8 @@ footer .vr {
 }
 
 .newsletter-input-container .sign-up-button:hover {
-    background-color: white;
-    color: black;
+    background-color: var(--white);
+    color: var(--black);
 }
 
 .valid-email-address-message,
@@ -100,7 +100,7 @@ footer .hr {
 }
 
 .footer-copyright-section-container {
-    color: gray;
+    color: var(--grey);
     font-size: 13px !important;
     margin-bottom: 20px;
 }
@@ -117,7 +117,7 @@ footer .hr {
     }
 }
 
-@media (max-width: 1080) {
+@media (max-width: 1080px) {
     footer {
         padding: 0 10%;
     }
