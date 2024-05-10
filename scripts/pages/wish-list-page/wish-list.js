@@ -1,4 +1,4 @@
-import { formatCurrency, findProductById } from '../../shared/utils.js';
+import { formatCurrency, findProductById } from "../../shared/utils.js";
 import {
     wishList,
     addProductToCart,
@@ -10,10 +10,11 @@ import {
     updateCartVisibility,
     updateCartItemDeliveryDateOptions,
     addEventListenersToDeliveryDateOptions,
-} from './cart.js';
-import { updateOrderSummaryDisplay, updatePlaceOrderButtonVisibility } from './order-summary.js';
+} from '../checkout-page/cart.js';
+import { updateOrderSummaryDisplay, updatePlaceOrderButtonVisibility } from '../checkout-page/order-summary.js';
 
 const wishListContainer = document.querySelector('.wish-list-container');
+const checkoutWishListContainer = document.querySelector('.checkout-wish-list-container');
 
 function generateWishListHTML() {
     let wishListHTML = '';
@@ -23,7 +24,7 @@ function generateWishListHTML() {
 
         if (matchingProduct) {
             wishListHTML += `
-                <div class="wish-list-item-container ${`wish-list-item-container-${matchingProduct.id}`}">
+                <div class="wish-list-item-container wish-list-item-container-${matchingProduct.id}">
                     <div class="wish-list-item-container-grid">
                         <img class="product-image" src="${matchingProduct.image}" alt="product image">
     
@@ -38,13 +39,59 @@ function generateWishListHTML() {
                             </div>
                             <div>
                                 <span class="add-wish-list-item-to-cart-button link-primary" data-product-id="${
-                                    matchingProduct.id
-                                }">
+                matchingProduct.id
+            }">
                                     Add to Cart
                                 </span>
                                 <span class="remove-wish-list-item-button link-primary" data-product-id="${
-                                    matchingProduct.id
-                                }">
+                matchingProduct.id
+            }">
+                                    Remove
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        } else {
+            console.error('Matching product not found.');
+        }
+    });
+
+    if (wishListContainer) {
+        wishListContainer.innerHTML = wishListHTML;
+    }
+}
+
+function generateCheckoutWishListHTML() {
+    let checkoutWishListHTML = '';
+
+    wishList.forEach((product) => {
+        const matchingProduct = findProductById(product.productId);
+
+        if (matchingProduct) {
+            checkoutWishListHTML += `
+                <div class="checkout-wish-list-item-container checkout-wish-list-item-container-${matchingProduct.id}">
+                    <div class="checkout-wish-list-item-container-grid">
+                        <img class="product-image" src="${matchingProduct.image}" alt="product image">
+    
+                        <div class="checkout-wish-list-item-details-container">
+                            <div>
+                                <div class="product-name">
+                                    ${matchingProduct.name}
+                                </div>
+                                <div class="product-price">
+                                    ${formatCurrency(matchingProduct.priceInCents)}
+                                </div>
+                            </div>
+                            <div>
+                                <span class="add-wish-list-item-to-cart-button link-primary" data-product-id="${
+                matchingProduct.id
+            }">
+                                    Add to Cart
+                                </span>
+                                <span class="remove-wish-list-item-button link-primary" data-product-id="${
+                matchingProduct.id
+            }">
                                     Remove
                                 </span>
                             </div>
@@ -56,24 +103,35 @@ function generateWishListHTML() {
         }
     });
 
-    if (wishListContainer) {
-        wishListContainer.innerHTML = wishListHTML;
+    if (checkoutWishListContainer) {
+        checkoutWishListContainer.innerHTML = checkoutWishListHTML;
     }
 }
 
 function generateEmptyWishListHTML() {
-    if (wishListContainer) {
-        wishListContainer.innerHTML = `
-            <div class="empty-wish-list-container">
-                <div class="empty-wish-list-message-container">
-                    <div>
-                        <span>Looks like it's empty!</span><br><br>
-                        Why not add something?
-                    </div>
+    let emptyWishListHTML;
+
+    emptyWishListHTML = `
+        <div class="empty-wish-list-container empty-checkout-wish-list-container">
+            <div class="empty-wish-list-message-container empty-checkout-wish-list-message-container">
+                <div>
+                    <span>Looks like it's empty!</span><br><br>
+                    Why not add something?
                 </div>
-                <i class="bi bi-bookmark-x" id="emptyWishListContainerImg"></i>
+                <div>
+                    Continue shopping on the
+                    <a class="link-primary" href="index.html">homepage</a>.
+                </div>
             </div>
-        `;
+            <i class="bi bi-bookmark-x" id="emptyWishListContainerImg"></i>
+        </div>
+    `;
+
+    if (wishListContainer) {
+        wishListContainer.innerHTML = emptyWishListHTML;
+    }
+    if (checkoutWishListContainer) {
+        checkoutWishListContainer.innerHTML = emptyWishListHTML;
     }
 }
 
@@ -84,7 +142,13 @@ function generateEmptyWishListHTML() {
  */
 export function updateWishListVisibility() {
     const wishListQuantity = calculateQuantityOfWishListItems();
-    wishListQuantity > 0 ? generateWishListHTML() : generateEmptyWishListHTML();
+
+    if (wishListQuantity > 0) {
+        generateWishListHTML();
+        generateCheckoutWishListHTML();
+    } else {
+        generateEmptyWishListHTML();
+    }
 }
 
 updateWishListVisibility();
@@ -114,6 +178,9 @@ function handleAddWishListItemToCartButtonClick (event) {
 if (wishListContainer) {
     wishListContainer.addEventListener('click', handleAddWishListItemToCartButtonClick);
 }
+if (checkoutWishListContainer) {
+    checkoutWishListContainer.addEventListener('click', handleAddWishListItemToCartButtonClick);
+}
 
 /**
  * Removes a product from the wish list.
@@ -121,7 +188,7 @@ if (wishListContainer) {
  */
 export function removeWishListItem(productId) {
     const itemIndex = wishList.findIndex((product) => product.productId === productId);
-    const productContainer = document.querySelector(`.wish-list-item-container-${productId}`);
+    const productContainer = document.querySelector(`.checkout-wish-list-item-container-${productId}`);
 
     if (itemIndex !== -1) {
         wishList.splice(itemIndex, 1);
@@ -149,4 +216,7 @@ function handleRemoveWishListItemButtonClick(event) {
 
 if (wishListContainer) {
     wishListContainer.addEventListener('click', handleRemoveWishListItemButtonClick);
+}
+if (checkoutWishListContainer) {
+    checkoutWishListContainer.addEventListener('click', handleRemoveWishListItemButtonClick);
 }

@@ -1,0 +1,20 @@
+html {
+    background-color: var(--custom-light-grey);
+}
+
+main {
+    max-width: 850px;
+    padding: 0 30px;
+    margin: 140px auto;
+}
+
+.wish-list-item-container {
+    height: 243px;
+    display: flex;
+}
+
+.wish-list-item-container-grid {
+    display: grid;
+    grid-template-columns: 100px auto;
+    grid-gap: 40px;
+}

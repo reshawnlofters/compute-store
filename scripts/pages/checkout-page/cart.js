@@ -1,5 +1,5 @@
 import {findProductById, formatCurrency} from '../../shared/utils.js';
-import {updateWishListVisibility} from './wish-list.js';
+import {updateWishListVisibility} from '../wish-list-page/wish-list.js';
 import {updateOrderSummaryDisplay, updatePlaceOrderButtonVisibility} from './order-summary.js';
 import {
     calculateQuantityOfCartItems,

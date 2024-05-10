@@ -2,7 +2,7 @@ import {products} from '../../../data/home-page.js';
 import {findProductByName, formatCurrency} from '../../shared/utils.js';
 import {addProductToCart, calculateQuantityOfCartItems} from '../../../data/checkout-page.js';
 import {addProductToWishList, isProductAlreadyInWishList} from '../checkout-page/cart.js';
-import {removeWishListItem} from '../checkout-page/wish-list.js';
+import {removeWishListItem} from '../wish-list-page/wish-list.js';
 
 const productsGrid = document.querySelector('.products-grid');
 const addedProductToCartMessageTimeouts = {};
