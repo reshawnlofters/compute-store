@@ -1,4 +1,4 @@
-import {products} from '../../../data/home-page.js';
+import {products} from '../../../data/homepage.js';
 import {findProductByName} from '../../shared/utils.js';
 
 const searchBar = document.querySelector('.search-bar');

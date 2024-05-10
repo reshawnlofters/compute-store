@@ -1,4 +1,4 @@
-import {products} from '../../../data/home-page.js';
+import {products} from '../../../data/homepage.js';
 import {findProductByName, formatCurrency} from '../../shared/utils.js';
 import {addProductToCart, calculateQuantityOfCartItems} from '../../../data/checkout-page.js';
 import {addProductToWishList, isProductAlreadyInWishList} from '../checkout-page/cart.js';
@@ -129,7 +129,7 @@ function displayAddedProductToCartMessage(productId) {
     }, 1000);
 }
 
-function adjustHomePageHeaderOnScroll() {
+function adjustHomepageHeaderOnScroll() {
     const promoHeaderContainer = document.querySelector('.promo-header-container');
     const headerContainer = document.querySelector('.header-container');
 
@@ -143,11 +143,11 @@ function adjustHomePageHeaderOnScroll() {
 }
 
 /**
- * Adjusts the appearance of the home page header based on the scroll position.
+ * Adjusts the appearance of the homepage header based on the scroll position.
  * Removes the promotion header when the user scrolls down.
  */
 window.addEventListener('load', () => {
-    adjustHomePageHeaderOnScroll();
+    adjustHomepageHeaderOnScroll();
 
     // Throttle the scroll event using 'requestAnimationFrame'
     let isScrolling = false;
@@ -155,7 +155,7 @@ window.addEventListener('load', () => {
     window.addEventListener('scroll', () => {
         if (!isScrolling) {
             window.requestAnimationFrame(() => {
-                adjustHomePageHeaderOnScroll();
+                adjustHomepageHeaderOnScroll();
                 isScrolling = false;
             });
             isScrolling = true;

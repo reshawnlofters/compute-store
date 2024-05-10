@@ -1,4 +1,4 @@
-import { products } from '../../data/home-page.js';
+import { products } from '../../data/homepage.js';
 
 /**
  * Formats prices to two decimal places with commas.
