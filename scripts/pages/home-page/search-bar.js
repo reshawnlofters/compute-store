@@ -120,7 +120,7 @@ document.addEventListener('click', (event) => {
 /**
  * Adds click event listeners to clear the search bar when leaving the homepage.
  */
-document.querySelectorAll('.header-orders-link, .header-checkout-link')
+document.querySelectorAll('.header-orders-page-link, .header-checkout-page-link')
     .forEach(link => link.addEventListener('click', clearSearchBar));
 
 

@@ -97,7 +97,7 @@
     justify-content: center;
     align-items: center;
     height: 250px;
-    background: #f6f6f6;
+    background-color: var(--product-image-container-background-colour);
     margin-bottom: 20px;
     cursor: pointer;
 }
@@ -175,7 +175,7 @@
 
 .add-product-to-cart-container .vr {
     height: 65%;
-    border-bottom: 1px solid #e4e2e1;
+    border-bottom: 1px solid var(--custom-border-bottom-colour);
 }
 
 .product-popup-container {

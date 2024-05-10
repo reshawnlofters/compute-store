@@ -15,6 +15,9 @@
     --cart-items-quantity-background-colour: #f33c3c;
     --modal-view-order-button-background-colour: #00aa66;
     --modal-cancel-order-button-background-colour: #ed4040;
+    --custom-border-bottom-colour: #e4e2e1;
+    --product-image-container-background-colour: #f6f6f6;
+    --search-bar-background-colour: #e3e3e3;
 }
 
 * {
@@ -53,7 +56,26 @@ input {
     border: 1px solid #ccc;
 }
 
-.header-logo {
+.orders-header-container,
+.wish-list-header-container,
+.checkout-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    background-color: var(--white);
+    font-size: 22px;
+    font-weight: 500;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 1px solid var(--custom-border-bottom-colour);
+    padding: 0 10%;
+    z-index: 1;
+}
+
+.header-website-logo {
     color: var(--custom-dark-grey);
     font-size: 22px;
     font-weight: 600;
