@@ -245,6 +245,40 @@ input {
     margin-right: 8px;
 }
 
+.product-image-container {
+    cursor: pointer;
+}
+
+.product-popup-container {
+    display: none;
+    position: fixed;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    height: 500px !important;
+    width: 500px !important;
+    padding: 50px;
+    z-index: 2;
+}
+
+.product-popup-image img {
+    max-height: 90%;
+    max-width: 90%;
+}
+
+.close-product-popup-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    background: none;
+    border: none;
+}
+
 input[type='number'] {
     outline: none;
     padding: 8px;

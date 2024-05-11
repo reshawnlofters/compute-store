@@ -21,9 +21,12 @@ function generateCartHTML() {
 
         if (matchingProduct) {
             cartHTML += `
-                <div class="cart-item-container cart-item-container-${matchingProduct.id}">
+                <div class="cart-item-container cart-item-container-${matchingProduct.id} product-container">
                     <div class="cart-item-details-grid">
-                        <img class="product-image" src="${matchingProduct.image}" alt="product image">
+                        <div class="product-image-container">
+                            <img class="product-image" src="${matchingProduct.image}" alt="product image">
+                        </div>
+                        
                         <div class="cart-item-details-container">
                             <div>
                                 <div class="product-name">

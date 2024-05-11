@@ -24,9 +24,11 @@ function generateWishListHTML() {
 
         if (matchingProduct) {
             wishListHTML += `
-                <div class="wish-list-item-container wish-list-item-container-${matchingProduct.id}">
+                <div class="wish-list-item-container wish-list-item-container-${matchingProduct.id} product-container">
                     <div class="wish-list-item-container-grid">
-                        <img class="product-image" src="${matchingProduct.image}" alt="product image">
+                        <div class="product-image-container">
+                            <img class="product-image" src="${matchingProduct.image}" alt="product image">
+                        </div>
     
                         <div class="wish-list-item-details-container">
                             <div>
@@ -70,9 +72,12 @@ function generateCheckoutWishListHTML() {
 
         if (matchingProduct) {
             checkoutWishListHTML += `
-                <div class="checkout-wish-list-item-container checkout-wish-list-item-container-${matchingProduct.id}">
+                <div class="checkout-wish-list-item-container checkout-wish-list-item-container-${matchingProduct.id} 
+                    product-container">
                     <div class="checkout-wish-list-item-container-grid">
-                        <img class="product-image" src="${matchingProduct.image}" alt="product image">
+                        <div class="product-image-container">
+                            <img class="product-image" src="${matchingProduct.image}" alt="product image">
+                        </div>
     
                         <div class="checkout-wish-list-item-details-container">
                             <div>

@@ -77,9 +77,9 @@ function generateOrderItemHTML(order) {
         }
 
         orderItemHTML += `
-            <div class="order-details-grid ${orderItemClass}">
+            <div class="order-details-grid ${orderItemClass} product-container">
                 <div class="product-image-container">
-                    <img src="${matchingProduct.image}" alt="product image">
+                    <img class="product-image" src="${matchingProduct.image}" alt="product image">
                 </div>
 
                 <div class="product-details">

@@ -24,6 +24,7 @@
         <script type="module" src="scripts/pages/checkout-page/cart.js" defer></script>
         <script type="module" src="scripts/pages/checkout-page/order-summary.js" defer></script>
         <script type="module" src="scripts/pages/wish-list-page/wish-list.js" defer></script>
+		<script type="module" src="scripts/shared/product-popup.js" defer></script>
         <script src="scripts/shared/footer.js" defer></script>
     </head>
     <body>
@@ -39,7 +40,7 @@
             </section>
         </header>
 
-        <main>
+        <main class="checkout-page-main">
             <div class="cart-section-title">Your Cart</div>
             <div class="cart-order-summary-grid">
                 <section class="cart-items-container"></section>
@@ -90,6 +91,8 @@
 
             <div class="wish-list-section-title">Your Wish List</div>
             <section class="checkout-wish-list-container"></section>
+
+			<div class="product-popup-container"></div>
         </main>
 
         <div id="footerContainer"></div>

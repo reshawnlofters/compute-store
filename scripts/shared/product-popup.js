@@ -1,6 +1,9 @@
-import {findProductById, findProductByName} from '../../shared/utils.js';
+import {findProductById, findProductByName} from './utils.js';
 
 const productsGrid = document.querySelector('.products-grid');
+const ordersGrid = document.querySelector('.orders-grid');
+const wishListContainer = document.querySelector('.wish-list-container');
+const checkoutPageMain = document.querySelector('.checkout-page-main');
 const productPopupContainer = document.querySelector('.product-popup-container');
 
 /**
@@ -83,6 +86,8 @@ function handleProductImageClick(event) {
     }
 }
 
-if (productsGrid) {
-    productsGrid.addEventListener('click', handleProductImageClick);
-}
+[productsGrid, ordersGrid, wishListContainer, checkoutPageMain].forEach(element => {
+    if (element) {
+        element.addEventListener('click', handleProductImageClick);
+    }
+});
