@@ -15,29 +15,28 @@
     z-index: 1;
 }
 
-.header-container {
-    display: flex;
+.header-grid {
+    height: 90px;
+    display: grid;
+    grid-template-columns: 250px 1fr 250px;
     align-items: center;
-    justify-content: space-between;
     background-color: var(--white);
     position: fixed;
-    height: 90px;
     top: 45px;
     left: 0;
     right: 0;
-    border-bottom: 1px solid rgba(25, 25, 25, 0.1);
     transition: top 0.2s ease;
     padding: 0 98px;
     z-index: 1;
 }
 
-.header-container .header-website-logo {
+.header-grid .header-website-logo {
     font-size: 28px;
 }
 
 .header-middle-section-container {
-    flex: 1;
-    max-width: 600px;
+    display: flex;
+    justify-content: center;
 }
 
 .search-bar-container {
@@ -47,12 +46,12 @@
 }
 
 .search-bar {
-    flex: 1;
-    background-color: var(--search-bar-background-colour);
-    border: none;
     height: 40px;
-    font-size: 14px;
+    width: 600px;
+    background-color: var(--search-bar-background-colour);
     color: var(--black);
+    font-size: 14px;
+    border: none;
     border-radius: 50px;
     padding-left: 20px;
 }
@@ -70,8 +69,8 @@
     position: absolute;
     background: transparent;
     border: none;
-    margin-top: 4px;
     right: 20px;
+    margin-top: 4px;
 }
 
 .search-button img {
@@ -116,7 +115,7 @@
 .header-wish-list-page-link {
     display: flex;
     align-items: center;
-    margin-right: 30px;
+    margin-right: 20px;
 }
 
 .header-checkout-page-link {
@@ -216,11 +215,11 @@
         transition: 0.6s;
     }
 
-    .header-container #ordersPageIcon,
-    .header-container #wishListPageIcon,
-    .header-container #checkoutPageIcon,
-    .header-container .header-orders-page-link,
-    .header-container .header-checkout-page-link {
+    .header-grid #ordersPageIcon,
+    .header-grid #wishListPageIcon,
+    .header-grid #checkoutPageIcon,
+    .header-grid .header-orders-page-link,
+    .header-grid .header-checkout-page-link {
         color: var(--white);
         font-weight: 400;
     }
@@ -233,7 +232,7 @@
         margin-left: 20px;
     }
 
-    .header-container {
+    .header-grid {
         padding: 0 75px;
     }
 }

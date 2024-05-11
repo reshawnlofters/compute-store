@@ -131,14 +131,14 @@ function displayAddedProductToCartMessage(productId) {
 
 function adjustHomepageHeaderOnScroll() {
     const promoHeaderContainer = document.querySelector('.promo-header-container');
-    const headerContainer = document.querySelector('.header-container');
+    const headerGrid = document.querySelector('.header-grid');
 
     if (window.scrollY > 0) {
         if (promoHeaderContainer) promoHeaderContainer.style.top = '-45px';
-        if (headerContainer) headerContainer.style.top = '0';
+        if (headerGrid) headerGrid.style.top = '0';
     } else {
         if (promoHeaderContainer) promoHeaderContainer.style.top = '0';
-        if (headerContainer) headerContainer.style.top = '45px';
+        if (headerGrid) headerGrid.style.top = '45px';
     }
 }
 

@@ -109,29 +109,39 @@ function generateCheckoutWishListHTML() {
 }
 
 function generateEmptyWishListHTML() {
-    let emptyWishListHTML;
-
-    emptyWishListHTML = `
-        <div class="empty-wish-list-container empty-checkout-wish-list-container">
-            <div class="empty-wish-list-message-container empty-checkout-wish-list-message-container">
-                <div>
-                    <span>Looks like it's empty!</span><br><br>
-                    Why not add something?
-                </div>
-                <div>
-                    Continue shopping on the
-                    <a class="link-primary" href="index.html">homepage</a>.
-                </div>
-            </div>
-            <i class="bi bi-bookmark-x" id="emptyWishListContainerImg"></i>
-        </div>
-    `;
-
     if (wishListContainer) {
-        wishListContainer.innerHTML = emptyWishListHTML;
+        wishListContainer.innerHTML = `
+           <div class="empty-wish-list-container">
+               <div class="empty-wish-list-message-container">
+                   <div>
+                       <span>Looks like it's empty!</span><br><br>
+                       Why not add something?
+                   </div>
+                   <div>
+                       Continue shopping on the
+                       <a class="link-primary" href="index.html">homepage</a>.
+                   </div>
+               </div>
+               <i class="bi bi-bookmark-x" id="emptyWishListContainerImg"></i>
+           </div>
+       `;
     }
+}
+
+
+function generateEmptyCheckoutWishListHTML() {
     if (checkoutWishListContainer) {
-        checkoutWishListContainer.innerHTML = emptyWishListHTML;
+        checkoutWishListContainer.innerHTML = `
+       <div class="empty-checkout-wish-list-container">
+           <div class="empty-checkout-wish-list-message-container">
+               <div>
+                   <span>Looks like it's empty!</span><br><br>
+                   Why not add something?
+               </div>
+           </div>
+           <i class="bi bi-bookmark-x" id="emptyWishListContainerImg"></i>
+       </div>
+   `;
     }
 }
 
@@ -148,6 +158,7 @@ export function updateWishListVisibility() {
         generateCheckoutWishListHTML();
     } else {
         generateEmptyWishListHTML();
+        generateEmptyCheckoutWishListHTML();
     }
 }
 
