@@ -47,5 +47,5 @@ function handleSignUpButtonClick() {
  */
 function manageFooter() {
     document.querySelector('.sign-up-button').addEventListener('click', handleSignUpButtonClick);
-    document.querySelector('.copy-right-notice-year').innerHTML = `${new Date().getFullYear()}`;
+    document.querySelector('.copyright-notice-year').innerHTML = `${new Date().getFullYear()}`;
 }

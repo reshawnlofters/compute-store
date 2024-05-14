@@ -26,7 +26,7 @@
     left: 0;
     right: 0;
     transition: top 0.2s ease;
-    padding: 0 98px;
+    padding: 0 22%;
     z-index: 1;
 }
 
@@ -37,18 +37,20 @@
 .header-middle-section-container {
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: center;
 }
 
 .search-bar-container {
     display: flex;
     align-items: center;
     position: relative;
+    flex: 1;
+    max-width: 700px;
 }
 
 .search-bar {
     height: 40px;
-    width: 600px;
+    flex: 1;
     background-color: var(--search-bar-background-colour);
     color: var(--black);
     font-size: 14px;
@@ -153,11 +155,8 @@
 #closeNavMenuIcon {
     display: none;
     height: 32px;
+    justify-self: end;
     cursor: pointer;
-}
-
-#openNavMenuIcon {
-    margin-left: 35px;
 }
 
 #closeNavMenuIcon {
@@ -168,21 +167,15 @@
     right: 25px;
 }
 
-@media (max-width: 1350px) {
-    .header-middle-section-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .search-bar-container {
-        width: 450px;
+@media (max-width: 2200px) {
+    .header-grid {
+        padding: 0 15%;
     }
 }
 
-@media (max-width: 1150px) {
-    .search-bar-container {
-        width: 350px;
+@media (max-width: 1850px) {
+    .header-grid {
+        padding: 0 10%;
     }
 }
 
@@ -197,31 +190,34 @@
 
     .nav-menu {
         display: block;
-        position: absolute;
         height: 100vh;
-        width: 200px;
+        width: 250px;
+        position: absolute;
         top: 0;
+        right: -250px;
         background-color: rgba(32, 33, 37, 255);
-        right: -200px;
         transition: 0.6s;
+        padding: 100px 0 0 25px;
     }
 
     .header-grid #checkoutPageIcon,
     .header-grid .header-orders-page-link,
+    .header-grid .header-wish-list-page-link,
     .header-grid .header-checkout-page-link {
         color: var(--white);
+        font-size: 18px;
         font-weight: 400;
     }
 
-    .header-orders-page-link {
-        margin: 100px 0 20px 20px;
+    .header-orders-page-link,
+    .header-wish-list-page-link{
+        margin-bottom: 25px;
     }
+}
 
-    .header-checkout-page-link {
-        margin-left: 20px;
-    }
-
+@media (max-width: 650px) {
     .header-grid {
-        padding: 0 75px;
+        display: flex;
+        justify-content: space-between;
     }
 }
