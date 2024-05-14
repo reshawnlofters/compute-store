@@ -11,11 +11,11 @@
     --label-secondary-colour: #e74c39;
     --link-primary-colour: #0066cc;
     --search-bar-placeholder-colour: #5e5f62;
-    --search-dropdown-menu-hover-colour: #f0f0f0;
+    --search-bar-dropdown-menu-hover-colour: #f0f0f0;
     --cart-items-quantity-background-colour: #f33c3c;
     --modal-view-order-button-background-colour: #00aa66;
     --modal-cancel-order-button-background-colour: #ed4040;
-    --custom-border-bottom-colour: #e4e2e1;
+    --custom-border-bottom-colour: #f4f4f4;
     --product-image-container-background-colour: #f6f6f6;
     --search-bar-background-colour: #e3e3e3;
 }

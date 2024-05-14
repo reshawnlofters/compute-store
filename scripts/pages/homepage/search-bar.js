@@ -2,7 +2,7 @@ import {products} from '../../../data/homepage.js';
 import {findProductByName} from '../../shared/utils.js';
 
 const searchBar = document.querySelector('.search-bar');
-const searchDropdownMenu = document.querySelector('.search-dropdown');
+const searchBarDropdownMenu = document.querySelector('.search-bar-dropdown-menu');
 const searchButton = document.querySelector('.search-button');
 
 /**
@@ -34,34 +34,36 @@ if (searchBar) {
 
 /**
  * Generates a dropdown list of matching products based on the provided array.
+ * - If no matching products are found, a default dropdown is displayed.
  * @param {Array} matchingProducts - The array of products to be displayed in the dropdown menu.
  */
 function generateSearchBarDropdownMenu(matchingProducts) {
     if (matchingProducts.length > 0) {
         const numberOfItemsToDisplay = matchingProducts.slice(0, 10);
-        searchDropdownMenu.innerHTML = numberOfItemsToDisplay
-            .map((product) => `<div class="search-dropdown-item">${product.name}</div>`)
+        searchBarDropdownMenu.innerHTML = numberOfItemsToDisplay
+            .map((product) => `<div class="search-bar-dropdown-menu-item">${product.name}</div>`)
             .join('');
-        searchDropdownMenu.style.display = 'block';
+        searchBarDropdownMenu.style.padding = '10px';
+        searchBarDropdownMenu.style.display = 'block';
 
         // Add click event listeners to the search dropdown menu items
-        const searchDropdownMenuItems = document.querySelectorAll('.search-dropdown-item');
-        searchDropdownMenuItems.forEach((item) => {
+        const searchBarDropdownMenuItems = document.querySelectorAll('.search-bar-dropdown-menu-item');
+        searchBarDropdownMenuItems.forEach((item) => {
             item.addEventListener('click', () => {
                 searchBar.value = item.textContent;
-                searchDropdownMenu.style.display = 'none';
+                searchBarDropdownMenu.style.display = 'none';
             });
         });
     } else {
-        searchDropdownMenu.innerHTML = '';
-        searchDropdownMenu.style.display = 'none';
+        searchBarDropdownMenu.innerHTML = 'No suggestions';
+        searchBarDropdownMenu.style.padding = '20px';
     }
 }
 
 /**
  * Handles the "search" button click event in the search bar.
  * - If a matching product is found, the page scrolls to it.
- * Checks if smooth scrolling is supported by the browser.
+ * - Checks if smooth scrolling is supported by the browser.
  */
 function handleSearchButtonClick() {
     const query = searchBar.value.toLowerCase();
@@ -96,7 +98,7 @@ function handleSearchButtonClick() {
         return;
     }
 
-    searchDropdownMenu.style.display = 'none'; // Clear the search dropdown menu
+    searchBarDropdownMenu.style.display = 'none'; // Clear the search bar dropdown menu
     clearSearchBar();
 }
 
@@ -109,11 +111,11 @@ function clearSearchBar() {
 }
 
 /**
- * Clears the search dropdown menu when a click is outside of it.
+ * Clears the search bar dropdown menu when a click is outside of it.
  */
 document.addEventListener('click', (event) => {
-    if (!event.target.matches('.search-bar') && !event.target.matches('.search-dropdown-item')) {
-        searchDropdownMenu.style.display = 'none';
+    if (!event.target.matches('.search-bar') && !event.target.matches('.search-bar-dropdown-menu-item')) {
+        searchBarDropdownMenu.style.display = 'none';
     }
 });
 
