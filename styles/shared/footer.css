@@ -3,6 +3,7 @@ footer {
     justify-content: center;
     flex-direction: column;
     background-color: var(--custom-dark-grey);
+    width: 100%;
     padding: 0 22%;
 }
 
@@ -10,7 +11,8 @@ footer {
     display: grid;
     grid-template-columns: auto auto 1fr;
     color: var(--white);
-    padding: 50px 0 30px 0;
+    padding-top: 50px;
+    margin-bottom: 25px;
 }
 
 .footer-about-section-container {
@@ -32,7 +34,7 @@ footer {
 footer .vr {
     position: relative;
     border-right: 1px solid rgba(128, 128, 128, 0.384);
-    margin: 0 40px 0 20px;
+    margin: 0 25px;
 }
 
 .newsletter-input-container {
@@ -96,13 +98,13 @@ footer .vr {
 footer .hr {
     position: relative;
     border-bottom: 1px solid rgba(128, 128, 128, 0.384);
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .footer-copyright-section-container {
     color: var(--grey);
     font-size: 13px !important;
-    margin-bottom: 20px;
+    padding-bottom: 50px;
 }
 
 @media (max-width: 1850px) {

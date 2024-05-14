@@ -36,7 +36,8 @@
 
 .header-middle-section-container {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    justify-content: start;
 }
 
 .search-bar-container {
@@ -101,6 +102,7 @@
 .header-right-section-container {
     display: flex;
     align-items: center;
+    justify-content: end;
 }
 
 .header-orders-page-link,
@@ -123,20 +125,9 @@
     align-items: center;
 }
 
-#ordersPageIcon,
 #checkoutPageIcon {
     font-size: 25px;
 }
-
-#ordersPageIcon,
-#wishListPageIcon {
-    margin-right: 8px;
-}
-
-#wishListPageIcon {
-    height: 25px;
-}
-
 
 .header-cart-items-quantity-container {
     position: relative;
@@ -215,8 +206,6 @@
         transition: 0.6s;
     }
 
-    .header-grid #ordersPageIcon,
-    .header-grid #wishListPageIcon,
     .header-grid #checkoutPageIcon,
     .header-grid .header-orders-page-link,
     .header-grid .header-checkout-page-link {
