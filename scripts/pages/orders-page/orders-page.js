@@ -38,7 +38,7 @@ function generateOrdersHTML() {
                         <div
                             class="cancel-order-button link-primary"
                             data-order-id="${order.id}">
-                                Cancel order
+                                Cancel
                         </div>
                     </section>
                 </div>

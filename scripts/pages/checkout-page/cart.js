@@ -100,7 +100,7 @@ function generateCartHTML() {
 function generateEmptyCartHTML() {
     if (cartItemContainer) {
         cartItemContainer.innerHTML = `
-            <div class="empty-cart-container">
+            <div class="empty-cart-item-container">
                 <div class="empty-cart-message-container">
                     <div>
                         <span>Looks like it's empty!</span><br><br>

@@ -5,9 +5,3 @@
 .checkout-header-right-section {
     justify-self: end;
 }
-
-@media (max-width: 600px) {
-    .checkout-header-middle-section {
-        display: none;
-    }
-}

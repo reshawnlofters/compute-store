@@ -3,9 +3,9 @@ html {
 }
 
 main {
-    max-width: 850px;
-    padding: 0 30px;
-    margin: 140px auto;
+    min-height: 100vh;
+    max-width: 825px;
+    margin: 140px auto 0 auto;
 }
 
 .wish-list-item-container {
@@ -17,4 +17,35 @@ main {
     display: grid;
     grid-template-columns: 100px auto;
     grid-gap: 40px;
+}
+
+@media (max-width: 900px) {
+    main {
+        min-width: 700px;
+        max-width: 65%;
+    }
+}
+
+@media (max-width: 750px) {
+    main {
+        min-width: 600px !important;
+    }
+}
+
+@media (max-width: 650px) {
+    main {
+        min-width: 500px !important;
+    }
+}
+
+@media (max-width: 550px) {
+    main {
+        min-width: 400px !important;
+    }
+}
+
+@media (max-width: 450px) {
+    main {
+        min-width: 300px !important;
+    }
 }

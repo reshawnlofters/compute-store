@@ -5,9 +5,3 @@
 .wish-list-header-right-section {
     justify-self: end;
 }
-
-@media (max-width: 600px) {
-    .wish-list-header-middle-section {
-        display: none;
-    }
-}

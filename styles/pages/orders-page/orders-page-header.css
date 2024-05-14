@@ -5,9 +5,3 @@
 .orders-header-right-section {
     justify-self: end;
 }
-
-@media (max-width: 600px) {
-    .orders-header-middle-section {
-        display: none;
-    }
-}

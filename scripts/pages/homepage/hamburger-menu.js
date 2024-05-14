@@ -13,7 +13,7 @@ if (openNavMenuIcon) {
 
 if (closeNavMenuIcon) {
     closeNavMenuIcon.addEventListener('click', () => {
-        navMenu.style.right = '-200px';
+        navMenu.style.right = '-250px';
     });
 } else {
     console.error('Close navigation menu icon not found.')
