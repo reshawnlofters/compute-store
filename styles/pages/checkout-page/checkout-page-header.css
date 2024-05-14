@@ -1,8 +1,9 @@
 .checkout-header-middle-section {
-    display: flex;
-    justify-content: center;
-    flex: 1;
-    flex-shrink: 0;
+    justify-self: center;
+}
+
+.checkout-header-right-section {
+    justify-self: end;
 }
 
 @media (max-width: 600px) {

@@ -1,13 +1,13 @@
-.orders-header-middle-section {
+.wish-list-header-middle-section {
     justify-self: center;
 }
 
-.orders-header-right-section {
+.wish-list-header-right-section {
     justify-self: end;
 }
 
 @media (max-width: 600px) {
-    .orders-header-middle-section {
+    .wish-list-header-middle-section {
         display: none;
     }
 }
