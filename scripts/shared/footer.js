@@ -41,6 +41,16 @@ function handleSignUpButtonClick() {
 }
 
 /**
+ * Handles adding a promo code using the "enter" key.
+ * - If the key is pressed, the promo code is validated.
+ */
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && document.querySelector('.email-input').value !== '') {
+        handleSignUpButtonClick();
+    }
+})
+
+/**
  * Manages the footer functionality.
  * - Adds a click event listener to the sign-up button to handle the sign-up click event.
  * - Updates the copyright notice year to the current year.

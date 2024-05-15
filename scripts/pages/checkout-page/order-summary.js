@@ -8,6 +8,7 @@ import {
     clearCart,
 } from '../../../data/checkout-page.js';
 
+const promoCodeInput = document.querySelector('.promo-code-input');
 const validPromoCodeMessageElement = document.querySelector('.valid-promo-code-message');
 const invalidPromoCodeMessageElement = document.querySelector('.invalid-promo-code-message');
 const addPromoCodeButton = document.querySelector('.add-promo-code-button');
@@ -33,8 +34,8 @@ function validatePromoCode() {
         invalidPromoCodeMessageElement.textContent = 'Promotion code is required';
         invalidPromoCodeMessageElement.style.display = 'block';
         validPromoCodeMessageElement.style.display = 'none';
-    } else if (promoCode.toLowerCase() !== 'demo') {
-        invalidPromoCodeMessageElement.textContent = 'Promotion code is invalid';
+    } else if (promoCode.toLowerCase() !== 'save20') {
+        invalidPromoCodeMessageElement.textContent = 'Promotion code is not recognized';
         invalidPromoCodeMessageElement.style.display = 'block';
         validPromoCodeMessageElement.style.display = 'none';
         isValidPromoCode = false;
@@ -53,13 +54,23 @@ if (addPromoCodeButton) {
 }
 
 /**
+ * Handles adding a promo code using the "enter" key.
+ * - If the key is pressed, the promo code is validated.
+ */
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && promoCodeInput.value.trim() !== '') {
+        validatePromoCode();
+    }
+})
+
+/**
  * Updates the order summary display with calculated values.
  * Calculates an order subtotal, shipping cost, discounts, taxes, and total cost.
  */
 export function updateOrderSummaryDisplay() {
     const subtotal = calculateCartItemTotalCost();
     const shippingCost = subtotal > 0 && subtotal < 10000 ? 899 : 0;
-    const discountSavings = isValidPromoCode ? subtotal * 0.25 : 0; // Discount is 25%
+    const discountSavings = isValidPromoCode ? subtotal * 0.25 : 0; // Discount is 20%
     const taxes = (subtotal - discountSavings + shippingCost) * 0.13;
 
     // Calculate the order total
@@ -99,7 +110,7 @@ function updateOrderSummaryDiscountElement(selector, discountSavings) {
     if (discountElement) {
         discountElement.style.color = discountElementColor;
         discountElement.innerHTML =
-            discountSavings > 0 ? `- ${formatCurrency(discountSavings)} (25%)` : formatCurrency(discountSavings);
+            discountSavings > 0 ? `- ${formatCurrency(discountSavings)} (20%)` : formatCurrency(discountSavings);
     }
 }
 

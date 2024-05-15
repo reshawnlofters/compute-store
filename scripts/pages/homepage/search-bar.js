@@ -128,6 +128,7 @@ document.querySelectorAll('.header-orders-page-link, .header-checkout-page-link'
 
 /**
  * Handles searching for a product in the search bar using the "enter" key.
+ * - If the key is pressed,the page scrolls to the product.
  */
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && searchBar.value !== '') {
