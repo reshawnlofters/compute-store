@@ -4,11 +4,13 @@
     z-index: 0;
 }
 
-.promo-section-container img {
+.promo-section-container .promo-section-background {
     display: block;
-    object-fit: cover;
     max-height: 650px;
     width: 100%;
+    object-fit: cover;
+    opacity: 1;
+    transition: opacity 0.5s ease;
 }
 
 .promo-section-container .overlay {

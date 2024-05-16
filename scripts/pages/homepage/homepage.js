@@ -7,6 +7,19 @@ import {removeWishListItem} from '../wish-list-page/wish-list.js';
 const productsGrid = document.querySelector('.products-grid');
 const addedProductToCartMessageTimeouts = {};
 const shopNowButton = document.querySelector('.shop-now-button');
+const promoSectionBackgrounds = [
+    'images/backgrounds/apple-airpods-max-background-casual.jpg',
+    'images/backgrounds/apple-airpods-max-background-formal.jpg',
+    'images/backgrounds/apple-ipad-background-formal.webp',
+    'images/backgrounds/logitech-mx-master-3-background-casual-3.jpg',
+    // 'images/backgrounds/logitech-mx-master-3-background-casual-2.webp',
+    // 'images/backgrounds/logitech-mx-master-3-background-casual.jpg',
+    // 'images/backgrounds/beats-headphones-background-formal.jpg',
+    'images/backgrounds/apple-airpods-pro-background-casual.jpg',
+    // 'images/backgrounds/apple-iphone-background-formal.jpg',
+    'images/backgrounds/apple-iphone-background-formal-2.png',
+    'images/backgrounds/beats-headphones-background-casual.jpg',
+];
 
 function generateProductsHTML() {
     let productsHTML = '';
@@ -251,3 +264,29 @@ document.addEventListener('DOMContentLoaded', () => {
         updateAddToWishListIcon(icon);
     });
 });
+
+/**
+ * Handles the carousel effect for the promo section background.
+ * - Changes the background image of the promo section after an interval.
+ * - Applies a smooth transition effect between background changes.
+ */
+function handlePromoSectionBackgroundCarousel() {
+    const promoSectionBackground = document.querySelector('.promo-section-background');
+    let index = -1;
+
+    const changeBackground = () => {
+        // Increment index and ensure looping through backgrounds
+        index = (index + 1) % promoSectionBackgrounds.length;
+
+        promoSectionBackground.style.opacity = '0';
+
+        setTimeout(() => {
+            promoSectionBackground.src = promoSectionBackgrounds[index];
+            promoSectionBackground.style.opacity = '1';
+        }, 500) // 0.5 seconds
+    }
+
+    setInterval(changeBackground, 7500); // 7.5 seconds
+}
+
+window.addEventListener('DOMContentLoaded', handlePromoSectionBackgroundCarousel);
