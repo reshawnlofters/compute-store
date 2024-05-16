@@ -1,22 +1,27 @@
-# Compute (E-commerce Store)
-## Overview
-Compute is an e-commerce store that provides users with a seamless and enjoyable shopping experience for tech products. The project showcases various functionalities, including product quantity selection, cart management, wish list creation, and order placement and viewing. Users can enjoy savings by applying code "DEMO" at checkout.
+# Compute Store (E-commerce Store)
 
-## Key Features
-- **Cart Management:** Easily add, remove, and adjust product quantities in the cart for personalized shopping.
-- **Wish list Functionality:** Save items for later directly from the homepage or during checkout.
-- **Quantity Selection:** Specify a desired product quantity before adding it to the cart.
-- **Order Summary:** View essential order information and apply discounts.
-- **Free Shipping Threshold:** Enjoy free shipping if your purchase exceeds a threshold.
-- **Orders Page:** View placed orders, featuring order details and the ability to cancel orders.
-- **Responsive Design:** Use the website on various devices; it is responsive for different screen sizes.
+## Overview
+The Compute Store offers an immersive shopping experience for the latest tech products. The application provides seamless product searching, browsing, wish list management, and cart features, allowing you to find and organize your desired products easily. It also offers a discount application feature for cost-saving opportunities, secure order placement, and order tracking through order history viewing.
+
+### Preview
+![Compute Store](images/project/project-homepage-1.png)
+![Compute Store](images/project/project-homepage-2.png)
+![Compute Store](images/project/project-checkout-page.png)
+![Compute Store](images/project/project-orders-page.png)
+![Compute Store](images/project/project-wish-list-page.png)
+
+Explore the Compute Store at [computestore.ca](computestore.ca).
+
+### Additional Information
+- **Homepage**: Easily add products to your wish list and cart. Customize the number of items in your cart and use the search bar for quick product navigation.
+- **Wish List Page**: View wish list items and the date they were added for transparency.
+- **Checkout Page**: View cart items, wish list items, and an order summary. Customize delivery dates and apply discounts for savings. Enjoy free shipping for qualifying orders.
+- **Orders Page**: View detailed order information, including order date, total, and ID. Cancel orders with assurance through a confirmation popup.
+- **Product Popup View**: Click on product images to enlarge them for better viewing.
+- **Responsiveness**: Enjoy a seamless experience across various devices with responsive design.
 
 ## Technologies Used
-HTML5, CSS3, JavaScript (ES6), Git
-
-## Getting Started
-Explore the [Compute Store](https://www.computestore.ca) and browse the wide range of tech products and available features.
+- HTML, CSS, JavaScript, Git, GitHub Pages
 
 ## Developer
-**Reshawn Lofters**
-- LinkedIn: [in/reshawnlofters](https://www.linkedin.com/in/reshawnlofters/)
+**Reshawn Lofters** - [LinkedIn](https://www.linkedin.com/in/reshawnlofters/)

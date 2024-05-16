@@ -140,16 +140,16 @@ function generateEmptyWishListHTML() {
 function generateEmptyCheckoutWishListHTML() {
     if (checkoutWishListContainer) {
         checkoutWishListContainer.innerHTML = `
-       <div class="empty-checkout-wish-list-container">
-           <div class="empty-checkout-wish-list-message-container">
-               <div>
-                   <span>Looks like it's empty!</span><br><br>
-                   Why not add something?
+            <div class="empty-checkout-wish-list-container">
+               <div class="empty-checkout-wish-list-message-container">
+                   <div>
+                       <span>Looks like it's empty!</span><br><br>
+                       Why not add something?
+                   </div>
                </div>
-           </div>
-           <i class="bi bi-bookmark-x" id="emptyWishListContainerImg"></i>
-       </div>
-   `;
+               <i class="bi bi-bookmark-x" id="emptyWishListContainerImg"></i>
+            </div>
+        `;
     }
 }
 
