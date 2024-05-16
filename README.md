@@ -5,10 +5,9 @@ The Compute Store offers an immersive shopping experience for the latest tech pr
 
 ### Preview
 ![Compute Store](images/project/project-homepage-1.png)
-![Compute Store](images/project/project-homepage-2.png)
 ![Compute Store](images/project/project-checkout-page.png)
-![Compute Store](images/project/project-orders-page.png)
 ![Compute Store](images/project/project-wish-list-page.png)
+![Compute Store](images/project/project-orders-page.png)
 
 Explore the Compute Store at [computestore.ca](computestore.ca).
 
