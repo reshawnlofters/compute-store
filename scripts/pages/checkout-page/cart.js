@@ -1,4 +1,4 @@
-import {findProductById, formatCurrency} from '../../shared/utils.js';
+import {findProductById, formatCurrency, date, monthNames} from '../../shared/utils.js';
 import {updateWishListVisibility} from '../wish-list-page/wish-list.js';
 import {updateOrderSummaryDisplay, updatePlaceOrderButtonVisibility} from './order-summary.js';
 import {
@@ -412,7 +412,15 @@ export function isProductAlreadyInWishList(productId) {
  */
 export function addProductToWishList(productId) {
     if (!isProductAlreadyInWishList(productId)) {
-        wishList.push({ productId });
+        // Create wish list object
+        const wishListItem = {
+            productId,
+            date: `${monthNames[date.getMonth()]} ${date.getDate()}`
+        }
+
+        // Add wish list item to 'wish list' array
+        wishList.push(wishListItem);
+
         updateWishListInLocalStorage();
         updateWishListVisibility();
     }

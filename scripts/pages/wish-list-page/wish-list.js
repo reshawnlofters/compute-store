@@ -38,6 +38,9 @@ function generateWishListHTML() {
                                 <div class="product-price">
                                     ${formatCurrency(matchingProduct.priceInCents)}
                                 </div>
+                                <div class="product-added-date"> 
+                                    Item added: ${product.date}, ${new Date().getFullYear()}
+                                </div>
                             </div>
                             <div>
                                 <span class="add-wish-list-item-to-cart-button link-primary" data-product-id="${

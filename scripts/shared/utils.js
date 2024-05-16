@@ -1,5 +1,21 @@
 import { products } from '../../data/homepage.js';
 
+export const date = new Date();
+export const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+];
+
 /**
  * Formats prices to two decimal places with commas.
  * @param priceInCents - The price in cents.

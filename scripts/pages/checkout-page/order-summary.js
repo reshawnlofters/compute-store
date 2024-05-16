@@ -1,4 +1,4 @@
-import { formatCurrency } from '../../shared/utils.js';
+import {formatCurrency, date, monthNames} from '../../shared/utils.js';
 import { orders, updateOrdersInLocalStorage } from '../../../data/orders-page.js';
 import { generateOrderId } from '../orders-page/orders-page.js';
 import {
@@ -150,21 +150,6 @@ if (removePromoCodeButton) {
  */
 function placeOrder() {
     const selectedCartItemDeliveryDates = getSelectedCartItemDeliveryDates();
-    const date = new Date();
-    const monthNames = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
-    ];
 
     // Create order object
     const order = {
