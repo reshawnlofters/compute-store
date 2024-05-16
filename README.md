@@ -3,7 +3,7 @@
 ## Overview
 The Compute Store offers an immersive shopping experience for the latest tech products. The application provides seamless product searching, browsing, wish list management, and cart features, allowing you to find and organize your desired products easily. It also offers a discount application feature for cost-saving opportunities, secure order placement, and order tracking through order history viewing.
 
-Explore the Compute Store at [computestore.ca](computestore.ca).
+Explore the Compute Store at [computestore.ca](https://computestore.ca).
 
 ### Preview
 ![Compute Store](images/project/project-homepage-1.png)
