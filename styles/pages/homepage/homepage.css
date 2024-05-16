@@ -2,6 +2,7 @@
     position: relative;
     top: 90px;
     z-index: 0;
+    margin-bottom: 200px;
 }
 
 .promo-section-container .promo-section-background {
@@ -73,13 +74,12 @@
 
 .products-section-container {
     padding: 0 22%;
-    margin-bottom: 100px;
+    margin-bottom: 140px;
 }
 
 .products-section-title {
     font-size: 26px;
     font-weight: 500;
-    padding-top: 200px;
     margin-bottom: 50px;
 }
 

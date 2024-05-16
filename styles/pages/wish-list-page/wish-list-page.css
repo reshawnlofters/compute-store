@@ -5,7 +5,7 @@ html {
 main {
     min-height: 100vh;
     max-width: 825px;
-    margin: 140px auto 0 auto;
+    margin: 140px auto;
 }
 
 .wish-list-item-container {

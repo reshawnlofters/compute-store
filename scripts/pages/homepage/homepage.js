@@ -7,18 +7,15 @@ import {removeWishListItem} from '../wish-list-page/wish-list.js';
 const productsGrid = document.querySelector('.products-grid');
 const addedProductToCartMessageTimeouts = {};
 const shopNowButton = document.querySelector('.shop-now-button');
+const promoSectionBackground = document.querySelector('.promo-section-background');
 const promoSectionBackgrounds = [
-    'images/backgrounds/apple-airpods-max-background-casual.jpg',
     'images/backgrounds/apple-airpods-max-background-formal.jpg',
-    'images/backgrounds/apple-ipad-background-formal.webp',
-    'images/backgrounds/logitech-mx-master-3-background-casual-3.jpg',
-    // 'images/backgrounds/logitech-mx-master-3-background-casual-2.webp',
-    // 'images/backgrounds/logitech-mx-master-3-background-casual.jpg',
-    // 'images/backgrounds/beats-headphones-background-formal.jpg',
+    'images/backgrounds/logitech-mx-master-3-background-casual.jpg',
+    'images/backgrounds/apple-iphone-background-formal.png',
     'images/backgrounds/apple-airpods-pro-background-casual.jpg',
-    // 'images/backgrounds/apple-iphone-background-formal.jpg',
-    'images/backgrounds/apple-iphone-background-formal-2.png',
     'images/backgrounds/beats-headphones-background-casual.jpg',
+    'images/backgrounds/apple-airpods-max-background-casual.jpg',
+    'images/backgrounds/apple-ipad-background-formal.webp',
 ];
 
 function generateProductsHTML() {
@@ -40,7 +37,7 @@ function generateProductsHTML() {
                             ${formatCurrency(product.priceInCents)}
                         </div>
                     </div>
-                    <img class="wish-list-icon" src="images/icons/unsaved.png" alt="wish list icon">
+                    <img class="wish-list-icon" src="images/icons/unsaved-wish-list-item.png" alt="wish list icon">
                 </div>
 
                 <div class="add-product-to-cart-container">
@@ -203,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const wishListIcons = document.querySelectorAll('.wish-list-icon');
 
     function updateSaveToWishListIconOnMouseover(icon) {
-        icon.src = 'images/icons/saved.png'; // Display the 'saved' icon
+        icon.src = 'images/icons/saved-wish-list-item.png'; // Display the 'saved' icon
     }
 
     function updateSaveToWishListIconOnMouseout(icon) {
@@ -250,9 +247,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const matchingProduct = findProductByName(productName);
 
         if (matchingProduct && isProductAlreadyInWishList(matchingProduct.id)) {
-            icon.src = 'images/icons/saved.png'; // Display "saved" icon
+            icon.src = 'images/icons/saved-wish-list-item.png'; // Display "saved" icon
         } else {
-            icon.src = 'images/icons/unsaved.png'; // Display "unsaved" icon
+            icon.src = 'images/icons/unsaved-wish-list-item.png'; // Display "unsaved" icon
         }
     }
 
@@ -271,7 +268,6 @@ document.addEventListener('DOMContentLoaded', () => {
  * - Applies a smooth transition effect between background changes.
  */
 function handlePromoSectionBackgroundCarousel() {
-    const promoSectionBackground = document.querySelector('.promo-section-background');
     let index = -1;
 
     const changeBackground = () => {
@@ -289,4 +285,6 @@ function handlePromoSectionBackgroundCarousel() {
     setInterval(changeBackground, 7500); // 7.5 seconds
 }
 
-window.addEventListener('DOMContentLoaded', handlePromoSectionBackgroundCarousel);
+if (promoSectionBackground) {
+    window.addEventListener('DOMContentLoaded', handlePromoSectionBackgroundCarousel);
+}

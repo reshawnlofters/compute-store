@@ -55,7 +55,7 @@ function generateSearchBarDropdownMenu(matchingProducts) {
             });
         });
     } else {
-        searchBarDropdownMenu.innerHTML = 'No suggestions';
+        searchBarDropdownMenu.innerHTML = 'No results could be found';
         searchBarDropdownMenu.style.padding = '20px';
     }
 }
