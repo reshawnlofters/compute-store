@@ -10,19 +10,19 @@ Explore the Compute Store at [computestore.ca](https://computestore.ca).
 ![Compute Store](images/project/project-checkout-page.png)
 ![Compute Store](images/project/project-orders-page.png)
 
-### Additional Information
-- **Homepage**: Easily add products to your wish list and cart. Customize the number of items in your cart and use the search bar for quick product navigation.
-- **Wish List Page**: View wish list items and the date they were added for transparency.
-- **Checkout Page**: View cart items, wish list items, and an order summary. Customize delivery dates and apply discounts for savings. Enjoy free shipping for qualifying orders.
-- **Orders Page**: View detailed order information, including order date, total, and ID. Cancel orders with assurance through a confirmation popup.
-- **Product Popup View**: Click on product images to enlarge them for better viewing.
-- **Responsiveness**: Enjoy a seamless experience across various devices with responsive design.
+## Usage
+- **Homepage**: Add products to your wish list and cart. Customize the number of items to add to your cart and use the search bar to navigate through products.
+- **Wish List Page**: View your wish list items and the date they were added for transparency.
+- **Checkout Page**: View your cart items, wish list items, and order summary. Customize cart item delivery dates and apply discounts for savings. Enjoy free shipping for qualifying orders.
+- **Orders Page**: View detailed order information, including order date, total, and ID. Cancel orders.
+- **Product Popup View**: Click on product images to enlarge them for enhanced product viewing.
+- **Responsiveness**: Seamlessly use the Compute Store on any device with its responsive design.
 
 ## Technologies Used
 - HTML, CSS, JavaScript, Git, GitHub Pages
 
-## Developer
-**Reshawn Lofters** - [LinkedIn](https://www.linkedin.com/in/reshawnlofters/)
+## Author
+The Compute Store is developed and maintained by Reshawn Lofters. For inquiries, suggestions, or feedback, please contact Reshawn Lofters at reshawnalofters@gmail.com.
 
 ## License
 This project is licensed under the Compute Store License. See the [LICENSE](./LICENSE) file for details.
