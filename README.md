@@ -23,3 +23,6 @@ Explore the Compute Store at [computestore.ca](https://computestore.ca).
 
 ## Developer
 **Reshawn Lofters** - [LinkedIn](https://www.linkedin.com/in/reshawnlofters/)
+
+## License
+This project is licensed under the Compute Store License. See the [LICENSE](./LICENSE) file for details.
