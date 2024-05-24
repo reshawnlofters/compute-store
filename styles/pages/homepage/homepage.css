@@ -1,8 +1,8 @@
 .promo-section-container {
     position: relative;
     top: 90px;
-    z-index: 0;
     margin-bottom: 200px;
+    z-index: 0;
 }
 
 .promo-section-container .promo-section-background {
@@ -25,35 +25,26 @@
 }
 
 .promo-section-title {
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    position: absolute;
-    color: var(--white);
     max-width: 500px;
     top: 40%;
     left: 50%;
+    color: var(--white);
     font-weight: 700;
     font-size: 45px;
-    transform: translate(-50%, -50%);
 }
 
 .promo-section-tag {
-    position: absolute;
-    text-align: center;
-    color: var(--white);
     width: 100%;
     top: 55%;
     left: 50%;
+    color: var(--white);
     font-size: 16px;
     font-weight: 700;
     letter-spacing: 1px;
-    transform: translate(-50%, -50%);
     margin-bottom: 25px;
 }
 
 .shop-now-button {
-    position: absolute;
     top: 68%;
     left: 50%;
     color: var(--custom-dark-grey);
@@ -61,10 +52,16 @@
     font-size: 15px;
     font-weight: 500;
     border: none;
-    text-align: center;
-    padding: 15px 25px;
-    transform: translate(-50%, -50%);
     transition: all 0.2s ease 0s;
+    padding: 15px 25px;
+}
+
+.promo-section-title,
+.promo-section-tag,
+.shop-now-button {
+    position: absolute;
+    text-align: center;
+    transform: translate(-50%, -50%);
 }
 
 .shop-now-button:hover {
@@ -244,10 +241,18 @@
 @media (max-width: 600px) {
     .promo-section-title {
         font-size: 35px;
+        transform: translate(-50%, -80%);
     }
 
     .promo-section-tag {
+        width: 70%;
+        min-width: 275px;
         font-size: 15px;
+        transform: translate(-50%, -115%);
+    }
+
+    .shop-now-button {
+        transform: translate(-50%, -100%);
     }
 
     .products-section-title {
@@ -258,10 +263,6 @@
 @media (max-width: 550px) {
     .promo-section-title {
         font-size: 35px;
-    }
-
-    .promo-section-tag {
-        width: 70%;
     }
 }
 
