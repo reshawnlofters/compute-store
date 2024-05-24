@@ -48,4 +48,12 @@ main {
     main {
         min-width: 300px !important;
     }
+
+    .wish-list-item-container {
+        height: auto;
+    }
+
+    .product-added-date {
+        margin-bottom: 8px;
+    }
 }

@@ -241,18 +241,18 @@
 @media (max-width: 600px) {
     .promo-section-title {
         font-size: 35px;
-        transform: translate(-50%, -80%);
+        transform: translate(-50%, -100%);
     }
 
     .promo-section-tag {
         width: 70%;
         min-width: 275px;
         font-size: 15px;
-        transform: translate(-50%, -115%);
+        transform: translate(-50%, -150%);
     }
 
     .shop-now-button {
-        transform: translate(-50%, -100%);
+        transform: translate(-50%, -115%);
     }
 
     .products-section-title {
