@@ -1,8 +1,17 @@
-import {products} from '../../../data/homepage.js';
-import {findProductByName, formatCurrency} from '../../shared/utils.js';
-import {addProductToCart, calculateQuantityOfCartItems} from '../../../data/checkout-page.js';
-import {addProductToWishList, isProductAlreadyInWishList} from '../checkout-page/cart.js';
-import {removeWishListItem} from '../wish-list-page/wish-list.js';
+/*
+    Compute Store (E-commerce Store)
+
+    Copyright © 2024 Reshawn Lofters
+
+    This file is part of the Compute Store project, which is licensed under the Compute Store License.
+    Please see the LICENSE file in the root of this project repository for full license details.
+*/
+
+import { products } from '../../../data/homepage.js';
+import { findProductByName, formatCurrency } from '../../shared/utils.js';
+import { addProductToCart, calculateQuantityOfCartItems } from '../../../data/checkout-page.js';
+import { addProductToWishList, isProductAlreadyInWishList } from '../checkout-page/cart.js';
+import { removeWishListItem } from '../wish-list-page/wish-list.js';
 
 const productsGrid = document.querySelector('.products-grid');
 const addedProductToCartMessageTimeouts = {};

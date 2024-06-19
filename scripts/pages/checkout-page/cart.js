@@ -1,6 +1,15 @@
-import {findProductById, formatCurrency, date, monthNames} from '../../shared/utils.js';
-import {updateWishListVisibility} from '../wish-list-page/wish-list.js';
-import {updateOrderSummaryDisplay, updatePlaceOrderButtonVisibility} from './order-summary.js';
+/*
+    Compute Store (E-commerce Store)
+
+    Copyright © 2024 Reshawn Lofters
+
+    This file is part of the Compute Store project, which is licensed under the Compute Store License.
+    Please see the LICENSE file in the root of this project repository for full license details.
+*/
+
+import { findProductById, formatCurrency, date, monthNames } from '../../shared/utils.js';
+import { updateWishListVisibility } from '../wish-list-page/wish-list.js';
+import { updateOrderSummaryDisplay, updatePlaceOrderButtonVisibility } from './order-summary.js';
 import {
     calculateQuantityOfCartItems,
     cart,
@@ -8,7 +17,7 @@ import {
     updateCartItemPriceDisplay,
     updateCartItemQuantity,
     updateWishListInLocalStorage,
-    wishList,
+    wishList
 } from '../../../data/checkout-page.js';
 
 const cartItemContainer = document.querySelector('.cart-items-container');

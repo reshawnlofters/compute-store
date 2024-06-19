@@ -1,11 +1,20 @@
-import {formatCurrency, date, monthNames} from '../../shared/utils.js';
+/*
+    Compute Store (E-commerce Store)
+
+    Copyright © 2024 Reshawn Lofters
+
+    This file is part of the Compute Store project, which is licensed under the Compute Store License.
+    Please see the LICENSE file in the root of this project repository for full license details.
+*/
+
+import { formatCurrency, date, monthNames } from '../../shared/utils.js';
 import { orders, updateOrdersInLocalStorage } from '../../../data/orders-page.js';
 import { generateOrderId } from '../orders-page/orders-page.js';
 import {
     cart,
     calculateQuantityOfCartItems,
     calculateCartItemTotalCost,
-    clearCart,
+    clearCart
 } from '../../../data/checkout-page.js';
 
 const promoCodeInput = document.querySelector('.promo-code-input');

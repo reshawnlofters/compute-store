@@ -1,3 +1,12 @@
+/*
+    Compute Store (E-commerce Store)
+
+    Copyright © 2024 Reshawn Lofters
+
+    This file is part of the Compute Store project, which is licensed under the Compute Store License.
+    Please see the LICENSE file in the root of this project repository for full license details.
+*/
+
 const navMenu = document.querySelector('.nav-menu');
 const openNavMenuIcon = document.getElementById('openNavMenuIcon');
 const closeNavMenuIcon = document.getElementById('closeNavMenuIcon');

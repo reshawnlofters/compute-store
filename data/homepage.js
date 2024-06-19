@@ -1,3 +1,12 @@
+/*
+    Compute Store (E-commerce Store)
+
+    Copyright © 2024 Reshawn Lofters
+
+    This file is part of the Compute Store project, which is licensed under the Compute Store License.
+    Please see the LICENSE file in the root of this project repository for full license details.
+*/
+
 /**
  * Array of products.
  * Each product object contains the product ID, image URL, name, and price.
@@ -194,5 +203,5 @@ export const products = [
     //     image: 'images/products/keyboards/apple-magic-keyboard-white.png',
     //     name: 'Apple Magic Keyboard - White',
     //     priceInCents: 22900,
-    // },
+    // }
 ];

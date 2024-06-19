@@ -1,5 +1,14 @@
-import {products} from '../../../data/homepage.js';
-import {findProductByName} from '../../shared/utils.js';
+/*
+    Compute Store (E-commerce Store)
+
+    Copyright © 2024 Reshawn Lofters
+
+    This file is part of the Compute Store project, which is licensed under the Compute Store License.
+    Please see the LICENSE file in the root of this project repository for full license details.
+*/
+
+import { products } from '../../../data/homepage.js';
+import { findProductByName } from '../../shared/utils.js';
 
 const searchBar = document.querySelector('.search-bar');
 const searchBarDropdownMenu = document.querySelector('.search-bar-dropdown-menu');

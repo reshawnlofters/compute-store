@@ -1,8 +1,17 @@
+/*
+    Compute Store (E-commerce Store)
+
+    Copyright © 2024 Reshawn Lofters
+
+    This file is part of the Compute Store project, which is licensed under the Compute Store License.
+    Please see the LICENSE file in the root of this project repository for full license details.
+*/
+
 import { findProductById, findProductByName, formatCurrency } from '../../shared/utils.js';
 import {
     orders,
     calculateQuantityOfOrders,
-    updateOrdersInLocalStorage,
+    updateOrdersInLocalStorage
 } from '../../../data/orders-page.js';
 import { addProductToCart } from '../../../data/checkout-page.js';
 

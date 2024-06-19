@@ -1,15 +1,24 @@
+/*
+    Compute Store (E-commerce Store)
+
+    Copyright © 2024 Reshawn Lofters
+
+    This file is part of the Compute Store project, which is licensed under the Compute Store License.
+    Please see the LICENSE file in the root of this project repository for full license details.
+*/
+
 import { formatCurrency, findProductById } from "../../shared/utils.js";
 import {
     wishList,
     addProductToCart,
     calculateQuantityOfWishListItems,
-    updateWishListInLocalStorage,
+    updateWishListInLocalStorage
 } from '../../../data/checkout-page.js';
 import {
     updateCartItemsQuantityDisplay,
     updateCartVisibility,
     updateCartItemDeliveryDateOptions,
-    addEventListenersToDeliveryDateOptions,
+    addEventListenersToDeliveryDateOptions
 } from '../checkout-page/cart.js';
 import { updateOrderSummaryDisplay, updatePlaceOrderButtonVisibility } from '../checkout-page/order-summary.js';
 
