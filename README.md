@@ -1,9 +1,9 @@
-# Compute Store (E-commerce Store)
+# Compute Store (E-commerce Store Simulator)
 
 ## Overview
-The Compute Store offers an immersive shopping experience for the latest tech products. The application provides seamless product searching, browsing, wish list management, and cart features, allowing you to find and organize your desired products easily. It also offers a discount application feature for cost-saving opportunities, secure order placement, and order tracking through order history viewing.
+The Compute Store is a responsive e-commerce simulator where users shop for the latest tech products. It features product search, browsing, wish list management, cart management, and order processing functionalities. The application also includes a discount feature for cost-saving opportunities and provides order history viewing for easy order tracking.
 
-Explore the Compute Store at [computestore.ca](https://computestore.ca).
+To explore the Compute Store, visit [computestore.ca](https://computestore.ca).
 
 ### Preview
 ![Compute Store](images/project/project-homepage-1.png)
@@ -11,18 +11,18 @@ Explore the Compute Store at [computestore.ca](https://computestore.ca).
 ![Compute Store](images/project/project-orders-page.png)
 
 ## Usage
-- **Homepage**: Add products to your wish list and cart. Customize the number of items to add to your cart and use the search bar to navigate through products.
-- **Wish List Page**: View your wish list items and the date they were added for transparency.
-- **Checkout Page**: View your cart items, wish list items, and order summary. Customize cart item delivery dates and apply discounts for savings. Enjoy free shipping for qualifying orders.
-- **Orders Page**: View detailed order information, including order date, total, and ID. Cancel orders.
-- **Product Popup View**: Click on product images to enlarge them for enhanced product viewing.
-- **Responsiveness**: Seamlessly use the Compute Store on any device with its responsive design.
+- **Homepage**: Add products to your wish list and cart, and use the search bar for quick navigation.
+- **Wish List Page**: Manage and view items on your wish list.
+- **Checkout Page**: Review cart and wish list items, customize delivery dates, apply discounts, and enjoy free shipping for qualifying orders.
+- **Orders Page**: Access detailed order information and manage orders, including cancellations.
+- **Product Popup View**: Click product images to enlarge them for detailed viewing.
+- **Responsiveness**: Experience a seamless interface across all devices with the responsive design.
 
 ## Technologies Used
-- HTML, CSS, JavaScript, Git, GitHub Pages
+- JavaScript, HTML, CSS, Git, Microsoft Azure Cloud
 
 ## Author
-The Compute Store is developed and maintained by Reshawn Lofters. For inquiries, suggestions, or feedback, please contact Reshawn Lofters at reshawnalofters@gmail.com.
+The Compute Store is developed and maintained by Reshawn Lofters. For inquiries, suggestions, or feedback, please email [reshawnalofters@gmail.com](mailto:reshawnalofters@gmail.com).
 
 ## License
-This project is licensed under the Compute Store License. See the [LICENSE](./LICENSE) file for details.
+This project is licensed under a Custom License. See the [LICENSE](./LICENSE) file for details.
