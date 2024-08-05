@@ -1,9 +1,9 @@
 /*
-    Compute Store (E-commerce Store)
+    Compute Store (E-commerce Store Simulator)
 
     Copyright © 2024 Reshawn Lofters
 
-    This file is part of the Compute Store project, which is licensed under the Compute Store License.
+    This file is part of the Compute Store project, which is licensed under a Custom License.
     Please see the LICENSE file in the root of this project repository for full license details.
 */
 
