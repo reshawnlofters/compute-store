@@ -1,0 +1,16 @@
+{
+  "name": "compute-store",
+  "version": "1.0.0",
+  "description": "The Compute Store is a responsive e-commerce simulator where users shop for the latest tech products. It features product search, browsing, wish list management, cart management, and order processing functionalities. The application also includes a discount feature for cost-saving opportunities and provides order history viewing for easy order tracking.",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 'No build step required'",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
