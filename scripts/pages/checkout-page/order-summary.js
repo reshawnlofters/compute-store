@@ -7,7 +7,7 @@
     Please see the LICENSE file in the root of this project repository for full license details.
 */
 
-import { formatCurrency, date, monthNames } from '../../shared/utils.js';
+import { formatCurrency, date, monthNames, clearInputField } from '../../shared/utils.js';
 import { orders, updateOrdersInLocalStorage } from '../../../data/orders-page.js';
 import { generateOrderId } from '../orders-page/orders-page.js';
 import {
@@ -54,7 +54,7 @@ function validatePromoCode() {
         isValidPromoCode = true;
     }
 
-    promoCodeInput.value = ''; // Clear the input field
+    clearInputField(promoCodeInput);
     updateOrderSummaryDisplay();
 }
 

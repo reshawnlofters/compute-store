@@ -7,6 +7,8 @@
     Please see the LICENSE file in the root of this project repository for full license details.
 */
 
+import { clearInputField } from "./utils";
+
 function fetchFooterHTML() {
     const footerContainer = document.getElementById('footerContainer');
     const footerHTMLPath = 'footer.html';
@@ -46,7 +48,7 @@ function handleSignUpButtonClick() {
         invalidEmailMessage.style.display = 'none';
     }
 
-    emailInput.value = ''; // Clear the input field
+    clearInputField(emailInput);
 }
 
 /**

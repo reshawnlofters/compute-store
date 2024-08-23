@@ -55,3 +55,11 @@ export function findProductById(productId) {
 export function findProductByName(productName) {
     return products.find((product) => product.name.toLowerCase() === productName);
 }
+
+/**
+ * Clears the value of the specified input field.
+ * @param {Element} inputElement - The input field to be cleared.
+ */
+export function clearInputField(inputElement) {
+    inputElement.value = '';
+}

@@ -8,7 +8,7 @@
 */
 
 import { products } from '../../../data/homepage.js';
-import { findProductByName } from '../../shared/utils.js';
+import { clearInputField, findProductByName } from '../../shared/utils.js';
 
 const searchBar = document.querySelector('.search-bar');
 const searchBarDropdownMenu = document.querySelector('.search-bar-dropdown-menu');
@@ -108,15 +108,11 @@ function handleSearchButtonClick() {
     }
 
     searchBarDropdownMenu.style.display = 'none'; // Clear the search bar dropdown menu
-    clearSearchBar();
+    clearInputField(searchBar);
 }
 
 if (searchButton) {
     searchButton.addEventListener('click', handleSearchButtonClick);
-}
-
-function clearSearchBar() {
-    searchBar.value = '';
 }
 
 /**
@@ -132,7 +128,9 @@ document.addEventListener('click', (event) => {
  * Adds click event listeners to clear the search bar when leaving the homepage.
  */
 document.querySelectorAll('.header-orders-page-link, .header-checkout-page-link')
-    .forEach(link => link.addEventListener('click', clearSearchBar));
+    .forEach(link => link.addEventListener('click', () => {
+        clearInputField(searchBar);
+    }));
 
 
 /**
