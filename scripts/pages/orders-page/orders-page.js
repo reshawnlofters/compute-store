@@ -204,9 +204,7 @@ function cancelOrder(orderId) {
 function handleCancelOrderButtonClick(event) {
     const cancelOrderButton = event.target.closest('.cancel-order-button');
 
-    if (!cancelOrderButton) {
-        return;
-    }
+    if (!cancelOrderButton) return;
 
     const modal = document.querySelector('.cancel-order-modal');
     modal.showModal(); // Display the modal
@@ -269,9 +267,7 @@ displayPlacedOrderModal();
 function handleBuyProductAgainButtonClick(event) {
     const buyAgainButton = event.target.closest('.buy-product-again-button');
 
-    if (!buyAgainButton) {
-        return;
-    }
+    if (!buyAgainButton) return;
 
     const productDetailsContainer = buyAgainButton.closest('.product-details');
     const productNameElement = productDetailsContainer.querySelector('.product-name');

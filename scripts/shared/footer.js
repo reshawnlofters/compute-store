@@ -7,8 +7,6 @@
     Please see the LICENSE file in the root of this project repository for full license details.
 */
 
-import { clearInputField } from "./utils";
-
 function fetchFooterHTML() {
     const footerContainer = document.getElementById('footerContainer');
     const footerHTMLPath = 'footer.html';
@@ -48,15 +46,16 @@ function handleSignUpButtonClick() {
         invalidEmailMessage.style.display = 'none';
     }
 
-    clearInputField(emailInput);
+    emailInput.value = '';
 }
 
 /**
- * Handles adding a promo code using the "enter" key.
- * - If the key is pressed, the promo code is validated.
+ * Handles signing up to newsletter using the "enter" key.
+ * - If the key is pressed, the email is validated.
  */
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' && document.querySelector('.email-input').value !== '') {
+    const emailInput = document.querySelector('.email-input');
+    if (event.key === 'Enter' && emailInput && emailInput.value !== '') {
         handleSignUpButtonClick();
     }
 })

@@ -40,9 +40,7 @@ export function updateWishListInLocalStorage() {
 export function addProductToCart(productId, productQuantity) {
     const product = findProductById(productId);
 
-    if (!product) {
-        return;
-    }
+    if (!product) return;
 
     // Check if the product is already in the cart
     let matchingCartItem = cart.find((cartItem) => cartItem.productId === productId);
@@ -143,4 +141,11 @@ export function calculateCartItemTotalCost() {
 export function clearCart() {
     cart = [];
     updateCartInLocalStorage();
+}
+
+/**
+ * Returns the cart.
+ */
+export function getCart() {
+    return cart;
 }

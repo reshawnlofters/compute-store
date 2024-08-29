@@ -234,7 +234,7 @@ function handleValidCartItemQuantityInput(productId, cartItemContainer, newQuant
     if (cartItemContainer) {
         cartItemContainer.querySelector('.cart-item-quantity-count').innerHTML = String(newQuantity);
     } else {
-        console.log('Cart item container not found.');
+        console.error('Cart item container not found.');
         return;
     }
 
@@ -347,9 +347,7 @@ function handleUpdateQuantityButtonClick() {
     cartItemContainer.addEventListener('click', (event) => {
         const saveButton = event.target.closest('.update-cart-item-quantity-button');
 
-        if (!saveButton) {
-            return;
-        }
+        if (!saveButton) return;
 
         const productId = saveButton.dataset.productId;
         const cartItemContainer = document.querySelector(`.cart-item-container-${productId}`);

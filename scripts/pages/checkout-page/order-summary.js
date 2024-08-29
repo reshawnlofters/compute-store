@@ -31,7 +31,6 @@ let orderTotal = 0;
  * Validates a promo code inputted by the user and updates UI displays.
  */
 function validatePromoCode() {
-    const promoCodeInput = document.querySelector('.promo-code-input');
     const promoCode = promoCodeInput.value.trim();
 
     if (!promoCodeInput || !validPromoCodeMessageElement || !invalidPromoCodeMessageElement) {
@@ -67,7 +66,7 @@ if (addPromoCodeButton) {
  * - If the key is pressed, the promo code is validated.
  */
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' && promoCodeInput.value.trim() !== '') {
+    if (event.key === 'Enter' && promoCodeInput && promoCodeInput.value !== '') {
         validatePromoCode();
     }
 })
