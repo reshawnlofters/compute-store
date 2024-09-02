@@ -185,7 +185,7 @@ export function generateOrderId() {
  * Cancels an order and updates UI displays.
  * @param {string} orderId - The unique identifier of the order.
  */
-function cancelOrder(orderId) {
+export function cancelOrder(orderId) {
     const orderIndex = orders.findIndex((order) => order.id === orderId);
 
     if (orderIndex !== -1) {

@@ -27,3 +27,10 @@ export function updateOrdersInLocalStorage() {
 export function calculateQuantityOfOrders() {
     return orders.length;
 }
+
+/**
+ * Returns the `orders`array.
+ */
+export function getOrders() {
+    return orders;
+}
