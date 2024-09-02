@@ -189,16 +189,16 @@ function saveNewCartItemQuantity(productId, cartItemContainer) {
     const updateCartItemQuantityElement = cartItemContainer.querySelector(
         '.update-cart-item-quantity-input'
     );
-    const newQuantity = parseInt(updateCartItemQuantityElement.value.trim(), 10);
+    const newCartItemQuantity = parseInt(updateCartItemQuantityElement.value.trim(), 10);
 
-    if (Number.isNaN(newQuantity)) {
+    if (Number.isNaN(newCartItemQuantity)) {
         return;
-    } else if (newQuantity === 0) {
+    } else if (newCartItemQuantity === 0) {
         handleZeroCartItemQuantityInput(productId);
-    } else if (newQuantity > 50) {
+    } else if (newCartItemQuantity > 50) {
         handleInvalidCartItemQuantityInput(cartItemContainer);
     } else {
-        handleValidCartItemQuantityInput(productId, cartItemContainer, newQuantity);
+        handleValidCartItemQuantityInput(productId, cartItemContainer, newCartItemQuantity);
     }
 
     updateCartItemQuantityElement.blur();
@@ -227,12 +227,13 @@ function handleInvalidCartItemQuantityInput(cartItemContainer) {
  * Handles a valid cart item quantity input.
  * @param {string} productId - The unique identifier of the cart item.
  * @param {Element} cartItemContainer - The container element of the cart item.
- * @param {number} newQuantity - The new cart item quantity inputted by the user.
+ * @param {number} newCartItemQuantity - The new cart item quantity inputted by the user.
  */
-function handleValidCartItemQuantityInput(productId, cartItemContainer, newQuantity) {
+function handleValidCartItemQuantityInput(productId, cartItemContainer, newCartItemQuantity) {
     // Update the cart item quantity label
     if (cartItemContainer) {
-        cartItemContainer.querySelector('.cart-item-quantity-count').innerHTML = String(newQuantity);
+        cartItemContainer.querySelector('.cart-item-quantity-count').innerHTML =
+            String(newCartItemQuantity);
     } else {
         console.error('Cart item container not found.');
         return;
@@ -241,8 +242,8 @@ function handleValidCartItemQuantityInput(productId, cartItemContainer, newQuant
     // Remove the 'editing-cart-item-quantity' class from the container
     cartItemContainer.classList.remove('editing-cart-item-quantity');
 
-    updateCartItemQuantity(productId, newQuantity);
-    updateCartItemPriceDisplay(productId, cartItemContainer, newQuantity);
+    updateCartItemQuantity(productId, newCartItemQuantity);
+    updateCartItemPriceDisplay(productId, cartItemContainer, newCartItemQuantity);
     updateCartItemsQuantityDisplay();
     updateOrderSummaryDisplay();
 }

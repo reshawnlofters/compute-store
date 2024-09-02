@@ -97,13 +97,13 @@ export function calculateQuantityOfWishListItems() {
 /**
  * Updates the quantity of a cart item based on user input.
  * @param {string} productId - The unique identifier of the cart item.
- * @param {number} newQuantity - The new cart item quantity inputted by the user.
+ * @param {number} newCartItemQuantity - The new cart item quantity inputted by the user.
  */
-export function updateCartItemQuantity(productId, newQuantity) {
+export function updateCartItemQuantity(productId, newCartItemQuantity) {
     const cartItem = cart.find((item) => item.productId === productId);
 
     if (cartItem) {
-        cartItem.quantity = newQuantity;
+        cartItem.quantity = newCartItemQuantity;
 
         updateCartInLocalStorage();
     }
@@ -113,14 +113,16 @@ export function updateCartItemQuantity(productId, newQuantity) {
  * Updates the total price of a cart item displayed in the cart based on the cart item quantity.
  * @param {string} productId - The unique identifier of the cart item.
  * @param {Element} cartItemContainer - The container element of the cart item.
- * @param {number} newQuantity - The new cart item quantity inputted by the user.
+ * @param {number} newCartItemQuantity - The new cart item quantity inputted by the user.
  */
-export function updateCartItemPriceDisplay(productId, cartItemContainer, newQuantity) {
+export function updateCartItemPriceDisplay(productId, cartItemContainer, newCartItemQuantity) {
     const cartItemPriceElement = cartItemContainer.querySelector('.product-price');
     const matchingCartItem = findProductById(productId);
 
     if (matchingCartItem) {
-        cartItemPriceElement.innerHTML = formatCurrency(matchingCartItem.priceInCents * newQuantity);
+        cartItemPriceElement.innerHTML = formatCurrency(
+            matchingCartItem.priceInCents * newCartItemQuantity
+        );
     }
 }
 
