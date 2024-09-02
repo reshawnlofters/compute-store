@@ -25,28 +25,28 @@ function generateOrdersHTML() {
         const order = orders[i];
 
         ordersHTML += `
-            <div class="order-container order-container-${order.id}">
-                <div class="order-header-container">
-                    <section class="order-header-left-section">
-                        <div class="order-date">
-                            <div class="order-header-label label-primary">
+            <div class='order-container order-container-${order.id}'>
+                <div class='order-header-container'>
+                    <section class='order-header-left-section'>
+                        <div class='order-date'>
+                            <div class='order-header-label label-primary'>
                                 Order Date
                             </div>
                             <div>${order.date}, ${new Date().getFullYear()}</div>
                         </div>
-                        <div class="order-total">
-                            <div class="order-header-label label-primary">Total</div>
+                        <div class='order-total'>
+                            <div class='order-header-label label-primary'>Total</div>
                             <div>${formatCurrency(order.price)}</div>
                         </div>
-                        <div class="order-id">
-                            <div class="order-header-label label-primary">Order ID</div>
+                        <div class='order-id'>
+                            <div class='order-header-label label-primary'>Order ID</div>
                             <div>${order.id}</div>
                         </div>
                     </section>
-                    <section class="order-header-right-section">
+                    <section class='order-header-right-section'>
                         <div
-                            class="cancel-order-button link-primary"
-                            data-order-id="${order.id}">
+                            class='cancel-order-button link-primary'
+                            data-order-id='${order.id}'>
                                 Cancel
                         </div>
                     </section>
@@ -86,25 +86,25 @@ function generateOrderItemHTML(order) {
         }
 
         orderItemHTML += `
-            <div class="order-details-grid ${orderItemClass} product-container">
-                <div class="product-image-container">
-                    <img class="product-image" src="${matchingProduct.image}" alt="product image">
+            <div class='order-details-grid ${orderItemClass} product-container'>
+                <div class='product-image-container'>
+                    <img class='product-image' src='${matchingProduct.image}' alt='product image'>
                 </div>
 
-                <div class="product-details">
-                    <div class="product-name">
+                <div class='product-details'>
+                    <div class='product-name'>
                         ${matchingProduct.name}
                     </div>
-                    <div class="product-delivery-date">
+                    <div class='product-delivery-date'>
                         Estimated delivery: ${formatOrderDeliveryDate(
                             orderItem.deliveryDate
                         )}, ${new Date().getFullYear()}
                     </div>
-                    <div class="product-quantity">
+                    <div class='product-quantity'>
                         Quantity: ${orderItem.quantity}
                     </div>
-                    <button class="buy-product-again-button button-primary">
-                        <i class="bi bi-arrow-clockwise"></i>
+                    <button class='buy-product-again-button button-primary'>
+                        <i class='bi bi-arrow-clockwise'></i>
                         <span
                             >Buy it again
                         </span>
@@ -119,18 +119,18 @@ function generateOrderItemHTML(order) {
 function generateEmptyOrdersHTML() {
     if (ordersGrid) {
         ordersGrid.innerHTML = `
-            <div class="empty-orders-container">
-                <div class="empty-orders-message-container">
+            <div class='empty-orders-container'>
+                <div class='empty-orders-message-container'>
                     <div>
                         <span>Looks like it's empty!</span><br><br>
                         Why not place an order?
                     </div>
                     <div>
                         Continue shopping on the
-                        <a class="link-primary" href="index.html">homepage</a>.
+                        <a class='link-primary' href='index.html'>homepage</a>.
                     </div>
                 </div>
-                <i class="bi bi-bag-x" id="emptyOrdersContainerImg"></i>
+                <i class='bi bi-bag-x' id='emptyOrdersContainerImg'></i>
             </div>`;
     }
 }
@@ -198,7 +198,7 @@ export function cancelOrder(orderId) {
 }
 
 /**
- * Handles the "cancel order" button click event.
+ * Handles the `cancel-order-button` click event.
  * - If the button is clicked, a modal appears for cancellation confirmation.
  */
 function handleCancelOrderButtonClick(event) {
@@ -209,7 +209,7 @@ function handleCancelOrderButtonClick(event) {
     const modal = document.querySelector('.cancel-order-modal');
     modal.showModal(); // Display the modal
 
-    // If the "cancel order" button in the modal is clicked, cancel the order
+    // If the 'cancel order' button in the modal is clicked, cancel the order
     document.querySelector('.modal-cancel-order-button').addEventListener('click', () => {
         modal.close();
         const orderId = cancelOrderButton.dataset.orderId;
@@ -220,7 +220,7 @@ function handleCancelOrderButtonClick(event) {
         }, 500);
     });
 
-    // If the "close" button in the modal is clicked, close the modal
+    // If the 'close' button in the modal is clicked, close the modal
     document.querySelector('.modal-close-button').addEventListener('click', () => {
         modal.close();
     });
@@ -247,7 +247,7 @@ function displayPlacedOrderModal() {
 
         modal.showModal();
 
-        // Add a click event listener to the "view order" button to close the modal
+        // Add a click event listener to the 'view order' button to close the modal
         document.querySelector('.modal-view-order-button').addEventListener('click', () => {
             modal.close();
         });
@@ -260,7 +260,7 @@ function displayPlacedOrderModal() {
 displayPlacedOrderModal();
 
 /**
- * Handles the "buy product again" button click event.
+ * Handles the `buy-product-again-button` click event.
  * - If the button is clicked, the product is added to the cart and the user is sent to the checkout page.
  * @param {Event} event - The click event object.
  */

@@ -16,7 +16,7 @@ const searchButton = document.querySelector('.search-button');
 
 /**
  * Handles the search bar functionality.
- * - Displays matching products by filtering the 'products' array with the query.
+ * - Displays matching products by filtering the `products` array with the query.
  * - Generates and displays the search bar dropdown menu with the matching products.
  * - Updates the search bar styles based on the state of the search bar.
  */
@@ -70,7 +70,7 @@ function generateSearchBarDropdownMenu(matchingProducts) {
 }
 
 /**
- * Handles the "search" button click event in the search bar.
+ * Handles the `search-button` click event in the search bar.
  * - If a matching product is found, the page scrolls to it.
  * - Checks if smooth scrolling is supported by the browser.
  */
@@ -134,7 +134,7 @@ document.querySelectorAll('.header-orders-page-link, .header-checkout-page-link'
 
 
 /**
- * Handles searching for a product in the search bar using the "enter" key.
+ * Handles searching for a product in the search bar using the 'Enter' key.
  * - If the key is pressed,the page scrolls to the product.
  */
 document.addEventListener('keydown', (event) => {

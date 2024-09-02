@@ -39,7 +39,7 @@ export function formatCurrency(priceInCents) {
 }
 
 /**
- * Finds a product in the 'products' array based on its ID.
+ * Finds a product in the `products` array based on its ID.
  * @param {string} productId - The unique identifier of the product.
  * @returns {Object | undefined} - The matching product. If not found, undefined.
  */
@@ -48,7 +48,7 @@ export function findProductById(productId) {
 }
 
 /**
- * Finds a product in the 'products' array based on its name.
+ * Finds a product in the `products` array based on its name.
  * @param {string} productName - The name of the product to find.
  * @returns {Object | undefined} - The matching product. If not found, undefined.
  */

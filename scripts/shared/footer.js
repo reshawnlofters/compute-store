@@ -23,7 +23,7 @@ function fetchFooterHTML() {
 document.addEventListener('DOMContentLoaded', fetchFooterHTML);
 
 /**
- * Handles the "sign-up" button click event.
+ * Handles the `sign-up-button` button click event.
  * - If the button is clicked, the email inputted by the user is verified and UI displays are updated.
  */
 function handleSignUpButtonClick() {
@@ -50,7 +50,7 @@ function handleSignUpButtonClick() {
 }
 
 /**
- * Handles signing up to newsletter using the "enter" key.
+ * Handles signing up to newsletter using the 'Enter' key.
  * - If the key is pressed, the email is validated.
  */
 document.addEventListener('keydown', (event) => {
@@ -62,7 +62,7 @@ document.addEventListener('keydown', (event) => {
 
 /**
  * Manages the footer functionality.
- * - Adds a click event listener to the sign-up button to handle the sign-up click event.
+ * - Adds a click event listener to the `sign-up-button` to handle the 'sign-up' click event.
  * - Updates the copyright notice year to the current year.
  */
 function manageFooter() {

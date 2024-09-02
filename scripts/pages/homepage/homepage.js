@@ -32,43 +32,43 @@ function generateProductsHTML() {
 
     products.forEach((product) => {
         productsHTML += `
-            <div class="product-container product-container-${product.id}">
-                <div class="product-image-container">
-                    <img class="product-image" src="${product.image}" alt="product image">
+            <div class='product-container product-container-${product.id}'>
+                <div class='product-image-container'>
+                    <img class='product-image' src='${product.image}' alt='product image'>
                 </div>
                 
-                <div class="product-info-grid">
+                <div class='product-info-grid'>
                     <div>
-                        <div class="product-name limit-text-to-2-lines">
+                        <div class='product-name limit-text-to-2-lines'>
                             ${product.name}
                         </div>
-                        <div class="product-price">
+                        <div class='product-price'>
                             ${formatCurrency(product.priceInCents)}
                         </div>
                     </div>
-                    <img class="wish-list-icon" src="images/icons/unsaved-wish-list-item.png" alt="wish list icon">
+                    <img class='wish-list-icon' src='images/icons/unsaved-wish-list-item.png' alt='wish list icon'>
                 </div>
 
-                <div class="add-product-to-cart-container">
-                    <div class="input-product-quantity-container">
-                        <div class="product-quantity-controls-container">
-                            <button class="decrease-product-quantity-button" data-product-id="${
+                <div class='add-product-to-cart-container'>
+                    <div class='input-product-quantity-container'>
+                        <div class='product-quantity-controls-container'>
+                            <button class='decrease-product-quantity-button' data-product-id='${
                                 product.id
-                            }">
-                                <i class="bi bi-dash-lg"></i>
+                            }'>
+                                <i class='bi bi-dash-lg'></i>
                             </button>
-                            <div class="product-quantity-count" data-product-id="${product.id}">
+                            <div class='product-quantity-count' data-product-id='${product.id}'>
                                 0
                             </div>
-                            <button class="increase-product-quantity-button" data-product-id="${
+                            <button class='increase-product-quantity-button' data-product-id='${
                                 product.id
-                            }">
-                                <i class="bi bi-plus-lg"></i>
+                            }'>
+                                <i class='bi bi-plus-lg'></i>
                             </button>
-                            <div class="vr"></div>
+                            <div class='vr'></div>
                         </div>
                     </div>
-                    <button class="add-product-to-cart-button" data-product-id="${product.id}">
+                    <button class='add-product-to-cart-button' data-product-id='${product.id}'>
                         Add to Cart
                     </button>
                 </div>
@@ -85,9 +85,9 @@ generateProductsHTML();
 
 /**
  * Adds event listeners to handle adding a product to the cart, increasing and decreasing product quantity.
- * - If the "add to cart" button is clicked, the product is added to the cart.
- * - If the "increase product quantity" button is clicked, the product quantity is increased.
- * - If the "decrease product quantity" button is clicked, the product quantity is decreased.
+ * - If the 'add to cart' button is clicked, the product is added to the cart.
+ * - If the 'increase product quantity' button is clicked, the product quantity is increased.
+ * - If the 'decrease product quantity' button is clicked, the product quantity is decreased.
  */
 function addEventListenersToProductsGrid() {
     productsGrid.addEventListener('click', (event) => {
@@ -131,7 +131,7 @@ updateCartItemsQuantityDisplay();
 
 function displayAddedProductToCartMessage(productId) {
     const button = document.querySelector(
-        `.add-product-to-cart-button[data-product-id="${productId}"]`
+        `.add-product-to-cart-button[data-product-id='${productId}']`
     );
 
     // Clear any previous timeouts
@@ -168,7 +168,7 @@ function adjustHomepageHeaderOnScroll() {
 window.addEventListener('load', () => {
     adjustHomepageHeaderOnScroll();
 
-    // Throttle the scroll event using 'requestAnimationFrame'
+    // Throttle the scroll event using the `requestAnimationFrame` method
     let isScrolling = false;
 
     window.addEventListener('scroll', () => {
@@ -183,8 +183,8 @@ window.addEventListener('load', () => {
 });
 
 /**
- * Handles the "shop now" button click event.
- * - If the button is clicked, the page scrolls to the "featured products" section.
+ * Handles the `shop-now-button` click event.
+ * - If the button is clicked, the page scrolls to the 'featured products' section.
  */
 function handleShopNowButtonClick() {
     window.scrollTo({
@@ -198,11 +198,11 @@ if (shopNowButton) {
 }
 
 /**
- * Handles the "save product to wish list" functionality.
+ * Handles the 'save product to wish list' functionality.
  * - Listens for the DOMContentLoaded event before setting wish list icon interactions.
  * - Defines functions to update the wish list icon appearance on mouseover and mouseout events.
  * - Handles the click event for adding a product to the wish list.
- * - Toggles the wish list icon between "saved" and "unsaved" states.
+ * - Toggles the wish list icon between 'saved' and 'unsaved' states.
  * - Initializes event listeners for mouseover, mouseout, and click events for each wish list icon.
  */
 document.addEventListener('DOMContentLoaded', () => {
@@ -256,9 +256,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const matchingProduct = findProductByName(productName);
 
         if (matchingProduct && isProductAlreadyInWishList(matchingProduct.id)) {
-            icon.src = 'images/icons/saved-wish-list-item.png'; // Display "saved" icon
+            icon.src = 'images/icons/saved-wish-list-item.png'; // Display 'saved' icon
         } else {
-            icon.src = 'images/icons/unsaved-wish-list-item.png'; // Display "unsaved" icon
+            icon.src = 'images/icons/unsaved-wish-list-item.png'; // Display 'unsaved' icon
         }
     }
 

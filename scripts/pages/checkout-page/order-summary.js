@@ -62,7 +62,7 @@ if (addPromoCodeButton) {
 }
 
 /**
- * Handles adding a promo code using the "enter" key.
+ * Handles adding a promo code using the 'enter' key.
  * - If the key is pressed, the promo code is validated.
  */
 document.addEventListener('keydown', (event) => {
@@ -107,7 +107,7 @@ function updateOrderSummaryElement(selector, value) {
 }
 
 /**
- * Updates the order summary 'discount' element with a calculated value.
+ * Updates the order summary `discount` element with a calculated value.
  * @param {string} selector - The selector of the element.
  * @param {number} discountSavings - The amount of discount savings.
  */
@@ -154,7 +154,7 @@ if (removePromoCodeButton) {
 /**
  * Handles the process of placing an order.
  * Creates an order object with items from the cart.
- * Clears the cart after the order is placed and updates the 'orders' data in local storage.
+ * Clears the cart after the order is placed and updates the `orders` data in local storage.
  */
 function placeOrder() {
     const selectedCartItemDeliveryDates = getSelectedCartItemDeliveryDates();
@@ -170,7 +170,7 @@ function placeOrder() {
         date: `${monthNames[date.getMonth()]} ${date.getDate()}`,
     };
 
-    // Add order to 'orders' array
+    // Add order to `orders` array
     orders.push(order);
 
     clearCart();
@@ -214,7 +214,7 @@ function navigateToOrdersPage() {
 }
 
 /**
- * Updates the visibility of the "place order" button based on the quantity of cart items.
+ * Updates the visibility of the 'place order' button based on the quantity of cart items.
  */
 export function updatePlaceOrderButtonVisibility() {
     const isCartEmpty = calculateQuantityOfCartItems() < 0;

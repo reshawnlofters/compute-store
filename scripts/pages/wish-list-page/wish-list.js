@@ -183,7 +183,7 @@ updateWishListVisibility();
 
 
 /**
- * Handles the "add with list item to cart" button click event.
+ * Handles the `add-wish-list-item-to-cart-button` click event.
  * - If the button is clicked, the product is added to the cart and is removed from the wish list.
  */
 function handleAddWishListItemToCartButtonClick (event) {
@@ -229,7 +229,7 @@ export function removeWishListItem(productId) {
 }
 
 /**
- * Handles the "remove wish list item" click event.
+ * Handles the `remove-wish-list-item-button` click event.
  * - If the button is clicked, the product is removed from the wish list and UI displays are updated.
  */
 function handleRemoveWishListItemButtonClick(event) {

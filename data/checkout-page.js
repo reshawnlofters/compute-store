@@ -10,21 +10,21 @@
 import { findProductById, formatCurrency } from '../scripts/shared/utils.js';
 
 /**
- * Retrieves the 'cart' and 'wishList' data from local storage.
+ * Retrieves the `cart` and `wishList` data from local storage.
  * - If no data is found, empty arrays are assigned to both variables.
  */
 export let cart = JSON.parse(localStorage.getItem('cart')) || [];
 export let wishList = JSON.parse(localStorage.getItem('wishList')) || [];
 
 /**
- * Updates the 'cart' data in local storage.
+ * Updates the `cart` data in local storage.
  */
 export function updateCartInLocalStorage() {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
 /**
- * Updates the 'wishList' data in local storage.
+ * Updates the `wishList` data in local storage.
  */
 export function updateWishListInLocalStorage() {
     localStorage.setItem('wishList', JSON.stringify(wishList));

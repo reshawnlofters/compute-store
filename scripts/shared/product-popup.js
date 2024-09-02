@@ -66,14 +66,15 @@ function generateProductPopup(productId) {
             '.close-product-popup-button'
         );
 
-        // Add an event listener to the "close product popup" button
-        if (closeProductPopupButton)
+        // Add an event listener to the `close-product-popup-button`
+        if (closeProductPopupButton) {
             closeProductPopupButton.addEventListener('click', closeProductPopup);
+        }
     }
 }
 
 /**
- * Handles the "open product popup" click event.
+ * Handles the 'open product popup' click event.
  * @param {Event} event - The click event object.
  */
 function handleProductImageClick(event) {
