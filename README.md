@@ -1,7 +1,7 @@
 # Compute Store (E-commerce Store Simulator)
 
 ## Overview
-The Compute Store is a responsive e-commerce simulator where users shop for the latest tech products. It features product searching, wish list management, cart management, and order processing functionalities. Additionally, it includes order history tracking and a discount system for cost-saving opportunities.
+The Compute Store is a responsive e-commerce simulator where users shop for the latest tech products. It features product search, wish list management, cart management, and order processing. Additionally, it includes order history tracking and a discount system for cost-saving opportunities.
 
 Explore the Compute Store at [computestore.ca](https://computestore.ca).
 
