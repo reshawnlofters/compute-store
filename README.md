@@ -1,4 +1,4 @@
-# Compute Store (E-commerce Store Simulator)
+# Compute Store: E-commerce Store Simulator
 
 ## Overview
 The Compute Store is a responsive e-commerce simulator where users shop for the latest tech products. It features product search, wish list management, cart management, and order processing. Additionally, it includes order history tracking and a discount system for cost-saving opportunities.
@@ -19,7 +19,7 @@ Explore the Compute Store at [computestore.ca](https://computestore.ca).
 - **Responsiveness**: Experience a seamless interface across all devices with its responsive design.
 
 ## Technologies Used
-JavaScript, HTML, CSS, Git, Microsoft Azure
+JavaScript, HTML, CSS, Microsoft Azure, Git
 
 ## Author
 This project is developed and maintained by Reshawn Lofters. For inquiries, suggestions, or feedback, email [reshawnalofters@gmail.com](mailto:reshawnalofters@gmail.com).
