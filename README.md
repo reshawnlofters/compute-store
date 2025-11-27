@@ -1,28 +1,28 @@
 # Compute Store: E-commerce Store Simulator
 
 ## Overview
-The Compute Store is a responsive e-commerce simulator where users shop for the latest tech products. It features product search, wish list management, cart management, and order processing. Additionally, it includes order history tracking and a discount system for cost-saving opportunities.
+The Compute Store is an e-commerce store simulator for tech products. Key features include product search, wish list and cart management, discount handling, order processing, and order history.
 
 Explore the Compute Store at [computestore.ca](https://computestore.ca).
 
 ### Preview
-![Compute Store Homepage](images/project/project-homepage-1.png)
+![Compute Store Homepage](images/project/project-homepage.png)
 ![Compute Store Checkout Page](images/project/project-checkout-page.png)
 ![Compute Store Orders Page](images/project/project-orders-page.png)
 
 ## Usage
-- **Homepage**: Add products to your wish list and cart, and use the search bar for quick navigation.
-- **Wish List Page**: Manage and view items on your wish list.
-- **Checkout Page**: Review cart and wish list items, customize delivery dates, apply discounts, and enjoy free shipping for qualifying orders.
-- **Orders Page**: Access detailed order information and manage orders, including cancellations.
-- **Product Popup View**: Click product images to enlarge them for detailed viewing.
-- **Responsiveness**: Experience a seamless interface across all devices with its responsive design.
+- **Homepage**: Browse products, add items to your wish list or cart, and use the search bar for quick filtering.
+- **Wish List Page**: View, manage, and move items from your wish list to your cart.
+- **Checkout Page**: Review cart and wish list items, customize delivery dates, apply discounts, and qualify for free shipping on eligible orders.
+- **Orders Page**: View detailed order history and manage existing orders, including cancellations.
+- **Product Popup View**: Click any product image to enlarge it for detailed viewing.
+- **Responsiveness**: The interface is fully responsive across desktop and mobile devices.
 
 ## Technologies Used
-JavaScript, HTML, CSS, Microsoft Azure, Git
+JavaScript, HTML/CSS, Microsoft Azure, Git
 
 ## Author
-This project is developed and maintained by Reshawn Lofters. For inquiries, suggestions, or feedback, email [reshawnalofters@gmail.com](mailto:reshawnalofters@gmail.com).
+Developed and maintained by Reshawn Lofters. For inquiries or feedback: [reshawnalofters@gmail.com](mailto:reshawnalofters@gmail.com).
 
 ## License
-This project is licensed under a Custom License. See the [LICENSE](./LICENSE) file for details.
+This project is licensed under a custom license. See the [LICENSE](./LICENSE) file for details.
